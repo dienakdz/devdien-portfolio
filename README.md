@@ -1,16 +1,69 @@
-# React + Vite
+# Minh Dien | Backend Developer Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, high-performance portfolio website showcasing my journey as a Backend Developer specializing in Python & FastAPI.
 
-Currently, two official plugins are available:
+![Portfolio Preview](src/assets/project1.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Vision
 
-## React Compiler
+Focusing on building **scalable**, **high-performance systems**, and aiming for **strategic roles** in software development (Technical Lead / Solutions Architect).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Key Features
 
-## Expanding the ESLint configuration
+- **Dynamic Theme Service**: Seamless switching between Dark and Light modes.
+- **Multi-language Support**: Full translation between English and Vietnamese.
+- **Interactive UI**:
+  - Cyberpunk-inspired **Matrix Background**.
+  - Custom interactive cursor.
+  - Terminal-style command interface.
+  - Smooth animations powered by Framer Motion.
+- **Responsive Design**: Optimized for all device sizes using Tailwind CSS v4.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tech Stack
+
+- **Core**: [React 19](https://react.dev/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) (The latest CSS-first configuration)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+
+## 🤖 Pair Programming with AI
+
+This project was built through a collaborative process between **Minh Dien** and **Antigravity (AI Coding Assistant by Google DeepMind)**. 
+
+While I provided the vision, domain expertise in Backend development, and real-world project data, the AI assisted in rapidly prototyping components, implementing the design system with Tailwind v4, and ensuring clean, maintainable code structures. 
+
+*Why use AI?* To accelerate the development cycle while focusing on what matters: the architecture and the story.
+
+## 🛠️ Getting Started
+
+### Prerequisites
+- Node.js (Latest LTS recommended)
+- npm or yarn
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/dienakdz/devdien-portfolio.git
+   ```
+2. Navigate to the project folder:
+   ```bash
+   cd devdien-portfolio
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## 📬 Contact
+
+- **Email**: [minhdien678@gmail.com](mailto:minhdien678@gmail.com)
+- **LinkedIn**: [linkedin.com/in/devdien](https://www.linkedin.com/in/devdien)
+- **GitHub**: [@dienakdz](https://github.com/dienakdz)
+
+---
+Made with ❤️ by Minh Dien & Antigravity.
