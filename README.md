@@ -2,7 +2,7 @@
 
 A modern, high-performance portfolio website showcasing my journey as a Backend Developer specializing in Python & FastAPI.
 
-![Portfolio Preview](src/assets/project1.png)
+![Portfolio Preview](src/assets/screen_preview.png)
 
 ## 🚀 Vision
 
