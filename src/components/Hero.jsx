@@ -88,7 +88,7 @@ const Hero = () => {
                             <div className="w-full h-full rounded-full overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-700 group">
                                 <img
                                     src={profileImg}
-                                    alt="DevDien Full-Stack Developer Profile"
+                                    alt="Nguyễn Minh Diện (DevDien) - Backend Developer Profile"
                                     fetchPriority="high"
                                     className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700"
                                 />
