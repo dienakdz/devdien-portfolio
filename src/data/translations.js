@@ -143,10 +143,10 @@ export const translations = {
       ],
     },
     preloader: {
-      boot: 'Đang tải portfolio...',
-      kernel: 'UI kernel sẵn sàng',
-      assets: 'Tối ưu visual và selected work',
-      ready: 'Sẵn sàng hiển thị',
+      boot: 'Khởi tạo presentation layer',
+      kernel: 'Visual engine trực tuyến',
+      assets: 'Đồng bộ selected work',
+      ready: 'Chuẩn bị vào trải nghiệm',
     },
   },
   en: {
@@ -293,10 +293,10 @@ export const translations = {
       ],
     },
     preloader: {
-      boot: 'Loading portfolio...',
-      kernel: 'UI kernel ready',
-      assets: 'Optimizing visuals and selected work',
-      ready: 'Ready to render',
+      boot: 'Initializing presentation layer',
+      kernel: 'Visual engine online',
+      assets: 'Syncing selected work',
+      ready: 'Preparing the experience',
     },
   },
 };

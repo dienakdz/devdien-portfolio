@@ -13,6 +13,7 @@ import Stats from './components/Stats.jsx';
 import TechMarquee from './components/TechMarquee.jsx';
 import Experience from './components/Experience.jsx';
 import AnimatedAuroraBackground from './components/AnimatedAuroraBackground.jsx';
+import Terminal from './components/Terminal.jsx';
 import { ToastProvider } from './context/ToastContext';
 
 function AppContent({ theme, setTheme }) {
@@ -79,6 +80,7 @@ function AppContent({ theme, setTheme }) {
               <Contact />
             </main>
             <Footer />
+            <Terminal />
           </motion.div>
         )}
       </AnimatePresence>
