@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle, AlertCircle, Info } from 'lucide-react';
 
@@ -20,10 +20,9 @@ export const ToastProvider = ({ children }) => {
     }, []);
 
     const showToast = useCallback((message, type = 'success') => {
-        const id = Math.random().toString(36).substr(2, 9);
+        const id = crypto.randomUUID?.() || Math.random().toString(36).slice(2, 9);
         setToasts((prev) => [...prev, { id, message, type }]);
 
-        //Auto remove after 5 seconds
         setTimeout(() => removeToast(id), 5000);
     }, [removeToast]);
 
@@ -39,7 +38,10 @@ export const ToastProvider = ({ children }) => {
     return (
         <ToastContext.Provider value={{ showToast }}>
             {children}
-            <div className="fixed bottom-8 left-8 z-[200] flex flex-col gap-3 pointer-events-none">
+            <div
+                aria-live="polite"
+                className="pointer-events-none fixed bottom-6 left-6 z-[200] flex max-w-sm flex-col gap-3"
+            >
                 <AnimatePresence>
                     {toasts.map((toast) => (
                         <motion.div
@@ -48,13 +50,13 @@ export const ToastProvider = ({ children }) => {
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -50 }}
                             transition={{ duration: 0.3 }}
-                            className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 flex items-center gap-3 min-w-[300px]"
+                            className="pointer-events-auto flex min-w-[300px] items-center gap-3 rounded-2xl border border-white/20 bg-background/90 p-4 shadow-[0_20px_60px_-30px_rgba(15,23,42,0.6)] backdrop-blur-xl"
                         >
                             {getIcon(toast.type)}
-                            <span className="text-gray-700 dark:text-gray-300 flex-1">{toast.message}</span>
+                            <span className="flex-1 text-sm text-foreground/85">{toast.message}</span>
                             <button
                                 onClick={() => removeToast(toast.id)}
-                                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                                className="text-foreground/45 transition-colors hover:text-foreground/80"
                             >
                                 <X size={18} />
                             </button>

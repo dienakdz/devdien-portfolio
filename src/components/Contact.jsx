@@ -1,164 +1,244 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, Github, Linkedin, Send, MessageCircle, Youtube, Facebook } from 'lucide-react';
+import {
+  ArrowUpRight,
+  Facebook,
+  Github,
+  Linkedin,
+  LoaderCircle,
+  Mail,
+  Phone,
+  Send,
+  Youtube,
+} from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useToast } from '../context/ToastContext';
+import { siteConfig } from '../data/siteConfig';
 
 const Contact = () => {
-    const { t } = useLanguage();
-    const { showToast } = useToast();
+  const { t, lang } = useLanguage();
+  const { showToast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        showToast(t.toasts.successSend, 'success');
-    };
+  const inputClassName =
+    'w-full rounded-[22px] border border-border/90 bg-background/84 px-5 py-4 text-foreground placeholder:text-muted-foreground/75 backdrop-blur-xl transition-colors focus:border-primary/60 focus:bg-background/96 dark:bg-card/88 dark:focus:bg-card';
 
-    const contactInfo = [
-        {
-            icon: <Mail className="text-emerald-500" />,
-            label: 'Email',
-            value: 'minhdien.dev@gmail.com',
-            href: 'mailto:minhdien.dev@gmail.com'
+  const contactInfo = [
+    {
+      icon: Mail,
+      label: 'Email',
+      value: siteConfig.email,
+      href: siteConfig.emailHref,
+    },
+    {
+      icon: Phone,
+      label: t.contact.labelPhone,
+      value: siteConfig.phone,
+      href: siteConfig.phoneHref,
+    },
+  ];
+
+  const socialLinks = [
+    { icon: Github, href: siteConfig.github, label: 'GitHub' },
+    { icon: Linkedin, href: siteConfig.linkedin, label: 'LinkedIn' },
+    { icon: Facebook, href: siteConfig.facebook, label: 'Facebook' },
+    { icon: Youtube, href: siteConfig.youtube, label: 'YouTube' },
+  ];
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    formData.append('_subject', `Portfolio contact from ${formData.get('name') || 'unknown'}`);
+    formData.append('_template', 'table');
+    formData.append('_captcha', 'false');
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(siteConfig.formEndpoint, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
         },
-        {
-            icon: <Phone className="text-green-500" />,
-            label: t.contact.labelEmail,
-            value: '+84 967 468 703',
-            href: 'tel:+84967468703'
-        }
-    ];
+        body: formData,
+      });
 
-    const socialLinks = [
-        { icon: <Facebook size={24} />, href: 'https://www.facebook.com/dienne.dev', color: 'bg-blue-600' },
-        { icon: <Youtube size={24} />, href: 'https://www.youtube.com/@devdien', color: 'bg-red-600' },
-        { icon: <Github size={24} />, href: 'https://github.com/dienakdz', color: 'bg-zinc-800' },
-        { icon: <Linkedin size={24} />, href: 'https://linkedin.com/in/devdien', color: 'bg-blue-700' },
-    ];
+      if (!response.ok) {
+        throw new Error('submit_failed');
+      }
 
-    return (
-        <section id="contact" className="section-padding bg-muted/30 relative overflow-hidden">
-            {/* Background Decor */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-[800px] h-[800px] bg-primary/5 blur-[150px] rounded-full" />
+      form.reset();
+      showToast(t.toasts.successSend, 'success');
+    } catch {
+      showToast(t.toasts.errorSend, 'error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-            <div className="container mx-auto px-6">
-                <div className="text-center max-w-2xl mx-auto mb-16">
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-4xl md:text-5xl font-extrabold mb-4"
-                    >
-                        <span className="text-glitch" data-text={t.contact.title1}>{t.contact.title1}</span> <span className="text-gradient">{t.contact.title2}</span>
-                    </motion.h2>
-                    <p className="text-muted-foreground text-lg">{t.contact.description}</p>
-                </div>
+  return (
+    <section id="contact" className="section-padding relative overflow-hidden">
+      <div className="container mx-auto max-w-6xl">
+        <div className="mb-14 max-w-3xl">
+          <p className="section-kicker mb-4">{t.contact.eyebrow}</p>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="section-title"
+          >
+            {t.contact.title1} <span className="text-gradient">{t.contact.title2}</span>
+          </motion.h2>
+          <p className="mt-5 text-lg leading-8 text-muted-foreground">
+            {t.contact.description}
+          </p>
+        </div>
 
-                <div className="max-w-6xl mx-auto grid md:grid-cols-5 gap-10">
-                    {/* Info Card */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        className="h-full md:col-span-2"
-                    >
-                        <div className="p-8 md:p-12 rounded-[2rem] bg-card border border-border shadow-sm h-full flex flex-col justify-between">
-                            <div>
-                                <h3 className="text-2xl font-bold mb-8 uppercase tracking-widest text-primary-500">{t.contact.infoTitle}</h3>
-                                <div className="space-y-8">
-                                    {contactInfo.map((info, idx) => (
-                                        <a
-                                            key={idx}
-                                            href={info.href}
-                                            className="flex items-center gap-6 group"
-                                        >
-                                            <div className="w-14 h-14 rounded-2xl bg-muted flex items-center justify-center group-hover:bg-primary-500/10 transition-colors">
-                                                {info.icon}
-                                            </div>
-                                            <div>
-                                                <p className="text-sm font-medium text-muted-foreground">{info.label}</p>
-                                                <p className="text-lg font-bold group-hover:text-primary-500 transition-colors">{info.value}</p>
-                                            </div>
-                                        </a>
-                                    ))}
-                                </div>
-                            </div>
+        <div className="grid gap-6 lg:grid-cols-[0.92fr_1.08fr]">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="content-plane-strong rounded-[32px] p-8 md:p-10"
+          >
+            <p className="section-kicker">{t.contact.infoTitle}</p>
+            <p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground">
+              {lang === 'vi'
+                ? 'Nếu hợp gu làm việc, bạn có thể gửi email trực tiếp hoặc để lại một lời nhắn ngắn. Tôi ưu tiên các cuộc trò chuyện rõ ràng, thực tế và có định hướng.'
+                : 'If the fit feels right, send an email directly or leave a short note. I prefer conversations that are clear, practical, and intentional.'}
+            </p>
 
-                            <div className="mt-12 pt-12 border-t border-border">
-                                <p className="font-bold mb-6 uppercase tracking-widest text-xs text-muted-foreground">{t.contact.socialTitle}</p>
-                                <div className="flex flex-wrap gap-4">
-                                    {socialLinks.map((social, idx) => (
-                                        <motion.a
-                                            key={idx}
-                                            href={social.href}
-                                            whileHover={{ scale: 1.1, y: -5 }}
-                                            whileTap={{ scale: 0.9 }}
-                                            className={`w-12 h-12 rounded-xl flex items-center justify-center text-white ${social.color} shadow-lg`}
-                                        >
-                                            {social.icon}
-                                        </motion.a>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
+            <div className="mt-8 grid gap-4">
+              {contactInfo.map((item) => {
+                const Icon = item.icon;
 
-                    {/* Contact Form */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        className="p-8 md:p-12 rounded-[2rem] bg-zinc-900 border border-white/5 shadow-2xl relative overflow-hidden h-full md:col-span-3"
-                    >
-                        {/* Decorative background for the form */}
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/10 blur-3xl -z-10" />
-
-                        <h3 className="text-3xl font-bold mb-8 text-white">{t.contact.formTitle}</h3>
-                        <form className="space-y-6" onSubmit={handleSubmit}>
-                            <div className="grid md:grid-cols-2 gap-6">
-                                <div className="space-y-2">
-                                    <label className="text-sm font-bold text-white/50 uppercase tracking-widest">{t.contact.labelName}</label>
-                                    <input
-                                        required
-                                        name="name"
-                                        type="text"
-                                        className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-primary-500 outline-none transition-all placeholder:text-white/20 text-white"
-                                        placeholder="Nguyễn Văn A"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-bold text-white/50 uppercase tracking-widest">{t.contact.labelEmail}</label>
-                                    <input
-                                        required
-                                        name="email"
-                                        type="email"
-                                        className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-primary-500 outline-none transition-all placeholder:text-white/20 text-white"
-                                        placeholder="name@email.com"
-                                    />
-                                </div>
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-sm font-bold text-white/50 uppercase tracking-widest">{t.contact.labelMessage}</label>
-                                <textarea
-                                    required
-                                    name="message"
-                                    rows="4"
-                                    className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-primary-500 outline-none transition-all placeholder:text-white/20 text-white"
-                                    placeholder={t.contact.placeholderMessage}
-                                ></textarea>
-                            </div>
-                            <motion.button
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                                className="w-full py-5 rounded-2xl bg-primary-500 text-zinc-950 font-black text-lg flex items-center justify-center gap-3 hover:bg-primary-600 transition-colors shadow-lg shadow-primary-500/20"
-                            >
-                                {t.contact.btnSend} <Send size={20} />
-                            </motion.button>
-                        </form>
-                    </motion.div>
-                </div>
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="content-plane rounded-[24px] p-5 transition-colors hover:bg-background/94 dark:hover:bg-card"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-[16px] bg-primary/12">
+                        <Icon size={20} className="text-primary" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-muted-foreground">{item.label}</p>
+                        <p className="mt-2 text-lg font-bold tracking-[-0.02em]">{item.value}</p>
+                      </div>
+                    </div>
+                  </a>
+                );
+              })}
             </div>
-        </section >
-    );
+
+            <div className="mt-8">
+              <p className="section-kicker">{t.contact.socialTitle}</p>
+              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {socialLinks.map((social) => {
+                  const Icon = social.icon;
+
+                  return (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={social.label}
+                      className="group content-plane rounded-[24px] px-4 py-5 text-center text-foreground transition-all duration-300 hover:-translate-y-1 hover:bg-background/94 dark:hover:bg-card"
+                    >
+                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-[18px] bg-primary/12 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
+                        <Icon size={20} />
+                      </div>
+                      <p className="mt-4 text-sm font-bold">{social.label}</p>
+                      <div className="mt-2 flex justify-center text-muted-foreground transition-colors duration-300 group-hover:text-primary">
+                        <ArrowUpRight size={15} />
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="content-plane-strong rounded-[32px] overflow-hidden p-8 md:p-10"
+          >
+            <p className="section-kicker">{t.contact.formTitle}</p>
+            <h3 className="mt-4 text-3xl font-black tracking-[-0.05em] md:text-4xl">{t.contact.formHeading}</h3>
+            <p className="mt-4 max-w-2xl text-base leading-8 text-muted-foreground">
+              {t.contact.formDescription}
+            </p>
+
+            <form onSubmit={handleSubmit} className="mt-8 grid gap-5">
+              <div className="grid gap-5 md:grid-cols-2">
+                <label className="grid gap-2">
+                  <span className="text-sm font-semibold text-muted-foreground">
+                    {t.contact.labelName}
+                  </span>
+                  <input
+                    required
+                    name="name"
+                    type="text"
+                    className={inputClassName}
+                    placeholder="Nguyen Minh Dien"
+                  />
+                </label>
+                <label className="grid gap-2">
+                  <span className="text-sm font-semibold text-muted-foreground">
+                    {t.contact.labelEmail}
+                  </span>
+                  <input
+                    required
+                    name="email"
+                    type="email"
+                    className={inputClassName}
+                    placeholder="name@email.com"
+                  />
+                </label>
+              </div>
+
+              <label className="grid gap-2">
+                <span className="text-sm font-semibold text-muted-foreground">
+                  {t.contact.labelMessage}
+                </span>
+                <textarea
+                  required
+                  name="message"
+                  rows="6"
+                  className={inputClassName}
+                  placeholder={t.contact.placeholderMessage}
+                />
+              </label>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="button-primary w-full py-4 text-base disabled:translate-y-0 disabled:opacity-75 disabled:shadow-none"
+              >
+                {isSubmitting ? (
+                  <>
+                    <LoaderCircle size={18} className="animate-spin" />
+                    {t.contact.sending}
+                  </>
+                ) : (
+                  <>
+                    {t.contact.btnSend}
+                    <Send size={18} />
+                  </>
+                )}
+              </button>
+            </form>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Contact;

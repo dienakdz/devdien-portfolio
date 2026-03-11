@@ -1,38 +1,63 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import {
+  AppWindow,
+  Boxes,
+  Braces,
+  Code2,
+  Database,
+  Layers3,
+  ServerCog,
+  Workflow,
+} from 'lucide-react';
 
 const TechMarquee = () => {
-    const technologies = [
-        "React", "TailwindCSS",
-        "Docker", "AWS", "PostgreSQL", "MySQL", "PHP", "Laravel",
-        "Git", "Python"
-    ];
+  const techRow = [
+    { label: 'Python', icon: Code2 },
+    { label: 'FastAPI', icon: ServerCog },
+    { label: 'Laravel', icon: Layers3 },
+    { label: 'PostgreSQL', icon: Database },
+    { label: 'MySQL', icon: Database },
+    { label: 'Docker', icon: Boxes },
+    { label: 'Nginx', icon: ServerCog },
+    { label: 'AWS', icon: Boxes },
+    { label: 'CI/CD', icon: Workflow },
+    { label: 'VS Code', icon: AppWindow },
+    { label: 'Postman', icon: Workflow },
+    { label: 'Git', icon: Braces },
+  ];
 
-    // Double the list to create seamless loop
-    const doubledTechs = [...technologies, ...technologies];
+  return (
+    <section className="relative -mt-4 px-6 pb-8 md:-mt-6 md:px-10 md:pb-10 lg:px-20 xl:px-24">
+      <div className="container mx-auto">
+        <div className="stack-marquee-frame rounded-[24px] px-3 py-3.5 md:px-4">
+          <div className="stack-marquee-shell">
+            <div className="stack-marquee-track">
+              {[0, 1].map((copyIndex) => (
+                <div
+                  key={`copy-${copyIndex}`}
+                  className="stack-marquee-sequence"
+                  aria-hidden={copyIndex === 1}
+                >
+                  {techRow.map((tech) => {
+                    const Icon = tech.icon;
 
-    return (
-        <div className="py-10 bg-zinc-950/50 border-y border-white/5 overflow-hidden flex whitespace-nowrap">
-            <motion.div
-                className="flex gap-12 items-center"
-                animate={{ x: [0, -1035] }} // Adjust based on total width
-                transition={{
-                    duration: 30,
-                    repeat: Infinity,
-                    ease: "linear"
-                }}
-            >
-                {doubledTechs.map((tech, idx) => (
-                    <span
-                        key={idx}
-                        className="text-2xl md:text-3xl font-black text-white/20 hover:text-primary-500 transition-colors cursor-default uppercase tracking-tighter"
-                    >
-                        {tech}
-                    </span>
-                ))}
-            </motion.div>
+                    return (
+                      <span key={`${copyIndex}-${tech.label}`} className="stack-capsule">
+                        <span className="stack-capsule-icon">
+                          <Icon size={16} />
+                        </span>
+                        {tech.label}
+                      </span>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-    );
+      </div>
+    </section>
+  );
 };
 
 export default TechMarquee;

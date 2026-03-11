@@ -1,104 +1,117 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import {
-    Database,
-    Terminal,
-    Cpu,
-    Layout
+  AppWindow,
+  Boxes,
+  Database,
+  ServerCog,
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const Skills = () => {
-    const { t } = useLanguage();
-    const categories = [
-        {
-            title: 'Frontend',
-            icon: <Layout className="text-emerald-500" />,
-            skills: ['React', 'Tailwind', 'HTML', 'CSS', 'JavaScript', 'Bootstrap']
-        },
-        {
-            title: 'Backend',
-            icon: <Terminal className="text-green-500" />,
-            skills: ['Python', 'FastAPI', 'PHP', 'Laravel']
-        },
-        {
-            title: 'Database',
-            icon: <Database className="text-teal-500" />,
-            skills: ['MySQL', 'PostgreSQL', 'SQL Server']
-        },
-        {
-            title: 'Infrastructure',
-            icon: <Cpu className="text-cyan-500" />,
-            skills: ['Docker', 'AWS', 'CI/CD', 'Nginx', 'Vercel']
-        }
-    ];
+  const { t, lang } = useLanguage();
 
-    const container = {
-        hidden: { opacity: 0 },
-        show: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.2
-            }
-        }
-    };
+  const categories = [
+    {
+      title: 'Backend',
+      icon: ServerCog,
+      description:
+        lang === 'vi'
+          ? 'API design, service layers, auth, business logic và các tích hợp backend.'
+          : 'API design, service layers, auth, business logic, and backend integrations.',
+      skills: ['Python', 'FastAPI', 'Laravel', 'PHP'],
+    },
+    {
+      title: 'Data',
+      icon: Database,
+      description:
+        lang === 'vi'
+          ? 'Thiết kế schema, tối ưu truy vấn và giữ dữ liệu nhất quán cho sản phẩm.'
+          : 'Schema design, query optimization, and data consistency for product workloads.',
+      skills: ['PostgreSQL', 'MySQL', 'SQL Server', 'ETL'],
+    },
+    {
+      title: 'Delivery',
+      icon: Boxes,
+      description:
+        lang === 'vi'
+          ? 'Containerization, môi trường triển khai và quy trình release ổn định.'
+          : 'Containerization, deployment environments, and reliable release workflows.',
+      skills: ['Docker', 'Nginx', 'CI/CD', 'AWS'],
+    },
+    {
+      title: 'Support',
+      icon: AppWindow,
+      description:
+        lang === 'vi'
+          ? 'Đủ để phối hợp với frontend, debug flow end-to-end và hỗ trợ khi cần chạm vào bề mặt sản phẩm.'
+          : 'Enough to collaborate with frontend, debug end-to-end flows, and support product delivery when needed.',
+      skills: ['React', 'JavaScript', 'Debugging', 'Vite'],
+    },
+  ];
 
-    const item = {
-        hidden: { opacity: 0, y: 20 },
-        show: { opacity: 1, y: 0 }
-    };
+  return (
+    <section id="skills" className="section-padding">
+      <div className="container mx-auto">
+        <div className="mb-12 max-w-3xl">
+          <p className="section-kicker mb-4">{t.skills.eyebrow}</p>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="section-title"
+          >
+            {t.skills.title1} <span className="text-gradient">{t.skills.title2}</span>
+          </motion.h2>
+          <p className="mt-5 text-lg leading-8 text-muted-foreground">
+            {t.skills.description}
+          </p>
+        </div>
 
-    return (
-        <section id="skills" className="section-padding bg-muted/30">
-            <div className="container mx-auto">
-                <div className="text-center max-w-2xl mx-auto mb-16">
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-4xl md:text-5xl font-extrabold mb-4"
-                    >
-                        <span className="text-glitch" data-text={t.skills.title1}>{t.skills.title1}</span> <span className="text-gradient">{t.skills.title2}</span>
-                    </motion.h2>
-                    <p className="text-muted-foreground text-lg">
-                        {t.skills.description}
-                    </p>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {categories.map((category, index) => {
+            const Icon = category.icon;
+
+            return (
+              <motion.article
+                key={category.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08 }}
+                className="content-plane rounded-[30px] p-7"
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-[18px] bg-primary/12 text-primary">
+                    <Icon size={24} />
+                  </div>
+                  <span className="text-[11px] font-black uppercase tracking-[0.22em] text-primary/82">
+                    0{index + 1}
+                  </span>
                 </div>
 
-                <motion.div
-                    variants={container}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true }}
-                    className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
-                >
-                    {categories.map((cat, idx) => (
-                        <motion.div
-                            key={idx}
-                            variants={item}
-                            whileHover={{ y: -10 }}
-                            className="p-8 rounded-3xl bg-card border border-border shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300"
-                        >
-                            <div className="w-14 h-14 rounded-2xl bg-muted flex items-center justify-center mb-6">
-                                {cat.icon}
-                            </div>
-                            <h3 className="text-2xl font-bold mb-4">{cat.title}</h3>
-                            <div className="flex flex-wrap gap-2">
-                                {cat.skills.map(skill => (
-                                    <span
-                                        key={skill}
-                                        className="px-3 py-1 rounded-full bg-muted text-foreground text-xs font-semibold border border-transparent hover:border-primary/30 hover:bg-primary/5 transition-colors"
-                                    >
-                                        {skill}
-                                    </span>
-                                ))}
-                            </div>
-                        </motion.div>
-                    ))}
-                </motion.div>
-            </div>
-        </section>
-    );
+                <h3 className="mt-8 text-[1.85rem] font-black tracking-[-0.05em]">{category.title}</h3>
+                <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                  {category.description}
+                </p>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {category.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="rounded-full border border-primary/16 bg-primary/8 px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-foreground/82 dark:bg-primary/10 dark:text-foreground/84"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Skills;

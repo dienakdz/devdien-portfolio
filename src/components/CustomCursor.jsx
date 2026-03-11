@@ -1,68 +1,97 @@
-import React, { useState, useEffect } from 'react';
-import { motion, useSpring } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 const CustomCursor = () => {
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-    const [isHovering, setIsHovering] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
+  const pointerX = useMotionValue(-100);
+  const pointerY = useMotionValue(-100);
+  const dotX = useTransform(pointerX, (latest) => latest - 5);
+  const dotY = useTransform(pointerY, (latest) => latest - 5);
+  const ringBaseX = useSpring(pointerX, { damping: 30, stiffness: 360, mass: 0.32 });
+  const ringBaseY = useSpring(pointerY, { damping: 30, stiffness: 360, mass: 0.32 });
+  const ringX = useTransform(ringBaseX, (latest) => latest - 20);
+  const ringY = useTransform(ringBaseY, (latest) => latest - 20);
 
-    useEffect(() => {
-        const handleMouseMove = (e) => {
-            setMousePosition({ x: e.clientX, y: e.clientY });
-        };
-
-        const handleMouseOver = (e) => {
-            const target = e.target;
-            const isClickable =
-                target.tagName === 'A' ||
-                target.tagName === 'BUTTON' ||
-                target.closest('a') ||
-                target.closest('button') ||
-                target.getAttribute('role') === 'button';
-
-            setIsHovering(isClickable);
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mouseover', handleMouseOver);
-
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseover', handleMouseOver);
-        };
-    }, []);
-
-    // Smooth springs for trailing effect
-    const springConfig = { damping: 20, stiffness: 200 };
-    const cursorX = useSpring(mousePosition.x, springConfig);
-    const cursorY = useSpring(mousePosition.y, springConfig);
-
-    return (
-        <>
-            {/* Main Cursor Dot */}
-            <motion.div
-                className="fixed top-0 left-0 w-3 h-3 bg-primary-500 rounded-full z-[9999] pointer-events-none mix-blend-difference"
-                style={{
-                    x: mousePosition.x - 6,
-                    y: mousePosition.y - 6,
-                }}
-            />
-
-            {/* Outer Circle Ring */}
-            <motion.div
-                className="fixed top-0 left-0 w-10 h-10 border-2 border-primary-500 rounded-full z-[9998] pointer-events-none"
-                animate={{
-                    scale: isHovering ? 1.5 : 1,
-                    opacity: isHovering ? 0.6 : 0.4,
-                    borderWidth: isHovering ? 1 : 2,
-                }}
-                style={{
-                    x: cursorX - 20,
-                    y: cursorY - 20,
-                }}
-                transition={{ type: 'spring', damping: 25, stiffness: 150 }}
-            />
-        </>
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(
+      '(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)',
     );
+
+    const updateState = () => setIsEnabled(mediaQuery.matches);
+    updateState();
+    mediaQuery.addEventListener('change', updateState);
+
+    return () => mediaQuery.removeEventListener('change', updateState);
+  }, []);
+
+  useEffect(() => {
+    if (!isEnabled) {
+      document.body.classList.remove('cursor-fx');
+      return undefined;
+    }
+
+    const handlePointerMove = (event) => {
+      pointerX.set(event.clientX);
+      pointerY.set(event.clientY);
+    };
+
+    const handleMouseOver = (event) => {
+      const target = event.target;
+
+      if (!(target instanceof Element)) {
+        return;
+      }
+
+      const clickable =
+        target.tagName === 'A' ||
+        target.tagName === 'BUTTON' ||
+        target.closest('a') ||
+        target.closest('button') ||
+        target.getAttribute('role') === 'button';
+
+      setIsHovering(Boolean(clickable));
+    };
+
+    document.body.classList.add('cursor-fx');
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('mouseover', handleMouseOver);
+
+    return () => {
+      document.body.classList.remove('cursor-fx');
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('mouseover', handleMouseOver);
+    };
+  }, [isEnabled, pointerX, pointerY]);
+
+  if (!isEnabled) {
+    return null;
+  }
+
+  return (
+    <>
+      <motion.div
+        className="pointer-events-none fixed left-0 top-0 z-[9999] h-2.5 w-2.5 rounded-full bg-foreground will-change-transform"
+        style={{
+          x: dotX,
+          y: dotY,
+        }}
+      />
+
+      <motion.div
+        className="pointer-events-none fixed left-0 top-0 z-[9998] h-10 w-10 rounded-full border border-primary/60 will-change-transform"
+        animate={{
+          scale: isHovering ? 1.55 : 1,
+          opacity: isHovering ? 0.7 : 0.34,
+        }}
+        style={{
+          x: ringX,
+          y: ringY,
+        }}
+        transition={{ type: 'spring', damping: 25, stiffness: 150 }}
+      />
+    </>
+  );
 };
 
 export default CustomCursor;

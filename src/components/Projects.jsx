@@ -1,120 +1,169 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, ExternalLink, Github, Lock } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import project1 from '../assets/project1.png';
-import project2 from '../assets/project2.png';
+import { projectData } from '../data/projectData';
+import { siteConfig } from '../data/siteConfig';
 
 const Projects = () => {
-    const { t, lang } = useLanguage();
+  const { t, lang } = useLanguage();
+  const projects = projectData[lang] || projectData.en;
+  const [showAll, setShowAll] = useState(false);
+  const visibleProjects = useMemo(
+    () => (showAll ? projects : projects.slice(0, 4)),
+    [projects, showAll],
+  );
+  const hasMoreProjects = projects.length > 4;
 
-    const projects = [
-        {
-            title: 'Travela - Tour Booking',
-            description: lang === 'vi'
-                ? 'Hệ thống đặt tour du lịch tích hợp công nghệ Python để xử lý dữ liệu và thuật toán gợi ý điểm đến thông minh.'
-                : 'Tour booking system integrated with Python for data processing and smart destination recommendation algorithms.',
-            image: project1,
-            tags: ['Laravel', 'PHP', 'Python', 'MySQL'],
-            live: '#',
-            github: 'https://github.com/dienakdz/travela'
-        },
-        {
-            title: 'Veggie - Food Store',
-            description: lang === 'vi'
-                ? 'Nền tảng thương mại điện tử thực phẩm sạch, tích hợp đơn vị vận chuyển GHN và hệ thống quản lý kho hàng tối ưu.'
-                : 'Clean food e-commerce platform, integrating GHN shipping service and optimized inventory management system.',
-            image: project2,
-            tags: ['Laravel', 'PHP', 'MySQL', 'API GHN'],
-            live: '#',
-            github: 'https://github.com/dienakdz/veggie'
-        }
-    ];
+  return (
+    <section id="projects" className="section-padding relative overflow-hidden">
+      <div
+        className="pointer-events-none absolute right-[-10rem] top-20 h-80 w-80 rounded-full bg-primary/10 blur-[120px]"
+        aria-hidden="true"
+      />
 
-    return (
-        <section id="projects" className="section-padding overflow-hidden">
-            <div className="container mx-auto">
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-                    <div className="max-w-2xl">
-                        <motion.h2
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="text-4xl md:text-5xl font-extrabold mb-4"
-                        >
-                            <span className="text-glitch" data-text={t.projects.title1}>{t.projects.title1}</span> <span className="text-gradient">{t.projects.title2}</span>
-                        </motion.h2>
-                        <p className="text-muted-foreground text-lg">
-                            {t.projects.description}
-                        </p>
-                    </div>
-                    <motion.a
-                        href="https://github.com"
-                        target="_blank"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="flex items-center gap-2 text-primary-600 font-bold hover:text-primary-700 transition-colors"
-                    >
-                        {t.projects.viewAll} <ExternalLink size={20} />
-                    </motion.a>
-                </div>
+      <div className="container mx-auto">
+        <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-3xl">
+            <p className="section-kicker mb-4">{t.projects.eyebrow}</p>
+            <motion.h2
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="section-title max-w-2xl"
+            >
+              {t.projects.title1} <span className="text-gradient">{t.projects.title2}</span>
+            </motion.h2>
+            <p className="mt-5 text-lg leading-8 text-muted-foreground">
+              {t.projects.description}
+            </p>
+          </div>
 
-                <div className="grid lg:grid-cols-2 gap-12">
-                    {projects.map((project, idx) => (
-                        <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.2 }}
-                            className="group relative rounded-[2.5rem] overflow-hidden bg-card border border-border shadow-2xl"
-                        >
-                            {/* Image Container */}
-                            <div className="relative aspect-video overflow-hidden">
-                                <img
-                                    src={project.image}
-                                    alt={project.title}
-                                    loading="lazy"
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-6">
-                                    <motion.a
-                                        href={project.live}
-                                        whileHover={{ y: -5 }}
-                                        className="w-14 h-14 rounded-full bg-white text-foreground flex items-center justify-center shadow-xl"
-                                    >
-                                        <ExternalLink size={24} />
-                                    </motion.a>
-                                    <motion.a
-                                        href={project.github}
-                                        whileHover={{ y: -5 }}
-                                        className="w-14 h-14 rounded-full bg-zinc-900 text-white flex items-center justify-center shadow-xl"
-                                    >
-                                        <Github size={24} />
-                                    </motion.a>
-                                </div>
-                            </div>
+          <a
+            href={siteConfig.github}
+            target="_blank"
+            rel="noreferrer"
+            className="button-secondary shrink-0"
+          >
+            {t.projects.viewAll}
+            <ArrowUpRight size={18} />
+          </a>
+        </div>
 
-                            {/* Content */}
-                            <div className="p-8 md:p-10">
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    {project.tags.map(tag => (
-                                        <span key={tag} className="text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-primary/10 text-primary-600 rounded-full border border-primary/20">
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
-                                <h3 className="text-3xl font-bold mb-4 group-hover:text-primary-500 transition-colors">{project.title}</h3>
-                                <p className="text-muted-foreground text-lg mb-0 leading-relaxed">
-                                    {project.description}
-                                </p>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
+        {visibleProjects.length ? (
+          <div className="content-plane-strong rounded-[34px] p-4 md:p-5">
+            <div className="mb-5 flex items-center justify-between gap-4">
+              <p className="section-kicker">{t.projects.archiveLabel}</p>
+              <span className="text-sm text-muted-foreground">
+                {visibleProjects.length}/{projects.length}
+              </span>
             </div>
-        </section>
-    );
+
+            <div className="grid gap-3">
+              {visibleProjects.map((project, index) => (
+                <motion.article
+                  key={project.title}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ delay: index * 0.05 }}
+                  className="content-plane rounded-[28px] p-4 md:p-5"
+                >
+                  <div className="grid gap-4 md:grid-cols-[8.5rem_minmax(0,1fr)] xl:grid-cols-[8.5rem_minmax(0,1fr)_11rem] xl:items-start">
+                    <div className="overflow-hidden rounded-[20px] border border-white/8 bg-[#08131b]">
+                      <div className="flex items-center justify-between border-b border-white/8 px-3 py-2 text-[10px] font-black uppercase tracking-[0.22em] text-white/68">
+                        <span>0{index + 1}</span>
+                        <span>{index === 0 ? t.projects.featuredLabel : project.status}</span>
+                      </div>
+                      <img
+                        src={project.image}
+                        alt={`${project.title} preview`}
+                        loading="lazy"
+                        className="aspect-[16/11] w-full object-cover"
+                      />
+                    </div>
+
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-center gap-3">
+                        <h3 className="text-2xl font-black tracking-[-0.05em]">{project.title}</h3>
+                        <span className="rounded-full border border-primary/20 bg-primary/12 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
+                          {project.status}
+                        </span>
+                      </div>
+
+                      <p className="mt-3 text-sm leading-7 text-muted-foreground">{project.summary}</p>
+
+                      <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(12rem,0.62fr)]">
+                        <div>
+                          <p className="section-kicker">{t.projects.compactNote}</p>
+                          <p className="mt-2 text-sm leading-7 text-muted-foreground">{project.impact}</p>
+                        </div>
+
+                        <div className="flex flex-wrap content-start gap-2 xl:justify-end">
+                          {project.tech.slice(0, 4).map((tag) => (
+                            <span
+                              key={tag}
+                              className="rounded-full border border-primary/20 bg-primary/12 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-primary"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 xl:flex-col xl:items-stretch">
+                      <a
+                        href={project.repoUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="button-secondary px-4 py-2 text-xs"
+                      >
+                        {t.projects.viewRepo}
+                        <Github size={16} />
+                      </a>
+                      {project.liveUrl ? (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="button-primary px-4 py-2 text-xs"
+                        >
+                          {t.projects.viewDemo}
+                          <ExternalLink size={16} />
+                        </a>
+                      ) : (
+                        <span className="inline-flex items-center justify-center gap-2 rounded-full border border-border/90 bg-background/72 px-4 py-2 text-xs font-bold text-foreground/82 dark:bg-card/80">
+                          <Lock size={14} />
+                          {t.projects.demoPending}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+
+            {hasMoreProjects ? (
+              <div className="mt-5 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setShowAll((current) => !current)}
+                  className="button-secondary text-sm"
+                >
+                  {showAll ? t.projects.showLess : t.projects.showMore}
+                  <ArrowDown
+                    size={16}
+                    className={`transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`}
+                  />
+                </button>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
+    </section>
+  );
 };
 
 export default Projects;

@@ -1,97 +1,105 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { useLanguage } from "../context/LanguageContext";
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
+import { siteConfig } from '../data/siteConfig';
+
+const fallbackPreloaderText = {
+  boot: 'Preparing portfolio...',
+  kernel: 'Visual system ready',
+  assets: 'Loading selected work',
+  ready: 'Almost there',
+};
 
 const Preloader = ({ onComplete }) => {
-    const { t } = useLanguage();
-    const [logs, setLogs] = useState([]);
-    const [progress, setProgress] = useState(0);
+  const { t } = useLanguage();
+  const [progress, setProgress] = useState(0);
 
-    //Defensive check for t.preloader
-    const preloaderText = t?.preloader || {
-        boot: 'Starting system...',
-        kernel: 'Kernel OK',
-        assets: 'Loading assets...',
-        ready: 'System Ready',
+  const preloaderText = t?.preloader || fallbackPreloaderText;
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduceMotion) {
+      const timer = setTimeout(() => {
+        if (onComplete) onComplete();
+      }, 160);
+
+      return () => clearTimeout(timer);
+    }
+
+    let frame;
+    let finishTimer;
+    const start = performance.now();
+    const duration = 960;
+
+    const tick = (now) => {
+      const elapsed = now - start;
+      const nextProgress = Math.min((elapsed / duration) * 100, 100);
+      setProgress(nextProgress);
+
+      if (nextProgress < 100) {
+        frame = window.requestAnimationFrame(tick);
+      } else {
+        finishTimer = setTimeout(() => {
+          if (onComplete) onComplete();
+        }, 160);
+      }
     };
 
-    const bootLogs = [
-        `> [SYSTEM] ${preloaderText.boot}`,
-        `> [KERNEL] ${preloaderText.kernel}... v6.1.0-master`,
-        `> [NETWORK] Initializing eth0... OK`,
-        `> [ASSETS] ${preloaderText.assets}`,
-        `> [GRAPHICS] Loading 3D textures... OK`,
-        `> [UI] Initializing Glassmorphism... OK`,
-        `> [SHADERS] Compiling terminal green... DONE`,
-        `> [STATUS] ${preloaderText.ready}`
-    ];
+    frame = window.requestAnimationFrame(tick);
 
-    useEffect(() => {
-        let currentLog = 0;
-        const interval = setInterval(() => {
-            if (currentLog < bootLogs.length) {
-                setLogs(prev => [...prev, bootLogs[currentLog]]);
-                setProgress(((currentLog + 1) / bootLogs.length) * 100);
-                currentLog++;
-            } else {
-                clearInterval(interval);
-                setTimeout(() => {
-                    if (onComplete) onComplete();
-                }, 800);
-            }
-        }, 150);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      clearTimeout(finishTimer);
+    };
+  }, [onComplete]);
 
-        return () => clearInterval(interval);
-    }, [bootLogs.length, onComplete]);
+  return (
+    <motion.div
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.35 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-background/96 p-6 backdrop-blur-xl sm:p-12"
+    >
+      <div className="panel-strong w-full max-w-xl p-8 sm:p-10">
+        <p className="section-kicker">Portfolio</p>
+        <h2 className="mt-4 font-outfit text-4xl font-black tracking-[-0.05em] sm:text-5xl">
+          {siteConfig.brand}
+        </h2>
+        <p className="mt-5 max-w-lg text-base leading-7 text-muted-foreground">
+          {preloaderText.assets}
+        </p>
 
-    return (
-        <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
-            className="fixed inset-0 z-[100] bg-zinc-950 flex flex-col items-center justify-center p-6 sm:p-12 font-mono"
-        >
-            <div className="w-full max-w-2xl">
-                <div className="mb-8 flex items-center justify-between">
-                    <div className="flex gap-2">
-                        <div className="w-3 h-3 rounded-full bg-red-500" />
-                        <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                        <div className="w-3 h-3 rounded-full bg-green-500" />
-                    </div>
-                    <span className="text-primary-500 text-xs font-bold uppercase tracking-widest">Master Boot Sequence</span>
-                </div>
+        <div className="mt-10 space-y-3">
+          <div className="relative h-2 overflow-hidden rounded-full bg-foreground/6 dark:bg-white/8">
+            <motion.div
+              className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary via-primary/90 to-slate-500/70"
+              animate={{ width: `${progress}%` }}
+            />
+          </div>
+          <div className="flex items-center justify-between text-[0.72rem] font-black uppercase tracking-[0.24em] text-muted-foreground">
+            <span>{preloaderText.boot}</span>
+            <span>{Math.round(progress)}%</span>
+          </div>
+        </div>
 
-                <div className="h-64 overflow-hidden mb-8 space-y-2">
-                    {logs.map((log, idx) => (
-                        <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="text-primary-500/80 text-sm sm:text-base"
-                        >
-                            {log}
-                        </motion.div>
-                    ))}
-                    <motion.div
-                        animate={{ opacity: [0, 1] }}
-                        transition={{ repeat: Infinity, duration: 0.8 }}
-                        className="w-2 h-5 bg-primary-500 inline-block"
-                    />
-                </div>
-
-                <div className="relative w-full h-1 bg-white/5 rounded-full overflow-hidden">
-                    <motion.div
-                        className="absolute top-0 left-0 h-full bg-primary-500"
-                        animate={{ width: `${progress}%` }}
-                    />
-                </div>
-                <div className="mt-2 flex justify-between text-[10px] text-white/30 uppercase font-black">
-                    <span>Booting</span>
-                    <span>{Math.round(progress)}%</span>
-                </div>
-            </div>
-        </motion.div>
-    );
+        <div className="mt-8 grid gap-3 text-sm text-muted-foreground sm:grid-cols-3">
+          <div className="metric-chip">
+            <p className="section-kicker">01</p>
+            <p className="mt-3">{preloaderText.kernel}</p>
+          </div>
+          <div className="metric-chip">
+            <p className="section-kicker">02</p>
+            <p className="mt-3">{preloaderText.assets}</p>
+          </div>
+          <div className="metric-chip">
+            <p className="section-kicker">03</p>
+            <p className="mt-3">{preloaderText.ready}</p>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
 };
 
 export default Preloader;
