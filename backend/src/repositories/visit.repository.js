@@ -44,3 +44,39 @@ export const fetchVisitSummary = async () => {
 
   return result.rows[0] || { total_visits: 0, unique_visitors: 0 };
 };
+
+export const fetchVisits = async ({ limit, offset }) => {
+  const [itemsResult, countResult] = await Promise.all([
+    query(
+      `
+        SELECT
+          id,
+          path,
+          ip,
+          country,
+          region,
+          city,
+          user_agent,
+          device_type,
+          browser,
+          os,
+          device_vendor,
+          device_model,
+          visited_at
+        FROM page_visits
+        ORDER BY visited_at DESC
+        LIMIT $1 OFFSET $2
+      `,
+      [limit, offset],
+    ),
+    query(`
+      SELECT COUNT(*)::int AS total
+      FROM page_visits
+    `),
+  ]);
+
+  return {
+    rows: itemsResult.rows,
+    total: countResult.rows[0]?.total || 0,
+  };
+};

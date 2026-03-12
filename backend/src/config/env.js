@@ -40,4 +40,9 @@ export const env = {
   mailFrom: process.env.MAIL_FROM || process.env.SMTP_USER || '',
   contactToEmail: process.env.CONTACT_TO_EMAIL || process.env.SMTP_USER || '',
   adminApiKey: process.env.ADMIN_API_KEY || '',
+  jwtAccessSecret: process.env.JWT_ACCESS_SECRET || '',
+  jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || '',
+  jwtAccessTtl: process.env.JWT_ACCESS_TTL || '15m',
+  jwtRefreshTtl: process.env.JWT_REFRESH_TTL || '7d',
+
 };

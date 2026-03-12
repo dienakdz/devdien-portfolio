@@ -39,8 +39,19 @@ export const openApiDocument = {
       name: 'Admin',
       description: 'Protected administrative endpoints.',
     },
+    {
+      name: 'Auth',
+      description: 'Authentication and session management endpoints.',
+    },
   ],
   components: {
+    securitySchemes: {
+      BearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
     schemas: {
       ErrorResponse: errorSchema,
       HealthResponse: {
@@ -207,17 +218,244 @@ export const openApiDocument = {
         },
         required: ['page', 'pageSize', 'total', 'items'],
       },
+      AdminVisit: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'integer',
+            example: 101,
+          },
+          path: {
+            type: ['string', 'null'],
+            example: '/projects',
+          },
+          ip: {
+            type: ['string', 'null'],
+            example: '203.113.10.12',
+          },
+          country: {
+            type: ['string', 'null'],
+            example: 'VN',
+          },
+          region: {
+            type: ['string', 'null'],
+            example: 'Ho Chi Minh',
+          },
+          city: {
+            type: ['string', 'null'],
+            example: 'Ho Chi Minh City',
+          },
+          userAgent: {
+            type: ['string', 'null'],
+            example: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+          },
+          deviceType: {
+            type: ['string', 'null'],
+            example: 'desktop',
+          },
+          browser: {
+            type: ['string', 'null'],
+            example: 'Chrome',
+          },
+          os: {
+            type: ['string', 'null'],
+            example: 'Windows',
+          },
+          deviceVendor: {
+            type: ['string', 'null'],
+            example: 'Dell',
+          },
+          deviceModel: {
+            type: ['string', 'null'],
+            example: 'XPS',
+          },
+          visitedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-03-12T03:00:00.000Z',
+          },
+        },
+        required: ['id', 'visitedAt'],
+      },
+      AdminVisitListResponse: {
+        type: 'object',
+        properties: {
+          page: {
+            type: 'integer',
+            example: 1,
+          },
+          pageSize: {
+            type: 'integer',
+            example: 20,
+          },
+          total: {
+            type: 'integer',
+            example: 182,
+          },
+          items: {
+            type: 'array',
+            items: {
+              $ref: '#/components/schemas/AdminVisit',
+            },
+          },
+        },
+        required: ['page', 'pageSize', 'total', 'items'],
+      },
+      AuthUser: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'integer',
+            example: 1,
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'minhdien.dev@gmail.com',
+          },
+          fullName: {
+            type: ['string', 'null'],
+            example: 'Dev Dien',
+          },
+          role: {
+            type: 'string',
+            example: 'admin',
+          },
+        },
+        required: ['id', 'email', 'role'],
+      },
+      LoginRequest: {
+        type: 'object',
+        properties: {
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'minhdien.dev@gmail.com',
+          },
+          password: {
+            type: 'string',
+            format: 'password',
+            example: 'Admin@123',
+          },
+        },
+        required: ['email', 'password'],
+      },
+      LoginResponse: {
+        type: 'object',
+        properties: {
+          user: {
+            $ref: '#/components/schemas/AuthUser',
+          },
+          accessToken: {
+            type: 'string',
+            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.access',
+          },
+          refreshToken: {
+            type: 'string',
+            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.refresh',
+          },
+        },
+        required: ['user', 'accessToken', 'refreshToken'],
+      },
+      RefreshRequest: {
+        type: 'object',
+        properties: {
+          refreshToken: {
+            type: 'string',
+            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.refresh',
+          },
+        },
+        required: ['refreshToken'],
+      },
+      RefreshResponse: {
+        type: 'object',
+        properties: {
+          accessToken: {
+            type: 'string',
+            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.access',
+          },
+          refreshToken: {
+            type: 'string',
+            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.refresh',
+          },
+        },
+        required: ['accessToken', 'refreshToken'],
+      },
+      LogoutRequest: {
+        type: 'object',
+        properties: {
+          refreshToken: {
+            type: 'string',
+            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.refresh',
+          },
+        },
+        required: ['refreshToken'],
+      },
+      LogoutResponse: {
+        type: 'object',
+        properties: {
+          ok: {
+            type: 'boolean',
+            example: true,
+          },
+        },
+        required: ['ok'],
+      },
+      MeResponse: {
+        type: 'object',
+        properties: {
+          user: {
+            $ref: '#/components/schemas/AuthUser',
+          },
+        },
+        required: ['user'],
+      },
+      UpdateMeRequest: {
+        type: 'object',
+        properties: {
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'minhdien.dev@gmail.com',
+          },
+          fullName: {
+            type: ['string', 'null'],
+            example: 'Dev Dien',
+          },
+        },
+      },
+      ChangePasswordRequest: {
+        type: 'object',
+        properties: {
+          currentPassword: {
+            type: 'string',
+            format: 'password',
+            example: 'Admin@123',
+          },
+          newPassword: {
+            type: 'string',
+            format: 'password',
+            example: 'Admin@1234',
+          },
+        },
+        required: ['currentPassword', 'newPassword'],
+      },
+      ChangePasswordResponse: {
+        type: 'object',
+        properties: {
+          ok: {
+            type: 'boolean',
+            example: true,
+          },
+          requiresLogin: {
+            type: 'boolean',
+            example: true,
+          },
+        },
+        required: ['ok', 'requiresLogin'],
+      },
     },
     parameters: {
-      AdminApiKeyHeader: {
-        name: 'x-admin-key',
-        in: 'header',
-        required: true,
-        schema: {
-          type: 'string',
-        },
-        description: 'Administrative API key.',
-      },
       PageQuery: {
         name: 'page',
         in: 'query',
@@ -378,10 +616,12 @@ export const openApiDocument = {
       get: {
         tags: ['Admin'],
         summary: 'List stored contact submissions',
-        parameters: [
+        security: [
           {
-            $ref: '#/components/parameters/AdminApiKeyHeader',
+            BearerAuth: [],
           },
+        ],
+        parameters: [
           {
             $ref: '#/components/parameters/PageQuery',
           },
@@ -401,7 +641,17 @@ export const openApiDocument = {
             },
           },
           '401': {
-            description: 'Missing or invalid admin key.',
+            description: 'Missing or invalid bearer token.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ErrorResponse',
+                },
+              },
+            },
+          },
+          '403': {
+            description: 'Authenticated user does not have admin access.',
             content: {
               'application/json': {
                 schema: {
@@ -412,6 +662,348 @@ export const openApiDocument = {
           },
           '500': {
             description: 'Server configuration error.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ErrorResponse',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/admin/visits': {
+      get: {
+        tags: ['Admin'],
+        summary: 'List recorded page visits',
+        security: [
+          {
+            BearerAuth: [],
+          },
+        ],
+        parameters: [
+          {
+            $ref: '#/components/parameters/PageQuery',
+          },
+          {
+            $ref: '#/components/parameters/PageSizeQuery',
+          },
+        ],
+        responses: {
+          '200': {
+            description: 'Paginated list of recorded page visits.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/AdminVisitListResponse',
+                },
+              },
+            },
+          },
+          '401': {
+            description: 'Missing or invalid bearer token.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ErrorResponse',
+                },
+              },
+            },
+          },
+          '403': {
+            description: 'Authenticated user does not have admin access.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ErrorResponse',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/auth/login': {
+      post: {
+        tags: ['Auth'],
+        summary: 'Authenticate a user and create a session',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/LoginRequest',
+              },
+            },
+          },
+        },
+        responses: {
+          '200': {
+            description: 'Authentication succeeded.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/LoginResponse',
+                },
+              },
+            },
+          },
+          '400': {
+            description: 'The login payload is invalid.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ErrorResponse',
+                },
+              },
+            },
+          },
+          '401': {
+            description: 'The credentials are invalid.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ErrorResponse',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/auth/me': {
+      get: {
+        tags: ['Auth'],
+        summary: 'Return the authenticated user',
+        security: [
+          {
+            BearerAuth: [],
+          },
+        ],
+        responses: {
+          '200': {
+            description: 'Authenticated user details.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/MeResponse',
+                },
+              },
+            },
+          },
+          '401': {
+            description: 'Missing or invalid bearer token.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ErrorResponse',
+                },
+              },
+            },
+          },
+        },
+      },
+      patch: {
+        tags: ['Auth'],
+        summary: 'Update the authenticated user profile',
+        security: [
+          {
+            BearerAuth: [],
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/UpdateMeRequest',
+              },
+            },
+          },
+        },
+        responses: {
+          '200': {
+            description: 'Authenticated user profile updated.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/MeResponse',
+                },
+              },
+            },
+          },
+          '400': {
+            description: 'Payload is invalid or empty.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ErrorResponse',
+                },
+              },
+            },
+          },
+          '401': {
+            description: 'Missing or invalid bearer token.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ErrorResponse',
+                },
+              },
+            },
+          },
+          '409': {
+            description: 'Email is already used by another user.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ErrorResponse',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/auth/refresh': {
+      post: {
+        tags: ['Auth'],
+        summary: 'Refresh the current session tokens',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/RefreshRequest',
+              },
+            },
+          },
+        },
+        responses: {
+          '200': {
+            description: 'A new token pair was issued.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/RefreshResponse',
+                },
+              },
+            },
+          },
+          '400': {
+            description: 'Refresh token is missing.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ErrorResponse',
+                },
+              },
+            },
+          },
+          '401': {
+            description: 'Refresh token or session is invalid.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ErrorResponse',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/auth/password': {
+      patch: {
+        tags: ['Auth'],
+        summary: 'Change the authenticated user password',
+        security: [
+          {
+            BearerAuth: [],
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/ChangePasswordRequest',
+              },
+            },
+          },
+        },
+        responses: {
+          '200': {
+            description: 'Password changed successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ChangePasswordResponse',
+                },
+              },
+            },
+          },
+          '400': {
+            description: 'Payload is invalid or new password does not meet policy.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ErrorResponse',
+                },
+              },
+            },
+          },
+          '401': {
+            description: 'Missing bearer token or current password is incorrect.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ErrorResponse',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/auth/logout': {
+      post: {
+        tags: ['Auth'],
+        summary: 'Revoke the current refresh session',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/LogoutRequest',
+              },
+            },
+          },
+        },
+        responses: {
+          '200': {
+            description: 'Session revoked successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/LogoutResponse',
+                },
+              },
+            },
+          },
+          '400': {
+            description: 'Refresh token is missing.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ErrorResponse',
+                },
+              },
+            },
+          },
+          '401': {
+            description: 'Refresh token or session is invalid.',
             content: {
               'application/json': {
                 schema: {
