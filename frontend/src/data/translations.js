@@ -119,6 +119,7 @@ export const translations = {
     },
     toasts: {
       successSend: 'Tin nhắn đã được gửi. Tôi sẽ phản hồi sớm.',
+      successSendStored: 'Tin nhắn đã được lưu. Email thông báo sẽ được xử lý khi mail service sẵn sàng.',
       errorSend: 'Không gửi được form lúc này. Vui lòng dùng email hoặc thử lại sau.',
       themeChanged: 'Đã thay đổi giao diện.',
     },
@@ -269,6 +270,7 @@ export const translations = {
     },
     toasts: {
       successSend: 'Your message was sent. I will get back to you soon.',
+      successSendStored: 'Your message was stored. Email delivery will continue once the mail service is ready.',
       errorSend: 'The form could not be sent right now. Please use email or try again later.',
       themeChanged: 'Theme updated.',
     },

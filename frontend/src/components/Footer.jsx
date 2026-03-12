@@ -1,17 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Eye, MoveUpRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { siteConfig } from '../data/siteConfig';
+import { apiUrl } from '../lib/api';
 
 const Footer = () => {
   const { lang } = useLanguage();
   const year = new Date().getFullYear();
+  const [visitorCount, setVisitorCount] = useState(null);
 
   const footerStatus =
     lang === 'vi'
       ? 'Open cho backend role phù hợp và selected freelance work.'
       : 'Open to the right backend roles and selected freelance work.';
   const visitorLabel = lang === 'vi' ? 'Lượt truy cập' : 'Visitors';
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchSummary = async () => {
+      try {
+        const response = await fetch(apiUrl('/api/visits/summary'), {
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          return;
+        }
+
+        const data = await response.json();
+        const nextCount =
+          data?.uniqueVisitors > 0 ? data.uniqueVisitors : data?.totalVisits ?? null;
+        setVisitorCount(nextCount);
+      } catch {
+        // Ignore non-critical footer metrics errors.
+      }
+    };
+
+    const handleVisitRecorded = () => {
+      fetchSummary();
+    };
+
+    fetchSummary();
+    window.addEventListener('visit-recorded', handleVisitRecorded);
+
+    return () => {
+      controller.abort();
+      window.removeEventListener('visit-recorded', handleVisitRecorded);
+    };
+  }, []);
 
   return (
     <footer className="px-6 pb-8 pt-4 md:px-10 lg:px-20 xl:px-24">
@@ -23,7 +60,7 @@ const Footer = () => {
               <p>{footerStatus}</p>
               <span className="inline-flex items-center gap-2 rounded-full border border-border/90 bg-background/82 px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-foreground/86 dark:bg-card/84">
                 <Eye size={14} className="text-primary" />
-                {visitorLabel}: 1
+                {visitorLabel}: {visitorCount ?? '--'}
               </span>
               <a
                 href="#hero"

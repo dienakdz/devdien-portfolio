@@ -14,6 +14,7 @@ import {
 import { useLanguage } from '../context/LanguageContext';
 import { useToast } from '../context/ToastContext';
 import { siteConfig } from '../data/siteConfig';
+import { apiUrl } from '../lib/api';
 
 const Contact = () => {
   const { t, lang } = useLanguage();
@@ -49,28 +50,34 @@ const Contact = () => {
     event.preventDefault();
     const form = event.currentTarget;
     const formData = new FormData(form);
-
-    formData.append('_subject', `Portfolio contact from ${formData.get('name') || 'unknown'}`);
-    formData.append('_template', 'table');
-    formData.append('_captcha', 'false');
+    const payload = {
+      name: String(formData.get('name') || '').trim(),
+      email: String(formData.get('email') || '').trim(),
+      message: String(formData.get('message') || '').trim(),
+    };
 
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(siteConfig.formEndpoint, {
+      const response = await fetch(apiUrl('/api/contact'), {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
-        body: formData,
+        body: JSON.stringify(payload),
       });
+      const result = await response.json().catch(() => null);
 
       if (!response.ok) {
         throw new Error('submit_failed');
       }
 
       form.reset();
-      showToast(t.toasts.successSend, 'success');
+      if (result?.mailDelivered === false) {
+        showToast(t.toasts.successSendStored, 'info');
+      } else {
+        showToast(t.toasts.successSend, 'success');
+      }
     } catch {
       showToast(t.toasts.errorSend, 'error');
     } finally {

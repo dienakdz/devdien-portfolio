@@ -15,6 +15,7 @@ import Experience from './components/Experience.jsx';
 import AnimatedAuroraBackground from './components/AnimatedAuroraBackground.jsx';
 import Terminal from './components/Terminal.jsx';
 import { ToastProvider } from './context/ToastContext';
+import { apiUrl } from './lib/api.js';
 
 function AppContent({ theme, setTheme }) {
   const [loading, setLoading] = useState(() => {
@@ -49,6 +50,48 @@ function AppContent({ theme, setTheme }) {
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (loading) {
+      return undefined;
+    }
+
+    const visitKey = `portfolio-visit:${window.location.pathname}`;
+
+    if (sessionStorage.getItem(visitKey) === '1') {
+      return undefined;
+    }
+
+    const controller = new AbortController();
+
+    const trackVisit = async () => {
+      try {
+        const response = await fetch(apiUrl('/api/visits'), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            path: window.location.pathname,
+          }),
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          return;
+        }
+
+        sessionStorage.setItem(visitKey, '1');
+        window.dispatchEvent(new CustomEvent('visit-recorded'));
+      } catch {
+        // Ignore non-critical tracking errors.
+      }
+    };
+
+    trackVisit();
+
+    return () => controller.abort();
+  }, [loading]);
 
   return (
     <MotionConfig reducedMotion="user">

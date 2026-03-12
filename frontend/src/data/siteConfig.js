@@ -15,5 +15,4 @@ export const siteConfig = {
   youtube: 'https://www.youtube.com/@devdien',
   profileUrl: 'https://www.linkedin.com/in/devdien/',
   resumeUrl: 'https://www.linkedin.com/in/devdien/',
-  formEndpoint: 'https://formsubmit.co/ajax/minhdien.dev@gmail.com',
 };

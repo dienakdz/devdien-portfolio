@@ -1,69 +1,170 @@
-# Minh Dien | Backend Developer Portfolio
+# Minh Dien Portfolio Monorepo
 
-A modern, high-performance portfolio website showcasing my journey as a Backend Developer specializing in Python & FastAPI.
+Portfolio monorepo with two deployable apps:
 
-![Portfolio Preview](src/assets/screen_preview.png)
+- `frontend/`: React + Vite portfolio site
+- `backend/`: Express API for contact submissions and visitor tracking
 
-## 🚀 Vision
+This repository is structured for `1 Git repository + 2 Vercel projects`.
 
-Focusing on building **scalable**, **high-performance systems**, and aiming for **strategic roles** in software development (Technical Lead / Solutions Architect).
+## Stack
 
-## ✨ Key Features
+- Frontend: React 19, Vite, Tailwind CSS v4, Framer Motion
+- Backend: Node.js, Express, PostgreSQL (Neon), Nodemailer
+- Deployment: Vercel
 
-- **Dynamic Theme Service**: Seamless switching between Dark and Light modes.
-- **Multi-language Support**: Full translation between English and Vietnamese.
-- **Interactive UI**:
-  - Cyberpunk-inspired **Matrix Background**.
-  - Custom interactive cursor.
-  - Terminal-style command interface.
-  - Smooth animations powered by Framer Motion.
-- **Responsive Design**: Optimized for all device sizes using Tailwind CSS v4.
+## Project Structure
 
-## 🛠️ Tech Stack
+```text
+.
+├─ frontend/
+│  ├─ package.json
+│  ├─ vercel.json
+│  └─ src/
+├─ backend/
+│  ├─ package.json
+│  ├─ vercel.json
+│  ├─ schema.sql
+│  └─ src/
+├─ eslint.config.js
+├─ package.json
+└─ package-lock.json
+```
 
-- **Core**: [React 19](https://react.dev/)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) (The latest CSS-first configuration)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Build Tool**: [Vite](https://vitejs.dev/)
-
-## 🤖 Pair Programming with AI
-
-This project was built through a collaborative process between **Minh Dien** and **Antigravity (AI Coding Assistant by Google DeepMind)**. 
-
-While I provided the vision, domain expertise in Backend development, and real-world project data, the AI assisted in rapidly prototyping components, implementing the design system with Tailwind v4, and ensuring clean, maintainable code structures. 
-
-*Why use AI?* To accelerate the development cycle while focusing on what matters: the architecture and the story.
-
-## 🛠️ Getting Started
+## Local Development
 
 ### Prerequisites
-- Node.js (Latest LTS recommended)
-- npm or yarn
 
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/dienakdz/devdien-portfolio.git
-   ```
-2. Navigate to the project folder:
-   ```bash
-   cd devdien-portfolio
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
+- Node.js 22.x
+- npm 10+
+- Neon PostgreSQL connection string
+- SMTP credentials for contact email delivery
 
-## 📬 Contact
+### Install
 
-- **Email**: [minhdien678@gmail.com](mailto:minhdien678@gmail.com)
-- **LinkedIn**: [linkedin.com/in/devdien](https://www.linkedin.com/in/devdien)
-- **GitHub**: [@dienakdz](https://github.com/dienakdz)
+From the repository root:
 
----
-Made with ❤️ by Minh Dien & Antigravity.
+```bash
+npm install
+```
+
+### Environment Files
+
+Backend:
+
+```bash
+cp backend/.env.example backend/.env
+```
+
+Set at least:
+
+- `DATABASE_URL`
+- `APP_ORIGIN=http://localhost:5173`
+- `SMTP_HOST`
+- `SMTP_PORT`
+- `SMTP_USER`
+- `SMTP_PASS`
+- `MAIL_FROM`
+- `CONTACT_TO_EMAIL`
+
+Frontend:
+
+```bash
+cp frontend/.env.example frontend/.env
+```
+
+For local development, leave `VITE_API_BASE_URL` empty so Vite can proxy `/api` to the backend.
+
+### Run
+
+Start both apps from the root:
+
+```bash
+npm run dev
+```
+
+Default local ports:
+
+- Frontend: `http://localhost:5173`
+- Backend API: `http://localhost:3001`
+
+Useful commands:
+
+```bash
+npm run dev:frontend
+npm run dev:backend
+npm run build
+npm run preview
+npm run start
+npm run lint
+```
+
+Notes:
+
+- `npm run dev` runs two separate servers.
+- `npm run preview` previews the frontend build only.
+- `npm run start` starts the backend API only.
+- The backend no longer serves the frontend build; this matches the Vercel deployment model.
+
+## Runtime Flow
+
+### Frontend
+
+- Vite serves the React app from `frontend/`
+- The client requests `/api/*`
+- In local development, Vite proxies `/api` to `http://localhost:3001`
+- In production, `VITE_API_BASE_URL` should point to your deployed backend domain
+
+### Backend
+
+- Express exposes `/api/contact`, `/api/visits`, `/api/visits/summary`, and `/api/health`
+- Swagger UI is available at `/api/docs`
+- The raw OpenAPI document is available at `/api/openapi.json`
+- Contact submissions are stored in Neon and then sent by SMTP
+- Visitor tracking stores IP-derived geo data and parsed device metadata in PostgreSQL
+
+## Vercel Deployment
+
+Deploy this monorepo as two separate Vercel projects from the same Git repository.
+
+### Project 1: Frontend
+
+- Import the repo into Vercel
+- Set `Root Directory` to `frontend`
+- Connect your main domain, for example `https://yourdomain.com`
+- Add environment variable:
+  - `VITE_API_BASE_URL=https://api.yourdomain.com`
+
+### Project 2: Backend
+
+- Import the same repo again into Vercel
+- Set `Root Directory` to `backend`
+- Connect a subdomain, for example `https://api.yourdomain.com`
+- Add environment variables:
+  - `APP_ORIGIN=https://yourdomain.com`
+  - `DATABASE_URL=...`
+  - `SMTP_HOST=...`
+  - `SMTP_PORT=...`
+  - `SMTP_USER=...`
+  - `SMTP_PASS=...`
+  - `MAIL_FROM=...`
+  - `CONTACT_TO_EMAIL=...`
+
+### Why Two Projects
+
+This codebase runs as two applications in production:
+
+- The frontend is a static Vite site
+- The backend is an Express API
+
+On Vercel, that is the clean and supported model for this repository.
+
+## Database Schema
+
+The PostgreSQL schema used by the backend is in `backend/schema.sql`.
+
+## Contact
+
+- Email: [minhdien678@gmail.com](mailto:minhdien678@gmail.com)
+- LinkedIn: [linkedin.com/in/devdien](https://www.linkedin.com/in/devdien)
+- GitHub: [@dienakdz](https://github.com/dienakdz)
