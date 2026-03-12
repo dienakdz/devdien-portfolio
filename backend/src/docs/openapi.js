@@ -189,7 +189,7 @@ export const openApiDocument = {
           createdAt: {
             type: 'string',
             format: 'date-time',
-            example: '2026-03-12T03:00:00.000Z',
+            example: '2026-03-12T10:00:00+07:00',
           },
         },
         required: ['id', 'email', 'createdAt'],
@@ -272,7 +272,7 @@ export const openApiDocument = {
           visitedAt: {
             type: 'string',
             format: 'date-time',
-            example: '2026-03-12T03:00:00.000Z',
+            example: '2026-03-12T10:00:00+07:00',
           },
         },
         required: ['id', 'visitedAt'],

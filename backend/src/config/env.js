@@ -30,6 +30,7 @@ const splitList = (value) =>
 export const env = {
   nodeEnv: process.env.NODE_ENV || 'development',
   port: toNumber(process.env.PORT, 3001),
+  appTimeZone: process.env.APP_TIMEZONE || 'Asia/Ho_Chi_Minh',
   databaseUrl: process.env.DATABASE_URL || '',
   allowedOrigins: splitList(process.env.APP_ORIGIN),
   smtpHost: process.env.SMTP_HOST || '',
@@ -44,5 +45,4 @@ export const env = {
   jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || '',
   jwtAccessTtl: process.env.JWT_ACCESS_TTL || '15m',
   jwtRefreshTtl: process.env.JWT_REFRESH_TTL || '7d',
-
 };

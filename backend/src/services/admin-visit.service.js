@@ -1,4 +1,5 @@
 import { fetchVisits } from '../repositories/visit.repository.js';
+import { formatDateTime } from '../utils/date-time.js';
 
 export const listVisits = async ({ page, pageSize }) => {
   const parsedPage = Number(page);
@@ -28,7 +29,7 @@ export const listVisits = async ({ page, pageSize }) => {
       os: row.os,
       deviceVendor: row.device_vendor,
       deviceModel: row.device_model,
-      visitedAt: row.visited_at,
+      visitedAt: formatDateTime(row.visited_at),
     })),
   };
 };
