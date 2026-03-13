@@ -1,5 +1,15 @@
-import geoip from 'geoip-lite';
+import { createRequire } from 'node:module';
 import { UAParser } from 'ua-parser-js';
+
+const require = createRequire(import.meta.url);
+
+let geoip = null;
+
+try {
+  geoip = require('geoip-lite');
+} catch (error) {
+  console.warn('geoip-lite is unavailable. Visitor geo lookup will be skipped.', error);
+}
 
 const PRIVATE_IPV4_PATTERNS = [
   /^10\./,
@@ -45,6 +55,14 @@ export const getClientIp = (req) => {
 
 export const getGeoDetails = (ip) => {
   if (!ip || isPrivateIp(ip)) {
+    return {
+      country: null,
+      region: null,
+      city: null,
+    };
+  }
+
+  if (!geoip) {
     return {
       country: null,
       region: null,
