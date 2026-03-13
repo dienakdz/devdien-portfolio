@@ -10,6 +10,7 @@ const Navbar = ({ theme, toggleTheme }) => {
   const { showToast } = useToast();
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [activeHref, setActiveHref] = useState('');
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -22,6 +23,62 @@ const Navbar = ({ theme, toggleTheme }) => {
     const handleScroll = () => setScrolled(window.scrollY > 16);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const sectionLinks = ['#focus', '#projects', '#experience', '#skills', '#contact'];
+    let frameId = 0;
+
+    const updateActiveSection = () => {
+      frameId = 0;
+
+      const marker = Math.max(112, window.innerHeight * 0.24);
+      let nextActive = '';
+
+      for (const href of sectionLinks) {
+        const section = document.getElementById(href.slice(1));
+
+        if (!section) {
+          continue;
+        }
+
+        const rect = section.getBoundingClientRect();
+
+        if (rect.top <= marker) {
+          nextActive = href;
+        }
+
+        if (rect.top <= marker && rect.bottom >= marker) {
+          nextActive = href;
+          break;
+        }
+      }
+
+      setActiveHref((current) => (current === nextActive ? current : nextActive));
+    };
+
+    const requestActiveUpdate = () => {
+      if (frameId) {
+        return;
+      }
+
+      frameId = window.requestAnimationFrame(updateActiveSection);
+    };
+
+    updateActiveSection();
+    window.addEventListener('scroll', requestActiveUpdate, { passive: true });
+    window.addEventListener('resize', requestActiveUpdate);
+    window.addEventListener('hashchange', requestActiveUpdate);
+
+    return () => {
+      if (frameId) {
+        window.cancelAnimationFrame(frameId);
+      }
+
+      window.removeEventListener('scroll', requestActiveUpdate);
+      window.removeEventListener('resize', requestActiveUpdate);
+      window.removeEventListener('hashchange', requestActiveUpdate);
+    };
   }, []);
 
   const navLinks = [
@@ -42,6 +99,11 @@ const Navbar = ({ theme, toggleTheme }) => {
     showToast(lang === 'vi' ? 'English activated' : 'Đã kích hoạt Tiếng Việt', 'info');
   };
 
+  const handleNavClick = (href) => {
+    setActiveHref(href);
+    setIsOpen(false);
+  };
+
   return (
     <nav className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-6">
       <motion.div
@@ -57,7 +119,7 @@ const Navbar = ({ theme, toggleTheme }) => {
         }`}
       >
         <div className="flex items-center gap-4">
-          <a href="#hero" className="flex min-w-0 items-center gap-3">
+          <a href="#hero" onClick={() => setActiveHref('')} className="flex min-w-0 items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-[18px] border border-primary/30 bg-primary/14 text-sm font-black tracking-[0.2em] text-primary">
               DD
             </div>
@@ -72,16 +134,23 @@ const Navbar = ({ theme, toggleTheme }) => {
           </a>
 
           <div className="hidden xl:flex flex-1 justify-center">
-            <div className="inline-flex items-center gap-1 rounded-full border border-border/80 bg-background/64 px-2 py-2 dark:bg-card/86">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="rounded-full px-4 py-2 text-sm font-semibold text-foreground/80 transition-colors duration-200 hover:bg-primary/12 hover:text-foreground"
-                >
-                  {link.name}
-                </a>
-              ))}
+            <div className="nav-pill-shell inline-flex items-center gap-1 rounded-full border border-border/80 bg-background/64 px-2 py-2 dark:bg-card/86">
+              {navLinks.map((link) => {
+                const isActive = activeHref === link.href;
+
+                return (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => handleNavClick(link.href)}
+                    aria-current={isActive ? 'page' : undefined}
+                    className={`nav-link ${isActive ? 'nav-link--active' : ''}`}
+                  >
+                    {isActive ? <motion.span layoutId="navbar-active-pill" className="nav-link__pill" /> : null}
+                    <span className="nav-link__label">{link.name}</span>
+                  </a>
+                );
+              })}
             </div>
           </div>
 
@@ -140,14 +209,15 @@ const Navbar = ({ theme, toggleTheme }) => {
             <div className="panel overflow-hidden p-4">
               <div className="grid gap-2">
                 {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="rounded-[20px] px-4 py-3 text-base font-semibold text-foreground/86 transition-colors hover:bg-primary/10 hover:text-foreground"
-                >
-                  {link.name}
-                </a>
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => handleNavClick(link.href)}
+                    aria-current={activeHref === link.href ? 'page' : undefined}
+                    className={`mobile-nav-link ${activeHref === link.href ? 'mobile-nav-link--active' : ''}`}
+                  >
+                    {link.name}
+                  </a>
                 ))}
               </div>
 

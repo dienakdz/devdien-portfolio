@@ -11,6 +11,25 @@ import { useLanguage } from '../context/LanguageContext';
 const Skills = () => {
   const { t, lang } = useLanguage();
 
+  const handleSkillPointerMove = (event) => {
+    if (event.pointerType === 'touch') {
+      return;
+    }
+
+    const card = event.currentTarget;
+    const rect = card.getBoundingClientRect();
+
+    card.style.setProperty('--skill-spotlight-x', `${event.clientX - rect.left}px`);
+    card.style.setProperty('--skill-spotlight-y', `${event.clientY - rect.top}px`);
+  };
+
+  const handleSkillPointerLeave = (event) => {
+    const card = event.currentTarget;
+
+    card.style.removeProperty('--skill-spotlight-x');
+    card.style.removeProperty('--skill-spotlight-y');
+  };
+
   const categories = [
     {
       title: 'Backend',
@@ -77,33 +96,44 @@ const Skills = () => {
                 key={category.title}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -4 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.08 }}
-                className="content-plane rounded-[30px] p-7"
+                onPointerMove={handleSkillPointerMove}
+                onPointerLeave={handleSkillPointerLeave}
+                className="skill-card content-plane rounded-[30px] p-7"
               >
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-[18px] bg-primary/12 text-primary">
-                    <Icon size={24} />
-                  </div>
-                  <span className="text-[11px] font-black uppercase tracking-[0.22em] text-primary/82">
-                    0{index + 1}
-                  </span>
-                </div>
+                <span aria-hidden="true" className="skill-spotlight" />
+                <span aria-hidden="true" className="skill-sheen" />
+                <span aria-hidden="true" className="skill-outline" />
 
-                <h3 className="mt-8 text-[1.85rem] font-black tracking-[-0.05em]">{category.title}</h3>
-                <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                  {category.description}
-                </p>
-
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {category.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="rounded-full border border-primary/16 bg-primary/8 px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-foreground/82 dark:bg-primary/10 dark:text-foreground/84"
-                    >
-                      {skill}
+                <div className="relative z-[1]">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="skill-card__icon flex h-14 w-14 items-center justify-center rounded-[18px] bg-primary/12 text-primary">
+                      <Icon size={24} />
+                    </div>
+                    <span className="text-[11px] font-black uppercase tracking-[0.22em] text-primary/82">
+                      0{index + 1}
                     </span>
-                  ))}
+                  </div>
+
+                  <h3 className="mt-8 text-[1.85rem] font-black tracking-[-0.05em]">{category.title}</h3>
+                  <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                    {category.description}
+                  </p>
+
+                  <div className="skill-card__rule mt-7" aria-hidden="true" />
+
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {category.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="skill-chip rounded-full border border-primary/16 bg-primary/8 px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-foreground/82 dark:bg-primary/10 dark:text-foreground/84"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </motion.article>
             );

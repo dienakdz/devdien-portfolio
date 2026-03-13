@@ -40,7 +40,6 @@ const Hero = () => {
       value: t.hero.noteValue,
     },
   ];
-
   return (
     <section
       id="hero"
@@ -139,12 +138,12 @@ const Hero = () => {
             <div className="pointer-events-none absolute -right-4 top-10 hidden h-48 w-48 rounded-full bg-primary/10 blur-[90px] xl:block" />
             <div className="pointer-events-none absolute -left-6 bottom-8 hidden h-44 w-44 rounded-full bg-[#d5e3ea]/12 blur-[90px] xl:block dark:bg-[#275565]/14" />
 
-            <div className="panel-strong rounded-[34px] p-4 sm:p-5">
-              <div className="content-plane-strong rounded-[30px] p-4 sm:p-5">
-                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/70 pb-4">
-                  <div>
-                    <p className="section-kicker">{siteConfig.brand}</p>
-                    <p className="mt-2 text-lg font-black tracking-[-0.04em]">{siteConfig.name}</p>
+            <div className="panel-strong hero-hud-shell rounded-[34px] p-3 sm:p-4">
+              <div className="hero-hud-frame">
+                <div className="hero-hud-head">
+                  <div className="hero-hud-meta">
+                    <p className="hero-hud-overline">{siteConfig.role}</p>
+                    <p className="hero-hud-status">{siteConfig.location}</p>
                   </div>
 
                   <a
@@ -159,29 +158,68 @@ const Hero = () => {
                   </a>
                 </div>
 
-                <div className="mt-4 overflow-hidden rounded-[26px] border border-white/8 bg-[#08131b]">
-                  <div className="flex items-center justify-between border-b border-white/8 px-4 py-3 text-[11px] font-black uppercase tracking-[0.22em] text-white/68">
-                    <div className="flex items-center gap-1.5">
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#ffb36b]" />
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#ffd17a]" />
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#63d0be]" />
-                    </div>
-                    <span>{siteConfig.role}</span>
-                  </div>
+                <div className="hero-hud-screen mt-4 overflow-hidden rounded-[26px] border border-white/8 bg-[#08131b]">
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    className="hero-hud-border"
+                    viewBox="0 0 100 100"
+                    preserveAspectRatio="none"
+                  >
+                    <rect
+                      className="hero-hud-border-base"
+                      x="1.4"
+                      y="1.4"
+                      width="97.2"
+                      height="97.2"
+                      rx="6.8"
+                      pathLength="100"
+                    />
+                    <rect
+                      className="hero-hud-border-glow"
+                      x="1.4"
+                      y="1.4"
+                      width="97.2"
+                      height="97.2"
+                      rx="6.8"
+                      pathLength="100"
+                    />
+                    <rect
+                      className="hero-hud-border-trail"
+                      x="1.4"
+                      y="1.4"
+                      width="97.2"
+                      height="97.2"
+                      rx="6.8"
+                      pathLength="100"
+                    />
+                  </svg>
+                  <span aria-hidden="true" className="hero-hud-corner hero-hud-corner--top-left" />
+                  <span aria-hidden="true" className="hero-hud-corner hero-hud-corner--top-right" />
+                  <span aria-hidden="true" className="hero-hud-corner hero-hud-corner--bottom-right" />
+                  <span aria-hidden="true" className="hero-hud-corner hero-hud-corner--bottom-left" />
+                  <div aria-hidden="true" className="hero-hud-grid ambient-grid" />
+                  <div aria-hidden="true" className="hero-hud-scan scene-scanlines" />
+                  <div aria-hidden="true" className="hero-hud-sweep" />
 
                   <div className="relative">
+                    <div className="pointer-events-none absolute left-5 top-5 z-10 text-[10px] font-black uppercase tracking-[0.22em] text-white/72">
+                      <div className="hero-hud-chip">
+                        <span className="hero-hud-dot" />
+                        <span>{siteConfig.company}</span>
+                      </div>
+                    </div>
+
                     <img
                       src={profileImg}
                       alt="Nguyen Minh Dien (DevDien) backend developer portrait"
                       fetchPriority="high"
                       className="aspect-[4/5] w-full object-cover object-center"
                     />
-                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,13,19,0.02)_10%,rgba(5,13,19,0.22)_48%,rgba(5,13,19,0.94)_100%)]" />
+                    <div aria-hidden="true" className="hero-hud-noise noise-overlay" />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,13,19,0.02)_10%,rgba(5,13,19,0.16)_48%,rgba(5,13,19,0.9)_100%)]" />
 
                     <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
-                      <p className="text-[11px] font-black uppercase tracking-[0.24em] text-primary">
-                        {siteConfig.brand}
-                      </p>
                       <div className="mt-3">
                         <p className="text-3xl font-black tracking-[-0.05em] text-white md:text-[2.25rem]">
                           {siteConfig.name}

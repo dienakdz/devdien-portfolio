@@ -1,30 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
-import Footer from './components/Footer';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Projects from './components/Projects';
-import Skills from './components/Skills';
-import Contact from './components/Contact';
-import Approach from './components/Approach.jsx';
-import Preloader from './components/Preloader.jsx';
-import Stats from './components/Stats.jsx';
-import TechMarquee from './components/TechMarquee.jsx';
-import Experience from './components/Experience.jsx';
-import AnimatedAuroraBackground from './components/AnimatedAuroraBackground.jsx';
-import Terminal from './components/Terminal.jsx';
 import { ToastProvider } from './context/ToastContext';
-import { apiUrl } from './lib/api.js';
+import { AdminAuthProvider } from './features/admin/context/AdminAuthContext.jsx';
+import ProtectedAdminRoute from './features/admin/components/ProtectedAdminRoute.jsx';
+import PortfolioPage from './features/public/pages/PortfolioPage.jsx';
 
-function AppContent({ theme, setTheme }) {
-  const [loading, setLoading] = useState(() => {
-    try {
-      return sessionStorage.getItem('portfolio-preloaded') !== '1';
-    } catch {
-      return true;
-    }
-  });
+const AdminLayout = lazy(() => import('./features/admin/components/AdminLayout.jsx'));
+const AdminLoginPage = lazy(() => import('./features/admin/pages/AdminLoginPage.jsx'));
+const AdminDashboardPage = lazy(() => import('./features/admin/pages/AdminDashboardPage.jsx'));
+const AdminContactsPage = lazy(() => import('./features/admin/pages/AdminContactsPage.jsx'));
+const AdminVisitsPage = lazy(() => import('./features/admin/pages/AdminVisitsPage.jsx'));
+const AdminProfilePage = lazy(() => import('./features/admin/pages/AdminProfilePage.jsx'));
+const AdminPasswordPage = lazy(() => import('./features/admin/pages/AdminPasswordPage.jsx'));
+
+const RouteFallback = () => <div className="min-h-screen bg-background" />;
+
+function App() {
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -38,106 +31,34 @@ function AppContent({ theme, setTheme }) {
     }
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
-  };
-
-  const handlePreloaderComplete = () => {
-    try {
-      sessionStorage.setItem('portfolio-preloaded', '1');
-    } catch {
-      // Ignore storage restrictions.
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    if (loading) {
-      return undefined;
-    }
-
-    const visitKey = `portfolio-visit:${window.location.pathname}`;
-
-    if (sessionStorage.getItem(visitKey) === '1') {
-      return undefined;
-    }
-
-    const controller = new AbortController();
-
-    const trackVisit = async () => {
-      try {
-        const response = await fetch(apiUrl('/api/visits'), {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            path: window.location.pathname,
-          }),
-          signal: controller.signal,
-        });
-
-        if (!response.ok) {
-          return;
-        }
-
-        sessionStorage.setItem(visitKey, '1');
-        window.dispatchEvent(new CustomEvent('visit-recorded'));
-      } catch {
-        // Ignore non-critical tracking errors.
-      }
-    };
-
-    trackVisit();
-
-    return () => controller.abort();
-  }, [loading]);
-
-  return (
-    <MotionConfig reducedMotion="user">
-      <AnimatePresence mode="wait">
-        {loading ? (
-          <Preloader key="preloader" onComplete={handlePreloaderComplete} />
-        ) : (
-          <motion.div
-            key="main"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="relative min-h-screen overflow-x-hidden bg-background transition-colors duration-500"
-          >
-            <AnimatedAuroraBackground
-              variant="soft"
-              speed="slow"
-              opacity={theme === 'dark' ? 0.62 : 0.3}
-            />
-            <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[28rem] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.38),transparent_70%)] dark:bg-[radial-gradient(circle_at_top,rgba(99,208,190,0.14),transparent_68%)]" />
-            <Navbar toggleTheme={toggleTheme} theme={theme} />
-            <main className="relative z-10 pb-6">
-              <Hero />
-              <TechMarquee />
-              <Stats />
-              <Approach />
-              <Skills />
-              <Projects />
-              <Experience />
-              <Contact />
-            </main>
-            <Footer />
-            <Terminal />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </MotionConfig>
-  );
-}
-
-function App() {
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
-
   return (
     <LanguageProvider>
       <ToastProvider>
-        <AppContent theme={theme} setTheme={setTheme} />
+        <AdminAuthProvider>
+          <BrowserRouter>
+            <Suspense fallback={<RouteFallback />}>
+              <Routes>
+                <Route path="/" element={<PortfolioPage theme={theme} setTheme={setTheme} />} />
+                <Route path="/login" element={<AdminLoginPage />} />
+                <Route
+                  path="/admin"
+                  element={
+                    <ProtectedAdminRoute>
+                      <AdminLayout />
+                    </ProtectedAdminRoute>
+                  }
+                >
+                  <Route index element={<AdminDashboardPage />} />
+                  <Route path="profile" element={<AdminProfilePage />} />
+                  <Route path="password" element={<AdminPasswordPage />} />
+                  <Route path="contacts" element={<AdminContactsPage />} />
+                  <Route path="visits" element={<AdminVisitsPage />} />
+                </Route>
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </AdminAuthProvider>
       </ToastProvider>
     </LanguageProvider>
   );

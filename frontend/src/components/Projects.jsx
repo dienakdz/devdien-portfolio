@@ -15,6 +15,25 @@ const Projects = () => {
   );
   const hasMoreProjects = projects.length > 4;
 
+  const handleProjectPointerMove = (event) => {
+    if (event.pointerType === 'touch') {
+      return;
+    }
+
+    const card = event.currentTarget;
+    const rect = card.getBoundingClientRect();
+
+    card.style.setProperty('--project-spotlight-x', `${event.clientX - rect.left}px`);
+    card.style.setProperty('--project-spotlight-y', `${event.clientY - rect.top}px`);
+  };
+
+  const handleProjectPointerLeave = (event) => {
+    const card = event.currentTarget;
+
+    card.style.removeProperty('--project-spotlight-x');
+    card.style.removeProperty('--project-spotlight-y');
+  };
+
   return (
     <section id="projects" className="section-padding relative overflow-hidden">
       <div
@@ -65,11 +84,18 @@ const Projects = () => {
                   key={project.title}
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
+                  whileHover={{ y: -4 }}
                   viewport={{ once: true, margin: '-40px' }}
                   transition={{ delay: index * 0.05 }}
-                  className="content-plane rounded-[28px] p-4 md:p-5"
+                  onPointerMove={handleProjectPointerMove}
+                  onPointerLeave={handleProjectPointerLeave}
+                  className="project-card content-plane rounded-[28px] p-4 md:p-5"
                 >
-                  <div className="grid gap-4 md:grid-cols-[8.5rem_minmax(0,1fr)] xl:grid-cols-[8.5rem_minmax(0,1fr)_11rem] xl:items-start">
+                  <span aria-hidden="true" className="project-spotlight" />
+                  <span aria-hidden="true" className="project-sheen" />
+                  <span aria-hidden="true" className="project-outline" />
+
+                  <div className="relative z-[1] grid gap-4 md:grid-cols-[8.5rem_minmax(0,1fr)] xl:grid-cols-[8.5rem_minmax(0,1fr)_11rem] xl:items-start">
                     <div className="overflow-hidden rounded-[20px] border border-white/8 bg-[#08131b]">
                       <div className="flex items-center justify-between border-b border-white/8 px-3 py-2 text-[10px] font-black uppercase tracking-[0.22em] text-white/68">
                         <span>0{index + 1}</span>

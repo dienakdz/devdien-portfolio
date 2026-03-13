@@ -22,7 +22,7 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const inputClassName =
-    'w-full rounded-[22px] border border-border/90 bg-background/84 px-5 py-4 text-foreground placeholder:text-muted-foreground/75 backdrop-blur-xl transition-colors focus:border-primary/60 focus:bg-background/96 dark:bg-card/88 dark:focus:bg-card';
+    'contact-input w-full rounded-[22px] border border-border/90 bg-background/84 px-5 py-4 text-foreground placeholder:text-muted-foreground/75 backdrop-blur-xl transition-colors focus:border-primary/60 focus:bg-background/96 dark:bg-card/88 dark:focus:bg-card';
 
   const contactInfo = [
     {
@@ -108,7 +108,7 @@ const Contact = () => {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="content-plane-strong rounded-[32px] p-8 md:p-10"
+            className="contact-info-panel content-plane-strong rounded-[32px] p-8 md:p-10"
           >
             <p className="section-kicker">{t.contact.infoTitle}</p>
             <p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground">
@@ -125,7 +125,7 @@ const Contact = () => {
                   <a
                     key={item.label}
                     href={item.href}
-                    className="content-plane rounded-[24px] p-5 transition-colors hover:bg-background/94 dark:hover:bg-card"
+                    className="contact-link-card content-plane rounded-[24px] p-5 transition-colors hover:bg-background/94 dark:hover:bg-card"
                   >
                     <div className="flex items-start gap-4">
                       <div className="flex h-12 w-12 items-center justify-center rounded-[16px] bg-primary/12">
@@ -154,7 +154,7 @@ const Contact = () => {
                       target="_blank"
                       rel="noreferrer"
                       aria-label={social.label}
-                      className="group content-plane rounded-[24px] px-4 py-5 text-center text-foreground transition-all duration-300 hover:-translate-y-1 hover:bg-background/94 dark:hover:bg-card"
+                      className="contact-social-card group content-plane rounded-[24px] px-4 py-5 text-center text-foreground transition-all duration-300 hover:-translate-y-1 hover:bg-background/94 dark:hover:bg-card"
                     >
                       <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-[18px] bg-primary/12 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
                         <Icon size={20} />
@@ -174,73 +174,91 @@ const Contact = () => {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="content-plane-strong rounded-[32px] overflow-hidden p-8 md:p-10"
+            className="contact-form-panel content-plane-strong rounded-[32px] overflow-hidden p-8 md:p-10"
           >
-            <p className="section-kicker">{t.contact.formTitle}</p>
-            <h3 className="mt-4 text-3xl font-black tracking-[-0.05em] md:text-4xl">{t.contact.formHeading}</h3>
-            <p className="mt-4 max-w-2xl text-base leading-8 text-muted-foreground">
-              {t.contact.formDescription}
-            </p>
+            <span aria-hidden="true" className="contact-form-panel__glow" />
+            <span aria-hidden="true" className="contact-form-panel__grid ambient-grid" />
+            <span aria-hidden="true" className="contact-form-panel__sheen" />
 
-            <form onSubmit={handleSubmit} className="mt-8 grid gap-5">
-              <div className="grid gap-5 md:grid-cols-2">
-                <label className="grid gap-2">
-                  <span className="text-sm font-semibold text-muted-foreground">
-                    {t.contact.labelName}
+            <div className="relative z-[1]">
+              <p className="section-kicker">{t.contact.formTitle}</p>
+              <h3 className="mt-4 text-3xl font-black tracking-[-0.05em] md:text-4xl">{t.contact.formHeading}</h3>
+              <p className="mt-4 max-w-2xl text-base leading-8 text-muted-foreground">
+                {t.contact.formDescription}
+              </p>
+
+              <form onSubmit={handleSubmit} className="mt-8 grid gap-5">
+                <div className="grid gap-5 md:grid-cols-2">
+                  <label className="contact-field grid gap-2">
+                    <span className="contact-field__label text-sm font-semibold text-muted-foreground">
+                      {t.contact.labelName}
+                    </span>
+                    <div className="contact-field__control">
+                      <input
+                        required
+                        name="name"
+                        type="text"
+                        className={inputClassName}
+                        placeholder="Nguyen Minh Dien"
+                      />
+                      <span aria-hidden="true" className="contact-field__line" />
+                    </div>
+                  </label>
+                  <label className="contact-field grid gap-2">
+                    <span className="contact-field__label text-sm font-semibold text-muted-foreground">
+                      {t.contact.labelEmail}
+                    </span>
+                    <div className="contact-field__control">
+                      <input
+                        required
+                        name="email"
+                        type="email"
+                        className={inputClassName}
+                        placeholder="name@email.com"
+                      />
+                      <span aria-hidden="true" className="contact-field__line" />
+                    </div>
+                  </label>
+                </div>
+
+                <label className="contact-field grid gap-2">
+                  <span className="contact-field__label text-sm font-semibold text-muted-foreground">
+                    {t.contact.labelMessage}
                   </span>
-                  <input
-                    required
-                    name="name"
-                    type="text"
-                    className={inputClassName}
-                    placeholder="Nguyen Minh Dien"
-                  />
+                  <div className="contact-field__control">
+                    <textarea
+                      required
+                      name="message"
+                      rows="6"
+                      className={inputClassName}
+                      placeholder={t.contact.placeholderMessage}
+                    />
+                    <span aria-hidden="true" className="contact-field__line" />
+                  </div>
                 </label>
-                <label className="grid gap-2">
-                  <span className="text-sm font-semibold text-muted-foreground">
-                    {t.contact.labelEmail}
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="button-primary contact-submit w-full py-4 text-base disabled:translate-y-0 disabled:opacity-75 disabled:shadow-none"
+                >
+                  <span aria-hidden="true" className="contact-submit__charge" />
+                  <span className="contact-submit__content">
+                    {isSubmitting ? (
+                      <>
+                        <LoaderCircle size={18} className="animate-spin" />
+                        {t.contact.sending}
+                      </>
+                    ) : (
+                      <>
+                        {t.contact.btnSend}
+                        <Send size={18} />
+                      </>
+                    )}
                   </span>
-                  <input
-                    required
-                    name="email"
-                    type="email"
-                    className={inputClassName}
-                    placeholder="name@email.com"
-                  />
-                </label>
-              </div>
-
-              <label className="grid gap-2">
-                <span className="text-sm font-semibold text-muted-foreground">
-                  {t.contact.labelMessage}
-                </span>
-                <textarea
-                  required
-                  name="message"
-                  rows="6"
-                  className={inputClassName}
-                  placeholder={t.contact.placeholderMessage}
-                />
-              </label>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="button-primary w-full py-4 text-base disabled:translate-y-0 disabled:opacity-75 disabled:shadow-none"
-              >
-                {isSubmitting ? (
-                  <>
-                    <LoaderCircle size={18} className="animate-spin" />
-                    {t.contact.sending}
-                  </>
-                ) : (
-                  <>
-                    {t.contact.btnSend}
-                    <Send size={18} />
-                  </>
-                )}
-              </button>
-            </form>
+                </button>
+              </form>
+            </div>
           </motion.div>
         </div>
       </div>

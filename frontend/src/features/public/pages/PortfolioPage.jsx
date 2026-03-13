@@ -1,0 +1,121 @@
+import React, { Suspense, lazy, useEffect, useState } from 'react';
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
+import Footer from '../../../components/Footer';
+import Navbar from '../../../components/Navbar';
+import Hero from '../../../components/Hero';
+import Projects from '../../../components/Projects';
+import Skills from '../../../components/Skills';
+import Contact from '../../../components/Contact';
+import Approach from '../../../components/Approach.jsx';
+import Preloader from '../../../components/Preloader.jsx';
+import Stats from '../../../components/Stats.jsx';
+import TechMarquee from '../../../components/TechMarquee.jsx';
+import Experience from '../../../components/Experience.jsx';
+import AnimatedAuroraBackground from '../../../components/AnimatedAuroraBackground.jsx';
+import { apiUrl } from '../../../lib/api.js';
+
+const Terminal = lazy(() => import('../../../components/Terminal.jsx'));
+
+export default function PortfolioPage({ theme, setTheme }) {
+  const [loading, setLoading] = useState(() => {
+    try {
+      return sessionStorage.getItem('portfolio-preloaded') !== '1';
+    } catch {
+      return true;
+    }
+  });
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
+  };
+
+  const handlePreloaderComplete = () => {
+    try {
+      sessionStorage.setItem('portfolio-preloaded', '1');
+    } catch {
+      // Ignore storage restrictions.
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (loading) {
+      return undefined;
+    }
+
+    const visitKey = `portfolio-visit:${window.location.pathname}`;
+
+    if (sessionStorage.getItem(visitKey) === '1') {
+      return undefined;
+    }
+
+    const controller = new AbortController();
+
+    const trackVisit = async () => {
+      try {
+        const response = await fetch(apiUrl('/api/visits'), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            path: window.location.pathname,
+          }),
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          return;
+        }
+
+        sessionStorage.setItem(visitKey, '1');
+        window.dispatchEvent(new CustomEvent('visit-recorded'));
+      } catch {
+        // Ignore non-critical tracking errors.
+      }
+    };
+
+    trackVisit();
+
+    return () => controller.abort();
+  }, [loading]);
+
+  return (
+    <MotionConfig reducedMotion="user">
+      <AnimatePresence mode="wait">
+        {loading ? (
+          <Preloader key="preloader" onComplete={handlePreloaderComplete} />
+        ) : (
+          <motion.div
+            key="main"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="relative min-h-screen overflow-x-hidden bg-background transition-colors duration-500"
+          >
+            <AnimatedAuroraBackground
+              variant="soft"
+              speed="slow"
+              opacity={theme === 'dark' ? 0.62 : 0.3}
+            />
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[28rem] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.38),transparent_70%)] dark:bg-[radial-gradient(circle_at_top,rgba(99,208,190,0.14),transparent_68%)]" />
+            <Navbar toggleTheme={toggleTheme} theme={theme} />
+            <main className="relative z-10 pb-6">
+              <Hero />
+              <TechMarquee />
+              <Stats />
+              <Approach />
+              <Skills />
+              <Projects />
+              <Experience />
+              <Contact />
+            </main>
+            <Footer />
+            <Suspense fallback={null}>
+              <Terminal />
+            </Suspense>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </MotionConfig>
+  );
+}
