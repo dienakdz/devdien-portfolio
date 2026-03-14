@@ -4,16 +4,34 @@ import { env } from './config/env.js';
 import { apiRouter } from './routes/index.js';
 import { errorHandler, notFoundHandler } from './middlewares/error-handler.js';
 
+const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+const createOriginMatcher = (allowedOrigins) => {
+  const exactOrigins = new Set();
+  const wildcardOrigins = [];
+
+  allowedOrigins.forEach((origin) => {
+    if (origin.includes('*')) {
+      wildcardOrigins.push(new RegExp(`^${escapeRegex(origin).replace(/\\\*/g, '.*')}$`));
+      return;
+    }
+
+    exactOrigins.add(origin);
+  });
+
+  return (origin) => exactOrigins.has(origin) || wildcardOrigins.some((pattern) => pattern.test(origin));
+};
+
 const createCorsOptions = () => {
   if (!env.allowedOrigins.length) {
     return {};
   }
 
-  const allowedOrigins = new Set(env.allowedOrigins);
+  const isAllowedOrigin = createOriginMatcher(env.allowedOrigins);
 
   return {
     origin(origin, callback) {
-      if (!origin || allowedOrigins.has(origin)) {
+      if (!origin || isAllowedOrigin(origin)) {
         callback(null, true);
         return;
       }

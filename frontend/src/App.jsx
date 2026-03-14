@@ -5,6 +5,7 @@ import { ToastProvider } from './context/ToastContext';
 import { AdminAuthProvider } from './features/admin/context/AdminAuthContext.jsx';
 import ProtectedAdminRoute from './features/admin/components/ProtectedAdminRoute.jsx';
 import PortfolioPage from './features/public/pages/PortfolioPage.jsx';
+import SeoHead from './components/SeoHead.jsx';
 
 const AdminLayout = lazy(() => import('./features/admin/components/AdminLayout.jsx'));
 const AdminLoginPage = lazy(() => import('./features/admin/pages/AdminLoginPage.jsx'));
@@ -36,6 +37,7 @@ function App() {
       <ToastProvider>
         <AdminAuthProvider>
           <BrowserRouter>
+            <SeoHead />
             <Suspense fallback={<RouteFallback />}>
               <Routes>
                 <Route path="/" element={<PortfolioPage theme={theme} setTheme={setTheme} />} />

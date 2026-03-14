@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "postbuild": "node ./scripts/build-seo-assets.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

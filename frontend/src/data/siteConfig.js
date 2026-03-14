@@ -13,6 +13,27 @@ export const siteConfig = {
   linkedin: 'https://www.linkedin.com/in/devdien/',
   facebook: 'https://www.facebook.com/dienne.dev',
   youtube: 'https://www.youtube.com/@devdien',
+  sameAs: [
+    'https://github.com/dienakdz',
+    'https://www.linkedin.com/in/devdien/',
+    'https://www.facebook.com/dienne.dev',
+    'https://www.youtube.com/@devdien',
+  ],
   profileUrl: 'https://www.linkedin.com/in/devdien/',
   resumeUrl: 'https://www.linkedin.com/in/devdien/',
+  siteTitle: 'Minh Dien (DevDien) | Backend Developer',
+  siteDescription:
+    'Nguyen Minh Dien (DevDien) is a Backend Developer specializing in Python, FastAPI, scalable APIs, and production-ready systems.',
+  keywords: [
+    'Nguyen Minh Dien',
+    'DevDien',
+    'Backend Developer',
+    'Python',
+    'FastAPI',
+    'API Design',
+    'Portfolio',
+    'TMA Solutions',
+  ],
+  locale: 'en_US',
+  ogImagePath: '/og-preview.jpg',
 };
