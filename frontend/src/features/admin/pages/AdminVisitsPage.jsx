@@ -69,7 +69,9 @@ export default function AdminVisitsPage() {
           </span>
           <div>
             <p className="admin-stat-card__label">{t.admin.latestVisits}</p>
-            <p className="admin-stat-card__value">{latestVisit ? latestVisit.path || '/' : '-'}</p>
+            <p className="admin-stat-card__value">
+              {latestVisit ? latestVisit.ip || t.admin.ipUnavailable : '-'}
+            </p>
             <p className="admin-stat-card__meta">
               {latestVisit ? formatAdminDateTime(latestVisit.visitedAt, lang) : t.admin.emptyVisits}
             </p>
@@ -104,7 +106,7 @@ export default function AdminVisitsPage() {
               <table className="admin-table admin-table--visits">
                 <thead>
                   <tr>
-                    <th scope="col">{t.admin.tablePath}</th>
+                    <th scope="col">{t.admin.tableIp}</th>
                     <th scope="col">{t.admin.tableDevice}</th>
                     <th scope="col">{t.admin.tablePlatform}</th>
                     <th scope="col">{t.admin.tableLocation}</th>
@@ -119,7 +121,7 @@ export default function AdminVisitsPage() {
                       <tr key={item.id}>
                         <td>
                           <span className="admin-table__primary admin-table__primary--mono">
-                            {item.path || '/'}
+                            {item.ip || t.admin.ipUnavailable}
                           </span>
                         </td>
                         <td>

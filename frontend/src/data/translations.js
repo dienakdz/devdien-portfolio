@@ -177,7 +177,7 @@ export const translations = {
         'Xem toàn bộ contact submissions mới nhất, gồm email, nội dung và thông tin vị trí cơ bản.',
       visitsPageTitle: 'Danh sách visits',
       visitsPageDescription:
-        'Theo dõi các lượt truy cập gần đây, đường dẫn được xem và dấu hiệu thiết bị cơ bản từ visitor.',
+        'Theo dõi các lượt truy cập gần đây, IP của visitor và dấu hiệu thiết bị cơ bản được ghi nhận.',
       contacts: 'Contacts',
       visits: 'Visits',
       latestContacts: 'Tin nhắn gần nhất',
@@ -444,7 +444,7 @@ export const translations = {
         'Review the latest contact submissions, including sender email, message content, and basic location metadata.',
       visitsPageTitle: 'Visit records',
       visitsPageDescription:
-        'Track recent site visits, requested paths, and the basic device signals captured from each visitor.',
+        'Track recent site visits, visitor IPs, and the basic device signals captured from each visitor.',
       contacts: 'Contacts',
       visits: 'Visits',
       latestContacts: 'Latest messages',

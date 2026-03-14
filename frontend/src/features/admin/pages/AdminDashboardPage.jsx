@@ -150,7 +150,7 @@ export default function AdminDashboardPage() {
                 <article key={item.id} className="admin-list-row">
                   <div className="admin-list-row__main">
                     <div className="admin-list-row__topline">
-                      <p className="admin-list-row__title">{item.path || '/'}</p>
+                      <p className="admin-list-row__title">{item.ip || t.admin.ipUnavailable}</p>
                       <span className="admin-list-row__badge">{item.country || 'Unknown'}</span>
                     </div>
                     <p className="admin-list-row__sub">{item.userAgent || t.admin.noUserAgent}</p>
