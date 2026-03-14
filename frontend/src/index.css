@@ -80,7 +80,6 @@
       radial-gradient(circle at 84% 14%, rgba(78, 154, 170, 0.12), transparent 24%),
       radial-gradient(circle at 16% 22%, rgba(16, 63, 76, 0.08), transparent 24%),
       linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(237, 242, 245, 0.98));
-    background-attachment: fixed;
   }
 
   [data-theme='dark'] body {

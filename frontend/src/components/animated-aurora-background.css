@@ -1,0 +1,265 @@
+.cosmic-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  isolation: isolate;
+  opacity: var(--cosmic-opacity, 0.88);
+  pointer-events: none;
+  contain: paint;
+}
+
+.cosmic-background__base,
+.cosmic-background__void,
+.cosmic-background__dust,
+.cosmic-background__grid,
+.cosmic-background__vignette,
+.cosmic-background__starfield,
+.cosmic-background__meteor-field,
+.cosmic-background__nebula {
+  position: absolute;
+  inset: 0;
+}
+
+.cosmic-background__base {
+  z-index: 0;
+}
+
+.cosmic-background__void {
+  z-index: 1;
+}
+
+.cosmic-background__nebula {
+  z-index: 2;
+}
+
+.cosmic-background__dust {
+  z-index: 3;
+}
+
+.cosmic-background__grid,
+.cosmic-background__vignette {
+  z-index: 4;
+}
+
+.cosmic-background__starfield {
+  z-index: 6;
+}
+
+.cosmic-background__meteor-field {
+  z-index: 7;
+}
+
+.cosmic-background__base {
+  background:
+    radial-gradient(circle at 50% 12%, rgba(226, 236, 244, 0.34), transparent 18%),
+    radial-gradient(circle at 16% 22%, rgba(106, 135, 166, 0.18), transparent 22%),
+    radial-gradient(circle at 82% 18%, rgba(139, 171, 199, 0.16), transparent 24%),
+    linear-gradient(180deg, #ebf1f5 0%, #dbe4ec 34%, #c8d5e0 100%);
+}
+
+[data-theme='dark'] .cosmic-background__base {
+  background:
+    radial-gradient(circle at 50% 10%, rgba(48, 91, 150, 0.18), transparent 13%),
+    radial-gradient(circle at 18% 18%, rgba(22, 63, 112, 0.22), transparent 24%),
+    radial-gradient(circle at 82% 16%, rgba(14, 84, 112, 0.18), transparent 24%),
+    linear-gradient(180deg, #010205 0%, #01040b 24%, #020916 56%, #010206 100%);
+}
+
+.cosmic-background__void {
+  background:
+    radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.06) 18%, rgba(21, 35, 49, 0.16) 54%, rgba(10, 18, 27, 0.34) 100%);
+}
+
+[data-theme='dark'] .cosmic-background__void {
+  background:
+    radial-gradient(circle at 50% 38%, rgba(0, 0, 0, 0) 0%, rgba(1, 6, 12, 0.08) 18%, rgba(1, 6, 14, 0.58) 56%, rgba(0, 0, 0, 0.88) 100%);
+}
+
+.cosmic-background__nebula--core {
+  inset: -8% 10% auto;
+  height: 34rem;
+  background: radial-gradient(circle, rgba(201, 218, 232, 0.34) 0%, rgba(173, 194, 214, 0.12) 26%, rgba(236, 242, 246, 0) 72%);
+  filter: blur(28px);
+  animation: none;
+}
+
+[data-theme='dark'] .cosmic-background__nebula--core {
+  background: radial-gradient(circle, rgba(53, 109, 181, 0.18) 0%, rgba(13, 31, 62, 0.14) 26%, rgba(0, 0, 0, 0) 74%);
+}
+
+.cosmic-background__nebula--left {
+  inset: 8% auto auto -16%;
+  width: 34rem;
+  height: 34rem;
+  background: radial-gradient(circle, rgba(167, 191, 214, 0.2) 0%, rgba(167, 191, 214, 0.08) 32%, transparent 74%);
+  filter: blur(34px);
+}
+
+[data-theme='dark'] .cosmic-background__nebula--left {
+  background: radial-gradient(circle, rgba(19, 74, 142, 0.24) 0%, rgba(10, 30, 61, 0.12) 32%, transparent 74%);
+}
+
+.cosmic-background__nebula--right {
+  inset: 10% -14% auto auto;
+  width: 32rem;
+  height: 32rem;
+  background: radial-gradient(circle, rgba(155, 187, 210, 0.18) 0%, rgba(155, 187, 210, 0.07) 34%, transparent 74%);
+  filter: blur(34px);
+}
+
+[data-theme='dark'] .cosmic-background__nebula--right {
+  background: radial-gradient(circle, rgba(14, 95, 125, 0.22) 0%, rgba(9, 34, 52, 0.1) 34%, transparent 74%);
+}
+
+.cosmic-background__dust {
+  background:
+    radial-gradient(circle at 24% 32%, rgba(255, 255, 255, 0.16) 0%, transparent 28%),
+    radial-gradient(circle at 72% 18%, rgba(255, 255, 255, 0.1) 0%, transparent 24%),
+    radial-gradient(circle at 48% 46%, rgba(255, 255, 255, 0.08) 0%, transparent 28%);
+  opacity: 0.22;
+}
+
+[data-theme='dark'] .cosmic-background__dust {
+  background:
+    radial-gradient(circle at 24% 32%, rgba(160, 212, 255, 0.1) 0%, transparent 28%),
+    radial-gradient(circle at 72% 18%, rgba(117, 165, 255, 0.08) 0%, transparent 24%),
+    radial-gradient(circle at 48% 46%, rgba(255, 255, 255, 0.04) 0%, transparent 28%);
+  opacity: 0.42;
+}
+
+.cosmic-background__starfield {
+  inset: 0;
+  mask-image: linear-gradient(180deg, black 0%, black 92%, transparent 100%);
+}
+
+.cosmic-background__star {
+  position: absolute;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+[data-theme='dark'] .cosmic-background__star {
+  background: rgba(214, 234, 255, 0.94);
+}
+
+.cosmic-background__star--near {
+  box-shadow: 0 0 8px rgba(173, 214, 255, 0.18);
+}
+
+.cosmic-background__star--mid {
+  box-shadow: 0 0 6px rgba(146, 191, 255, 0.12);
+}
+
+.cosmic-background__star--far {
+  box-shadow: none;
+}
+
+.cosmic-background__meteor-field {
+  inset: -10% -16% 0;
+  transform: rotate(24deg);
+  transform-origin: center;
+  mask-image: linear-gradient(180deg, black 0%, black 90%, transparent 100%);
+}
+
+.cosmic-background__meteor {
+  position: absolute;
+  left: -20rem;
+  top: var(--meteor-top);
+  width: var(--meteor-tail);
+  height: 2px;
+  border-radius: 999px;
+  opacity: 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), var(--meteor-color), rgba(255, 255, 255, 0));
+  box-shadow: 0 0 14px rgba(136, 190, 255, 0.26);
+  animation: cosmic-meteor var(--meteor-duration) var(--meteor-delay) linear infinite;
+  will-change: transform, opacity;
+}
+
+.cosmic-background__meteor::before,
+.cosmic-background__meteor::after {
+  content: "";
+  position: absolute;
+  right: 0.2rem;
+  top: 50%;
+  width: 1.4rem;
+  height: 1px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0));
+  transform-origin: right center;
+}
+
+.cosmic-background__meteor::before {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.cosmic-background__meteor::after {
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+.cosmic-background__grid {
+  background-image:
+    linear-gradient(rgba(20, 33, 43, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 33, 43, 0.08) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.12;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.36), black 22%, transparent 100%);
+}
+
+[data-theme='dark'] .cosmic-background__grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  opacity: 0.2;
+}
+
+.cosmic-background__vignette {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(223, 231, 237, 0.04) 48%, rgba(191, 203, 214, 0.18) 100%),
+    radial-gradient(circle at center, transparent 44%, rgba(15, 24, 35, 0.08) 100%);
+}
+
+[data-theme='dark'] .cosmic-background__vignette {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(4, 10, 18, 0.12) 46%, rgba(0, 0, 0, 0.46) 100%),
+    radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.42) 100%);
+}
+
+.cosmic-background--vivid .cosmic-background__nebula--core {
+  opacity: 1;
+}
+
+.cosmic-background--vivid .cosmic-background__nebula--left,
+.cosmic-background--vivid .cosmic-background__nebula--right,
+.cosmic-background--vivid .cosmic-background__dust {
+  opacity: 1;
+}
+
+.cosmic-background--reduced .cosmic-background__nebula,
+.cosmic-background--reduced .cosmic-background__meteor {
+  animation: none;
+}
+
+.cosmic-background--reduced .cosmic-background__meteor-field {
+  display: none;
+}
+
+@keyframes cosmic-meteor {
+  0% {
+    transform: translate3d(0, 0, 0) scaleX(0.35);
+    opacity: 0;
+  }
+
+  6% {
+    opacity: var(--meteor-opacity);
+  }
+
+  72% {
+    opacity: calc(var(--meteor-opacity) * 0.72);
+  }
+
+  100% {
+    transform: translate3d(160vw, 0, 0) scaleX(1);
+    opacity: 0;
+  }
+}

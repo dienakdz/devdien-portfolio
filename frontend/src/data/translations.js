@@ -257,10 +257,13 @@ export const translations = {
       ],
     },
     preloader: {
-      boot: 'Khởi tạo presentation layer',
-      kernel: 'Visual engine trực tuyến',
-      assets: 'Đồng bộ selected work',
-      ready: 'Chuẩn bị vào trải nghiệm',
+      label: 'Signal lock',
+      phases: {
+        boot: 'align',
+        kernel: 'lock',
+        assets: 'sync',
+        ready: 'open',
+      },
     },
   },
   en: {
@@ -521,10 +524,13 @@ export const translations = {
       ],
     },
     preloader: {
-      boot: 'Initializing presentation layer',
-      kernel: 'Visual engine online',
-      assets: 'Syncing selected work',
-      ready: 'Preparing the experience',
+      label: 'Signal lock',
+      phases: {
+        boot: 'align',
+        kernel: 'lock',
+        assets: 'sync',
+        ready: 'open',
+      },
     },
   },
 };

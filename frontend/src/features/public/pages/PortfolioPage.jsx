@@ -82,39 +82,42 @@ export default function PortfolioPage({ theme, setTheme }) {
 
   return (
     <MotionConfig reducedMotion="user">
-      <AnimatePresence mode="wait">
-        {loading ? (
-          <Preloader key="preloader" onComplete={handlePreloaderComplete} />
-        ) : (
-          <motion.div
-            key="main"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="relative min-h-screen overflow-x-hidden bg-background transition-colors duration-500"
-          >
-            <AnimatedAuroraBackground
-              variant="soft"
-              speed="slow"
-              opacity={theme === 'dark' ? 0.62 : 0.3}
-            />
-            <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[28rem] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.38),transparent_70%)] dark:bg-[radial-gradient(circle_at_top,rgba(99,208,190,0.14),transparent_68%)]" />
-            <Navbar toggleTheme={toggleTheme} theme={theme} />
-            <main className="relative z-10 pb-6">
-              <Hero />
-              <TechMarquee />
-              <Stats />
-              <Approach />
-              <Skills />
-              <Projects />
-              <Experience />
-              <Contact />
-            </main>
-            <Footer />
-            <Suspense fallback={null}>
-              <Terminal />
-            </Suspense>
-          </motion.div>
-        )}
+      <motion.div
+        initial={false}
+        animate={{
+          opacity: loading ? 0.82 : 1,
+          y: loading ? 14 : 0,
+          scale: loading ? 0.992 : 1,
+        }}
+        transition={{ duration: loading ? 0.2 : 0.55, delay: loading ? 0 : 0.08, ease: [0.22, 1, 0.36, 1] }}
+        className={`relative isolate min-h-screen overflow-x-hidden bg-background transition-colors duration-500 ${loading ? 'pointer-events-none' : ''}`}
+      >
+        <AnimatedAuroraBackground
+          variant="vivid"
+          speed="slow"
+          opacity={theme === 'dark' ? 0.96 : 0.52}
+        />
+        <div className="relative z-10">
+          <Navbar toggleTheme={toggleTheme} theme={theme} />
+          <main className="pb-6">
+            <Hero />
+            <TechMarquee />
+            <Stats />
+            <Approach />
+            <Skills />
+            <Projects />
+            <Experience />
+            <Contact />
+          </main>
+          <Footer />
+          <Suspense fallback={null}>
+            <Terminal />
+          </Suspense>
+        </div>
+      </motion.div>
+
+      <AnimatePresence>
+        {loading ? <Preloader key="preloader" onComplete={handlePreloaderComplete} /> : null}
       </AnimatePresence>
     </MotionConfig>
   );
