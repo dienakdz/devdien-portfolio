@@ -38,8 +38,8 @@ export const createStructuredData = (siteUrl = resolveSiteUrl()) => ({
   '@graph': [
     {
       '@type': 'WebSite',
-      name: siteConfig.brand,
-      alternateName: siteConfig.name,
+      name: siteConfig.name,
+      alternateName: siteConfig.brand,
       url: siteUrl,
       description: siteConfig.siteDescription,
       inLanguage: 'en',

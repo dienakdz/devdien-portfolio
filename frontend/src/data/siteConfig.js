@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: 'Nguyen Minh Dien',
+  name: 'Nguyễn Minh Diện',
   brand: 'DevDien',
   role: 'Backend Developer',
   company: 'TMA Solutions',
@@ -21,10 +21,11 @@ export const siteConfig = {
   ],
   profileUrl: 'https://www.linkedin.com/in/devdien/',
   resumeUrl: 'https://www.linkedin.com/in/devdien/',
-  siteTitle: 'Minh Dien (DevDien) | Backend Developer',
+  siteTitle: 'Nguyễn Minh Diện (DevDien) | Backend Developer',
   siteDescription:
-    'Nguyen Minh Dien (DevDien) is a Backend Developer specializing in Python, FastAPI, scalable APIs, and production-ready systems.',
+    'Nguyễn Minh Diện (DevDien) is a Backend Developer specializing in Python, FastAPI, scalable APIs, and production-ready systems.',
   keywords: [
+    'Nguyễn Minh Diện',
     'Nguyen Minh Dien',
     'DevDien',
     'Backend Developer',

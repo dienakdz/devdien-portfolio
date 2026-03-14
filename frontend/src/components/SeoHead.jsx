@@ -87,6 +87,14 @@ export default function SeoHead() {
     ensureMeta('meta[name="keywords"]', { name: 'keywords', content: seo.keywords });
     ensureMeta('meta[name="robots"]', { name: 'robots', content: seo.robots });
     ensureMeta('meta[name="googlebot"]', { name: 'googlebot', content: seo.robots });
+    ensureMeta('meta[name="application-name"]', {
+      name: 'application-name',
+      content: siteConfig.name,
+    });
+    ensureMeta('meta[name="apple-mobile-web-app-title"]', {
+      name: 'apple-mobile-web-app-title',
+      content: siteConfig.name,
+    });
     ensureMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' });
     ensureMeta('meta[property="og:title"]', { property: 'og:title', content: seo.title });
     ensureMeta('meta[property="og:description"]', {
@@ -94,7 +102,10 @@ export default function SeoHead() {
       content: seo.description,
     });
     ensureMeta('meta[property="og:url"]', { property: 'og:url', content: seo.canonicalUrl });
-    ensureMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: siteConfig.brand });
+    ensureMeta('meta[property="og:site_name"]', {
+      property: 'og:site_name',
+      content: siteConfig.name,
+    });
     ensureMeta('meta[property="og:locale"]', { property: 'og:locale', content: siteConfig.locale });
     ensureMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
     ensureMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: seo.title });
@@ -109,6 +120,16 @@ export default function SeoHead() {
     }
 
     ensureLink('link[rel="canonical"]', { rel: 'canonical', href: seo.canonicalUrl });
+    ensureLink('link[rel="icon"]', {
+      rel: 'icon',
+      type: 'image/svg+xml',
+      sizes: 'any',
+      href: '/favicon.svg',
+    });
+    ensureLink('link[rel="shortcut icon"]', {
+      rel: 'shortcut icon',
+      href: '/favicon.svg',
+    });
     ensureJsonLd(seo.schema);
   }, [location.pathname]);
 
