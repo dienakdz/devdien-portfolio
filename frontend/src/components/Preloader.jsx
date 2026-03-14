@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
-import { siteConfig } from '../data/siteConfig';
+import { getLocalizedName, siteConfig } from '../data/siteConfig';
 import profileImg from '../assets/profile.jpg';
 import './preloader.css';
 
@@ -87,7 +87,7 @@ const getBrandMonogram = (brand) => {
 };
 
 const Preloader = ({ onComplete }) => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const reduceMotion = useReducedMotion();
   const [progress, setProgress] = useState(0);
   const readyToFinishRef = useRef(false);
@@ -127,6 +127,7 @@ const Preloader = ({ onComplete }) => {
   }, 0);
   const currentPhase = phaseEntries[currentPhaseIndex];
   const brandMonogram = getBrandMonogram(siteConfig.brand);
+  const localizedName = getLocalizedName(lang);
 
   useEffect(() => {
     const previousHtmlOverflow = document.documentElement.style.overflow;
@@ -264,7 +265,7 @@ const Preloader = ({ onComplete }) => {
 
         <div className="preloader-console__body">
           <div className="preloader-console__copy">
-            <p className="preloader-console__name">{siteConfig.name}</p>
+            <p className="preloader-console__name">{localizedName}</p>
             <p className="preloader-console__descriptor">{siteConfig.role}</p>
 
             <div className="preloader-console__progress-meta">

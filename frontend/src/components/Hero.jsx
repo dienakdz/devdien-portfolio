@@ -3,10 +3,11 @@ import { motion } from 'framer-motion';
 import { ArrowRight, ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
 import profileImg from '../assets/profile.jpg';
 import { useLanguage } from '../context/LanguageContext';
-import { siteConfig } from '../data/siteConfig';
+import { getLocalizedName, siteConfig } from '../data/siteConfig';
 
 const Hero = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const localizedName = getLocalizedName(lang);
   const quickLinks = [
     {
       href: siteConfig.emailHref,
@@ -212,7 +213,7 @@ const Hero = () => {
 
                     <img
                       src={profileImg}
-                      alt="Nguyen Minh Dien (DevDien) backend developer portrait"
+                      alt={`${localizedName} (DevDien) backend developer portrait`}
                       fetchPriority="high"
                       className="aspect-[4/5] w-full object-cover object-center"
                     />
@@ -222,7 +223,7 @@ const Hero = () => {
                     <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
                       <div className="mt-3">
                         <p className="text-3xl font-black tracking-[-0.05em] text-white md:text-[2.25rem]">
-                          {siteConfig.name}
+                          {localizedName}
                         </p>
                         <p className="mt-2 max-w-[22rem] text-sm leading-6 text-white/78">
                           {t.hero.profileTagline}

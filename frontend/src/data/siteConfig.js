@@ -1,5 +1,6 @@
 export const siteConfig = {
   name: 'Nguyễn Minh Diện',
+  nameEn: 'Nguyen Minh Dien',
   brand: 'DevDien',
   role: 'Backend Developer',
   company: 'TMA Solutions',
@@ -38,3 +39,6 @@ export const siteConfig = {
   locale: 'en_US',
   ogImagePath: '/og-preview.jpg',
 };
+
+export const getLocalizedName = (lang = 'en') =>
+  lang === 'vi' ? siteConfig.name : siteConfig.nameEn;
