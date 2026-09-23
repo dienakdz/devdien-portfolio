@@ -16,6 +16,7 @@ const AdminContactsPage = lazy(() => import('./features/admin/pages/AdminContact
 const AdminVisitsPage = lazy(() => import('./features/admin/pages/AdminVisitsPage.jsx'));
 const AdminProfilePage = lazy(() => import('./features/admin/pages/AdminProfilePage.jsx'));
 const AdminPasswordPage = lazy(() => import('./features/admin/pages/AdminPasswordPage.jsx'));
+const AboutPage = lazy(() => import('./features/public/pages/AboutPage.jsx'));
 
 const RouteFallback = () => <div className="min-h-screen bg-background" />;
 // Temporary anti-DevTools test flags. Set to false to disable the trap quickly.
@@ -151,6 +152,7 @@ function App() {
             <Suspense fallback={<RouteFallback />}>
               <Routes>
                 <Route path="/" element={<PortfolioPage theme={theme} setTheme={setTheme} />} />
+                <Route path="/nguyen-minh-dien" element={<AboutPage />} />
                 <Route path="/login" element={<AdminLoginPage />} />
                 <Route
                   path="/admin"

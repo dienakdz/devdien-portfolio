@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
 import { ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
@@ -82,6 +83,7 @@ const Navbar = ({ theme, toggleTheme }) => {
   }, []);
 
   const navLinks = [
+    { name: t.nav.aboutMe || (lang === 'vi' ? 'Về tôi' : 'About Me'), href: '/nguyen-minh-dien', isRoute: true },
     { name: t.nav.about, href: '#focus' },
     { name: t.nav.projects, href: '#projects' },
     { name: t.nav.experience, href: '#experience' },
@@ -137,6 +139,19 @@ const Navbar = ({ theme, toggleTheme }) => {
             <div className="nav-pill-shell inline-flex items-center gap-1 rounded-full border border-border/80 bg-background/64 px-2 py-2 dark:bg-card/86">
               {navLinks.map((link) => {
                 const isActive = activeHref === link.href;
+
+                if (link.isRoute) {
+                  return (
+                    <Link
+                      key={link.name}
+                      to={link.href}
+                      onClick={() => handleNavClick(link.href)}
+                      className={`nav-link ${isActive ? 'nav-link--active' : ''}`}
+                    >
+                      <span className="nav-link__label">{link.name}</span>
+                    </Link>
+                  );
+                }
 
                 return (
                   <a
@@ -208,17 +223,35 @@ const Navbar = ({ theme, toggleTheme }) => {
           >
             <div className="panel overflow-hidden p-4">
               <div className="grid gap-2">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => handleNavClick(link.href)}
-                    aria-current={activeHref === link.href ? 'page' : undefined}
-                    className={`mobile-nav-link ${activeHref === link.href ? 'mobile-nav-link--active' : ''}`}
-                  >
-                    {link.name}
-                  </a>
-                ))}
+                {navLinks.map((link) => {
+                  if (link.isRoute) {
+                    return (
+                      <Link
+                        key={link.name}
+                        to={link.href}
+                        onClick={() => {
+                          setIsOpen(false);
+                          setActiveHref(link.href);
+                        }}
+                        className={`mobile-nav-link ${activeHref === link.href ? 'mobile-nav-link--active' : ''}`}
+                      >
+                        {link.name}
+                      </Link>
+                    );
+                  }
+
+                  return (
+                    <a
+                      key={link.name}
+                      href={link.href}
+                      onClick={() => handleNavClick(link.href)}
+                      aria-current={activeHref === link.href ? 'page' : undefined}
+                      className={`mobile-nav-link ${activeHref === link.href ? 'mobile-nav-link--active' : ''}`}
+                    >
+                      {link.name}
+                    </a>
+                  );
+                })}
               </div>
 
               <div className="mt-4 grid gap-3 sm:grid-cols-3">

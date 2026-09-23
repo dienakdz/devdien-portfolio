@@ -33,39 +33,104 @@ export const getDefaultSeo = (siteUrl = resolveSiteUrl()) => ({
   siteUrl,
 });
 
-export const createStructuredData = (siteUrl = resolveSiteUrl()) => ({
-  '@context': 'https://schema.org',
-  '@graph': [
+export const createStructuredData = (siteUrl = resolveSiteUrl(), pathname = '/') => {
+  const isProfilePage =
+    pathname === '/nguyen-minh-dien' ||
+    pathname === '/about' ||
+    pathname === '/ve-toi';
+
+  const personImages = (siteConfig.entityImages || []).map((img) => buildAbsoluteUrl(img, siteUrl));
+  if (siteConfig.ogImagePath) {
+    personImages.unshift(buildAbsoluteUrl(siteConfig.ogImagePath, siteUrl));
+  }
+
+  const graph = [
     {
       '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
       name: siteConfig.name,
       alternateName: siteConfig.brand,
       url: siteUrl,
       description: siteConfig.siteDescription,
-      inLanguage: 'en',
+      inLanguage: ['vi', 'en'],
     },
     {
       '@type': 'Person',
+      '@id': `${siteUrl}/#person`,
       name: siteConfig.name,
-      alternateName: siteConfig.brand,
+      alternateName: [siteConfig.nameEn, siteConfig.brand, 'dienne.dev', 'dienakdz'],
       jobTitle: siteConfig.role,
-      description: 'Backend Developer specializing in Python, FastAPI, API design, and scalable backend systems.',
+      worksFor: {
+        '@type': 'Organization',
+        name: siteConfig.company,
+        url: 'https://www.tmasolutions.com',
+      },
+      alumniOf: {
+        '@type': 'EducationalOrganization',
+        name: siteConfig.alumniOf,
+        alternateName: siteConfig.alumniOfEn,
+      },
+      description:
+        'Nguyễn Minh Diện (DevDien) là Backend Developer tại TMA Solutions, tốt nghiệp Kỹ thuật Phần mềm VKU loại Giỏi, và là người sáng tạo nội dung tại kênh YouTube @devdien chia sẻ kiến thức backend, Python, FastAPI.',
       url: siteUrl,
-      image: buildAbsoluteUrl(siteConfig.ogImagePath, siteUrl),
+      image: personImages,
       email: siteConfig.emailHref,
       homeLocation: {
         '@type': 'Place',
         name: siteConfig.location,
       },
       sameAs: siteConfig.sameAs,
+      knowsAbout: [
+        'Backend Engineering',
+        'Python',
+        'FastAPI',
+        'API Design',
+        'PostgreSQL',
+        'Docker',
+        'System Architecture',
+        'Software Engineering',
+      ],
     },
-  ],
-});
+  ];
+
+  if (isProfilePage) {
+    graph.push({
+      '@type': 'ProfilePage',
+      '@id': `${siteUrl}/nguyen-minh-dien#webpage`,
+      url: `${siteUrl}/nguyen-minh-dien`,
+      name: siteConfig.aboutTitleVi,
+      description: siteConfig.aboutDescriptionVi,
+      isPartOf: {
+        '@id': `${siteUrl}/#website`,
+      },
+      about: {
+        '@id': `${siteUrl}/#person`,
+      },
+      mainEntity: {
+        '@id': `${siteUrl}/#person`,
+      },
+      primaryImageOfPage: {
+        '@type': 'ImageObject',
+        url: buildAbsoluteUrl(siteConfig.entityImages[0], siteUrl),
+      },
+    });
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': graph,
+  };
+};
 
 export const publicSitemapEntries = [
   {
     path: '/',
     changefreq: 'weekly',
     priority: '1.0',
+  },
+  {
+    path: '/nguyen-minh-dien',
+    changefreq: 'weekly',
+    priority: '0.9',
   },
 ];

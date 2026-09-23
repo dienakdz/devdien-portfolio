@@ -65,12 +65,25 @@ const getRouteSeo = (pathname) => {
   }
 
   const defaultSeo = getDefaultSeo();
+  const isProfileRoute = normalizedPath === '/nguyen-minh-dien';
+
+  if (isProfileRoute) {
+    return {
+      title: siteConfig.aboutTitleVi,
+      description: siteConfig.aboutDescriptionVi,
+      keywords: `${siteConfig.keywords.join(', ')}, Tiểu sử Nguyễn Minh Diện, Quá trình làm việc Nguyễn Minh Diện, YouTube devdien, TMA Solutions, VKU`,
+      canonicalUrl: buildAbsoluteUrl('/nguyen-minh-dien'),
+      imageUrl: buildAbsoluteUrl(siteConfig.entityImages[0], defaultSeo.siteUrl),
+      robots: 'index, follow, max-image-preview:large',
+      schema: createStructuredData(defaultSeo.siteUrl, '/nguyen-minh-dien'),
+    };
+  }
 
   return {
     ...defaultSeo,
     canonicalUrl,
     robots: 'index, follow, max-image-preview:large',
-    schema: createStructuredData(defaultSeo.siteUrl),
+    schema: createStructuredData(defaultSeo.siteUrl, normalizedPath),
   };
 };
 

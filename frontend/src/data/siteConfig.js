@@ -38,6 +38,38 @@ export const siteConfig = {
   ],
   locale: 'en_US',
   ogImagePath: '/og-preview.jpg',
+  alumniOf: 'Trường Đại học Công nghệ Thông tin và Truyền thông Việt - Hàn (VKU)',
+  alumniOfEn: 'Vietnam - Korea University of Information and Communication Technology (VKU)',
+  youtubeChannel: 'https://www.youtube.com/@devdien',
+  youtubeSubscribeUrl: 'https://www.youtube.com/@devdien?sub_confirmation=1',
+  entityImages: [
+    '/images/about/nguyen-minh-dien-vku-honor-board.jpg',
+    '/images/about/nguyen-minh-dien-vku-bang-ky-su.jpg',
+    '/images/about/nguyen-minh-dien-vku-graduation-mother.jpg',
+    '/images/about/nguyen-minh-dien-vku-friends-graduation.jpg',
+    '/images/about/nguyen-minh-dien-vku-classmate-graduation.jpg',
+    '/images/about/nguyen-minh-dien-grab-danang-port.jpg',
+    '/images/about/nguyen-minh-dien-tma-speaker-gialai.jpg',
+    '/images/about/nguyen-minh-dien-tma-conference-stage.jpg',
+    '/images/about/nguyen-minh-dien-efe-rising-talent.jpg',
+    '/images/about/nguyen-minh-dien-tma-futsal-champion.jpg',
+    '/images/about/nguyen-minh-dien-tma-futsal-team.jpg',
+    '/images/about/nguyen-minh-dien-tma-gala-dalat.jpg',
+    '/images/about/nguyen-minh-dien-tma-team-dalat.jpg',
+    '/images/about/nguyen-minh-dien-company-year-end-party.jpg',
+    '/images/about/nguyen-minh-dien-tma-team-tet.jpg',
+    '/images/about/nguyen-minh-dien-hoian-basket-boat.jpg',
+    '/images/about/nguyen-minh-dien-hoian-river-travel.jpg',
+    '/images/about/nguyen-minh-dien-lifestyle-travel.jpg',
+    '/images/about/nguyen-minh-dien-dinosaur-park.jpg',
+    '/images/about/nguyen-minh-dien-temple-zen.jpg',
+  ],
+  aboutTitleVi: 'Nguyễn Minh Diện (DevDien) - Tiểu Sử, Quá Trình Làm Việc & Kênh YouTube @devdien',
+  aboutTitleEn: 'Nguyen Minh Dien (DevDien) - Biography, Career Journey & YouTube @devdien',
+  aboutDescriptionVi:
+    'Hồ sơ chính thức về Nguyễn Minh Diện (DevDien) - Kỹ sư Backend tại TMA Solutions, Tốt nghiệp Kỹ thuật Phần mềm VKU loại Giỏi, Content Creator tại YouTube @devdien.',
+  aboutDescriptionEn:
+    'Official profile of Nguyen Minh Dien (DevDien) - Backend Developer at TMA Solutions, VKU Software Engineering graduate with Honors, and Content Creator at YouTube @devdien.',
 };
 
 export const getLocalizedName = (lang = 'en') =>
