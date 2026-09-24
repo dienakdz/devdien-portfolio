@@ -27,19 +27,19 @@ const buildStarSet = (seed, count, config) => {
 const buildMeteorSet = (seed, count) => {
   const random = createSeededRandom(seed);
   const colors = [
-    'rgba(255,255,255,0.96)',
-    'rgba(181,220,255,0.92)',
-    'rgba(126,184,255,0.88)',
+    'rgba(255,255,255,0.95)',
+    'rgba(181,220,255,0.9)',
+    'rgba(126,184,255,0.85)',
   ];
 
   return Array.from({ length: count }, (_, index) => ({
     id: `meteor-${index + 1}`,
-    top: (random() * 78 + 4).toFixed(2),
-    delay: (random() * 3.8 + index * 0.18).toFixed(2),
-    duration: (random() * 2.4 + 4.6).toFixed(2),
-    tail: (random() * 6 + 7.5).toFixed(2),
-    opacity: (random() * 0.22 + 0.64).toFixed(2),
-    color: colors[Math.floor(random() * colors.length)],
+    top: (random() * 55 + 5).toFixed(2),
+    delay: (index * 6 + random() * 2).toFixed(2),
+    duration: (random() * 1.2 + 4.2).toFixed(2),
+    tail: (random() * 3 + 5).toFixed(2),
+    opacity: (random() * 0.2 + 0.65).toFixed(2),
+    color: colors[index % colors.length],
   }));
 };
 
@@ -47,55 +47,55 @@ const nearStars = [];
 const midStars = [];
 const farStars = [];
 
-buildStarSet(11, 76, {
+buildStarSet(11, 16, {
   prefix: 'near',
   items: nearStars,
   topOffset: 4,
-  topSpread: 72,
+  topSpread: 75,
   leftOffset: 2,
   leftSpread: 96,
-  sizeBase: 1.6,
-  sizeSpread: 2,
-  opacityBase: 0.58,
-  opacitySpread: 0.26,
+  sizeBase: 1.5,
+  sizeSpread: 1.5,
+  opacityBase: 0.6,
+  opacitySpread: 0.25,
   delaySpread: 0,
   durationBase: 0,
   durationSpread: 0,
 });
 
-buildStarSet(29, 54, {
+buildStarSet(29, 14, {
   prefix: 'mid',
   items: midStars,
   topOffset: 2,
-  topSpread: 78,
+  topSpread: 80,
   leftOffset: 0,
   leftSpread: 100,
-  sizeBase: 1.15,
-  sizeSpread: 1.3,
-  opacityBase: 0.34,
-  opacitySpread: 0.22,
+  sizeBase: 1.1,
+  sizeSpread: 1.1,
+  opacityBase: 0.35,
+  opacitySpread: 0.2,
   delaySpread: 0,
   durationBase: 0,
   durationSpread: 0,
 });
 
-buildStarSet(47, 36, {
+buildStarSet(47, 10, {
   prefix: 'far',
   items: farStars,
   topOffset: 0,
-  topSpread: 82,
+  topSpread: 85,
   leftOffset: 0,
   leftSpread: 100,
   sizeBase: 0.9,
-  sizeSpread: 0.9,
-  opacityBase: 0.18,
-  opacitySpread: 0.16,
+  sizeSpread: 0.8,
+  opacityBase: 0.2,
+  opacitySpread: 0.15,
   delaySpread: 0,
   durationBase: 0,
   durationSpread: 0,
 });
 
-const meteors = buildMeteorSet(73, 24);
+const meteors = buildMeteorSet(73, 3);
 
 const speedPresets = {
   slow: {

@@ -257,15 +257,6 @@ export const translations = {
         },
       ],
     },
-    preloader: {
-      label: 'Signal lock',
-      phases: {
-        boot: 'align',
-        kernel: 'lock',
-        assets: 'sync',
-        ready: 'open',
-      },
-    },
     aboutPage: {
       badge: 'Verified Entity • Hồ Sơ Định Danh Cá Nhân',
       title: 'Nguyễn Minh Diện',
@@ -844,15 +835,6 @@ export const translations = {
           copy: 'Practical execution, clear communication, and enough polish to keep momentum healthy.',
         },
       ],
-    },
-    preloader: {
-      label: 'Signal lock',
-      phases: {
-        boot: 'align',
-        kernel: 'lock',
-        assets: 'sync',
-        ready: 'open',
-      },
     },
     aboutPage: {
       badge: 'Verified Entity • Official Knowledge Profile',
