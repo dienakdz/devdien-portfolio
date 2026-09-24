@@ -11,25 +11,6 @@ import { useLanguage } from '../context/LanguageContext';
 const Skills = () => {
   const { t, lang } = useLanguage();
 
-  const handleSkillPointerMove = (event) => {
-    if (event.pointerType === 'touch') {
-      return;
-    }
-
-    const card = event.currentTarget;
-    const rect = card.getBoundingClientRect();
-
-    card.style.setProperty('--skill-spotlight-x', `${event.clientX - rect.left}px`);
-    card.style.setProperty('--skill-spotlight-y', `${event.clientY - rect.top}px`);
-  };
-
-  const handleSkillPointerLeave = (event) => {
-    const card = event.currentTarget;
-
-    card.style.removeProperty('--skill-spotlight-x');
-    card.style.removeProperty('--skill-spotlight-y');
-  };
-
   const categories = [
     {
       title: 'Backend',
@@ -99,8 +80,6 @@ const Skills = () => {
                 whileHover={{ y: -4 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.08 }}
-                onPointerMove={handleSkillPointerMove}
-                onPointerLeave={handleSkillPointerLeave}
                 className="skill-card content-plane rounded-[30px] p-7"
               >
                 <span aria-hidden="true" className="skill-spotlight" />

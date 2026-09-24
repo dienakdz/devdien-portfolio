@@ -21,65 +21,40 @@ const Navbar = ({ theme, toggleTheme }) => {
   });
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 16);
-    window.addEventListener('scroll', handleScroll);
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 16);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    const sectionLinks = ['#focus', '#projects', '#experience', '#skills', '#contact'];
-    let frameId = 0;
+    const sectionIds = ['focus', 'projects', 'experience', 'skills', 'contact'];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveHref(`#${entry.target.id}`);
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -60% 0px' },
+    );
 
-    const updateActiveSection = () => {
-      frameId = 0;
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
 
-      const marker = Math.max(112, window.innerHeight * 0.24);
-      let nextActive = '';
-
-      for (const href of sectionLinks) {
-        const section = document.getElementById(href.slice(1));
-
-        if (!section) {
-          continue;
-        }
-
-        const rect = section.getBoundingClientRect();
-
-        if (rect.top <= marker) {
-          nextActive = href;
-        }
-
-        if (rect.top <= marker && rect.bottom >= marker) {
-          nextActive = href;
-          break;
-        }
-      }
-
-      setActiveHref((current) => (current === nextActive ? current : nextActive));
-    };
-
-    const requestActiveUpdate = () => {
-      if (frameId) {
-        return;
-      }
-
-      frameId = window.requestAnimationFrame(updateActiveSection);
-    };
-
-    updateActiveSection();
-    window.addEventListener('scroll', requestActiveUpdate, { passive: true });
-    window.addEventListener('resize', requestActiveUpdate);
-    window.addEventListener('hashchange', requestActiveUpdate);
-
-    return () => {
-      if (frameId) {
-        window.cancelAnimationFrame(frameId);
-      }
-
-      window.removeEventListener('scroll', requestActiveUpdate);
-      window.removeEventListener('resize', requestActiveUpdate);
-      window.removeEventListener('hashchange', requestActiveUpdate);
-    };
+    return () => observer.disconnect();
   }, []);
 
   const navLinks = [
