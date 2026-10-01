@@ -10,6 +10,7 @@ import {
   ExternalLink,
   Github,
   GraduationCap,
+  Linkedin,
   Mail,
   MapPin,
   Send,
@@ -68,36 +69,41 @@ export default function PortfolioPage({ theme, setTheme }) {
       <main>
         {/* ========================================================================= */}
         {/* ========================================================================= */}
-        {/* 1. HERO SECTION (Cinematic Split Hero — Mẫu 1) */}
+        {/* 1. HERO SECTION (Cinematic Split Hero — 60/40 Harmonious Balance) */}
         {/* ========================================================================= */}
         <section className="relative overflow-hidden pt-12 pb-16 md:pt-20 md:pb-24 border-b border-border/60 dark:border-white/5 bg-background">
           
-          {/* Ambient Horizontal Photo (Right Side, 100% Sharp & Natural Colors) */}
-          <div className="absolute inset-y-0 right-0 w-full lg:w-7/12 pointer-events-none overflow-hidden select-none">
+          {/* Ambient Horizontal Photo (Right ~40-45%, Shifted Right & Harmonized Lighting) */}
+          <div className="absolute inset-y-0 right-0 w-full lg:w-[48%] xl:w-[45%] pointer-events-none overflow-hidden select-none">
             <img
               src={heroCover}
               alt={localizedName}
-              className="h-full w-full object-cover object-[center_35%] lg:object-center transition-all duration-700"
+              className="h-full w-full object-cover object-[center_35%] lg:object-[86%_center] filter brightness-[0.93] contrast-[1.04] saturate-[0.98] transition-all duration-700"
             />
-            {/* Seamless Left Fade Gradient (Fades into solid background on the left without dimming the rest) */}
-            <div className="absolute inset-y-0 left-0 w-32 sm:w-48 bg-gradient-to-r from-background via-background/90 to-transparent dark:from-[#0b1118] dark:via-[#0b1118]/90 dark:to-transparent" />
-            <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-background to-transparent dark:from-[#0b1118] dark:to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background to-transparent dark:from-[#0b1118] dark:to-transparent" />
+            {/* Seamless Soft Left Fade Gradient (Harmonious transition to deep dark) */}
+            <div className="absolute inset-y-0 left-0 w-44 sm:w-64 bg-gradient-to-r from-background via-background/75 to-transparent dark:from-[#0b1118] dark:via-[#0b1118]/75 dark:to-transparent" />
+            {/* Top & Bottom subtle ambient blends */}
+            <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background/90 via-background/40 to-transparent dark:from-[#0b1118]/90 dark:via-[#0b1118]/40 dark:to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-background/90 via-background/60 to-transparent dark:from-[#0b1118]/90 dark:via-[#0b1118]/60 dark:to-transparent" />
             {/* Mobile scrim overlay so text is 100% legible on small screens */}
-            <div className="absolute inset-0 bg-background/85 dark:bg-[#0b1118]/85 lg:hidden" />
+            <div className="absolute inset-0 bg-background/88 dark:bg-[#0b1118]/88 lg:hidden" />
           </div>
 
           <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="grid gap-12 lg:grid-cols-12 lg:items-center min-h-[520px]">
+            <div className="grid gap-12 lg:grid-cols-12 lg:items-center min-h-[540px]">
               
-              {/* Left Column: Intro, Identity & Core Stats (100% Solid Readability) */}
+              {/* Left Column: ~60% Width — Intro, Core Pillars, Metrics & CTAs */}
               <div className="lg:col-span-7">
                 
-                {/* Verified Knowledge Entity Badge & Google Graph ID */}
-                <div className="flex flex-wrap items-center gap-3">
+                {/* Verified Knowledge Entity Badge & Google Graph ID & Experience Badge */}
+                <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
                   <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/15 px-3 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
                     <ShieldCheck size={14} />
                     <span>VERIFIED KNOWLEDGE ENTITY</span>
+                  </div>
+
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-bold text-amber-500 dark:text-amber-400 font-mono">
+                    <span>3+ {lang === 'vi' ? 'Năm Kinh Nghiệm' : 'Years Experience'}</span>
                   </div>
 
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -109,7 +115,7 @@ export default function PortfolioPage({ theme, setTheme }) {
                 </div>
 
                 {/* Main Headline */}
-                <h1 className="mt-5 font-outfit text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.12]">
+                <h1 className="mt-6 font-outfit text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.12]">
                   <span>{localizedName}</span> <br className="hidden sm:inline" />
                   <span className="text-amber-500 dark:text-amber-400">
                     (DevDien)
@@ -126,56 +132,12 @@ export default function PortfolioPage({ theme, setTheme }) {
                 {/* Bio Description */}
                 <p className="mt-4 max-w-2xl text-base sm:text-lg leading-relaxed text-muted-foreground">
                   {lang === 'vi'
-                    ? 'Tôi tập trung vào việc thiết kế và xây dựng các hệ thống backend chịu tải cao, tối ưu cơ sở dữ liệu quan hệ, phát triển REST APIs chuẩn OpenAPI và tự động hóa hạ tầng đám mây với Docker & CI/CD.'
+                    ? 'Tôi tập trung thiết kế và xây dựng các hệ thống backend chịu tải cao, tối ưu cơ sở dữ liệu quan hệ, phát triển REST APIs chuẩn OpenAPI và tự động hóa quy trình triển khai với Docker & CI/CD.'
                     : 'Designing and building high-throughput backend architectures, clean OpenAPI services, robust relational data pipelines, and cloud automation with Docker & CI/CD.'}
                 </p>
 
-                {/* Real Highlights / Stats Row */}
-                <div className="mt-6 flex flex-wrap items-center gap-3">
-                  <div className="rounded-xl border border-border/70 bg-card/90 backdrop-blur-md px-4 py-2.5 dark:border-white/8 dark:bg-[#121922]/90 shadow-sm">
-                    <span className="font-outfit text-lg sm:text-xl font-extrabold text-amber-500 dark:text-amber-400">
-                      3+ Năm
-                    </span>
-                    <span className="text-xs text-muted-foreground font-medium uppercase ml-2">
-                      {lang === 'vi' ? 'Kinh nghiệm' : 'Experience'}
-                    </span>
-                  </div>
-                  <div className="rounded-xl border border-border/70 bg-card/90 backdrop-blur-md px-4 py-2.5 dark:border-white/8 dark:bg-[#121922]/90 shadow-sm">
-                    <span className="font-outfit text-lg sm:text-xl font-extrabold text-foreground">
-                      20+
-                    </span>
-                    <span className="text-xs text-muted-foreground font-medium uppercase ml-2">
-                      {lang === 'vi' ? 'Mã nguồn mở' : 'GitHub Repos'}
-                    </span>
-                  </div>
-                  <div className="rounded-xl border border-border/70 bg-card/90 backdrop-blur-md px-4 py-2.5 dark:border-white/8 dark:bg-[#121922]/90 shadow-sm">
-                    <span className="font-outfit text-lg sm:text-xl font-extrabold text-red-500">
-                      @devdien
-                    </span>
-                    <span className="text-xs text-muted-foreground font-medium uppercase ml-2">
-                      {lang === 'vi' ? 'Kênh YouTube' : 'YouTube Channel'}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Tech Chips */}
-                <div className="mt-5 flex flex-wrap gap-2 text-xs font-medium text-foreground/80">
-                  <span className="badge-tag border border-border/80 bg-card/80 backdrop-blur-md dark:border-white/10 dark:bg-[#121922]/80">
-                    <Code2 size={13} className="text-amber-500" /> Python / FastAPI
-                  </span>
-                  <span className="badge-tag border border-border/80 bg-card/80 backdrop-blur-md dark:border-white/10 dark:bg-[#121922]/80">
-                    <Database size={13} className="text-amber-500" /> PostgreSQL & Redis
-                  </span>
-                  <span className="badge-tag border border-border/80 bg-card/80 backdrop-blur-md dark:border-white/10 dark:bg-[#121922]/80">
-                    <Boxes size={13} className="text-amber-500" /> Docker & Linux
-                  </span>
-                  <span className="badge-tag border border-border/80 bg-card/80 backdrop-blur-md dark:border-white/10 dark:bg-[#121922]/80">
-                    <ServerCog size={13} className="text-amber-500" /> PHP / Laravel
-                  </span>
-                </div>
-
                 {/* Action CTAs */}
-                <div className="mt-7 flex flex-wrap items-center gap-3 sm:gap-4">
+                <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
                   <Link
                     to="/projects"
                     className="button-primary inline-flex items-center gap-2"
@@ -201,51 +163,49 @@ export default function PortfolioPage({ theme, setTheme }) {
                   </Link>
                 </div>
 
-                {/* Quick Social links */}
-                <div className="mt-7 flex flex-wrap items-center gap-4 pt-5 border-t border-border/60 text-xs text-muted-foreground dark:border-white/5">
-                  <span className="font-semibold uppercase tracking-wider text-muted-foreground/80">
-                    {lang === 'vi' ? 'Kênh kết nối:' : 'Quick links:'}
+                {/* Social Links Row Underneath CTAs */}
+                <div className="mt-6 flex flex-wrap items-center gap-2.5 sm:gap-3">
+                  <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                    {lang === 'vi' ? 'Kênh kết nối:' : 'Connect:'}
                   </span>
+
                   <a
                     href={siteConfig.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1 hover:text-foreground transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-border/80 bg-card/80 px-3 py-1.5 text-xs font-medium text-foreground/80 hover:text-foreground hover:border-amber-400/50 hover:bg-card hover:-translate-y-0.5 transition-all dark:border-white/8 dark:bg-[#121922]/80"
+                    title="GitHub"
                   >
                     <Github size={14} />
                     <span>GitHub</span>
                   </a>
+
                   <a
                     href={siteConfig.youtubeChannel}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1 hover:text-red-500 transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-border/80 bg-card/80 px-3 py-1.5 text-xs font-medium text-foreground/80 hover:text-red-500 hover:border-red-500/40 hover:bg-card hover:-translate-y-0.5 transition-all dark:border-white/8 dark:bg-[#121922]/80"
+                    title="YouTube @devdien"
                   >
-                    <Youtube size={14} />
+                    <Youtube size={14} className="text-red-500" />
                     <span>YouTube</span>
                   </a>
+
                   <a
                     href={siteConfig.linkedin}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1 hover:text-cyan-400 transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-border/80 bg-card/80 px-3 py-1.5 text-xs font-medium text-foreground/80 hover:text-cyan-400 hover:border-cyan-400/40 hover:bg-card hover:-translate-y-0.5 transition-all dark:border-white/8 dark:bg-[#121922]/80"
+                    title="LinkedIn"
                   >
+                    <Linkedin size={14} className="text-cyan-400" />
                     <span>LinkedIn</span>
                   </a>
                 </div>
               </div>
 
-              {/* Right Column: Clear Space to Unobstructedly Showcase the Photo */}
-              <div className="hidden lg:flex lg:col-span-5 flex-col justify-start items-end h-full pt-4">
-                {/* Subtle Floating Status Pill in the top-right corner of the hero (unobtrusive) */}
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/60 backdrop-blur-md px-3.5 py-1.5 text-xs font-semibold text-white shadow-lg">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-                  </span>
-                  <span>{lang === 'vi' ? 'Sẵn sàng nhận dự án' : 'Available for work'}</span>
-                </div>
-              </div>
+              {/* Right Column: ~40% Clean Space Letting Photo Breathe Fully */}
+              <div className="hidden lg:block lg:col-span-5" />
 
             </div>
           </div>
