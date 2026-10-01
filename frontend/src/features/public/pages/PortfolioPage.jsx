@@ -4,6 +4,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   Boxes,
+  CheckCircle2,
   Code2,
   Cpu,
   Database,
@@ -212,76 +213,175 @@ export default function PortfolioPage({ theme, setTheme }) {
         </section>
 
         {/* ========================================================================= */}
-        {/* 2. CORE CAPABILITIES (3 PILLARS) */}
+        {/* 2. CORE CAPABILITIES (3 PILLARS ARCHITECTURAL CARDS) */}
         {/* ========================================================================= */}
-        <section className="py-16 md:py-20 border-b border-border/60 dark:border-white/5">
+        <section className="py-16 md:py-20 border-b border-border/60 dark:border-white/5 relative">
           <div className="container mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="max-w-2xl">
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-500">
-                {lang === 'vi' ? 'Năng Lực Trọng Tâm' : 'Core Capabilities'}
-              </span>
-              <h2 className="mt-2 font-outfit text-3xl sm:text-4xl font-extrabold text-foreground">
-                {lang === 'vi' ? 'Tôi Có Thể Giúp Gì Cho Dự Án Của Bạn?' : 'What I Bring to the Table'}
+            {/* Section Header */}
+            <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 md:mb-14">
+              <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-bold font-mono tracking-wider text-amber-500 dark:text-amber-400 uppercase">
+                <Sparkles size={13} className="text-amber-400" />
+                <span>{lang === 'vi' ? 'Năng Lực Trọng Tâm' : 'Core Capabilities'}</span>
+              </div>
+              <h2 className="mt-3 font-outfit text-2xl sm:text-3xl lg:text-4xl font-extrabold text-foreground tracking-tight">
+                {lang === 'vi' ? 'Lĩnh Vực Chuyên Môn' : 'What I Bring to the Table'}
               </h2>
-              <p className="mt-3 text-base text-muted-foreground">
+              <p className="mt-2 text-sm sm:text-base text-muted-foreground">
                 {lang === 'vi'
-                  ? 'Tôi tập trung chuyên sâu vào hạ tầng phía sau của ứng dụng, đảm bảo tính ổn định, bảo mật và tốc độ phản hồi.'
-                  : 'Specializing in backend foundations to ensure reliability, security, and high-performance user experiences.'}
+                  ? 'Tập trung phát triển API dịch vụ, thiết kế cơ sở dữ liệu quan hệ và đóng gói môi trường với Docker.'
+                  : 'Focused on backend API development, relational databases, and containerized development.'}
               </p>
             </div>
 
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {/* Pillar 1 */}
-              <div className="rounded-2xl border border-border/80 bg-card p-6 shadow-sm transition-all hover:border-amber-400/50 dark:border-white/8 dark:bg-[#121922]">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/15 text-amber-500 dark:text-amber-400">
-                  <ServerCog size={22} />
+            {/* 3 Pillars Grid */}
+            <div className="grid gap-6 md:grid-cols-3 lg:gap-8">
+              {/* Pillar 01 */}
+              <div className="group relative flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-6 shadow-sm transition-all duration-300 hover:border-amber-400/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.06)] hover:-translate-y-1 dark:border-white/8 dark:bg-[#121922]">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-500 dark:text-amber-400 transition-transform duration-300 group-hover:scale-105">
+                      <ServerCog size={22} />
+                    </div>
+                    <span className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-0.5 font-mono text-xs font-extrabold text-amber-500 dark:text-amber-400">
+                      01
+                    </span>
+                  </div>
+
+                  <h3 className="mt-4 font-outfit text-lg font-bold text-foreground group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors">
+                    Backend & RESTful APIs
+                  </h3>
+
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                    {lang === 'vi'
+                      ? 'Xây dựng API dịch vụ và xử lý nghiệp vụ với Python (FastAPI) và PHP (Laravel).'
+                      : 'Building backend services and business logic with Python (FastAPI) and PHP (Laravel).'}
+                  </p>
+
+                  <ul className="mt-4 space-y-2">
+                    {[
+                      lang === 'vi' ? 'Thiết kế RESTful APIs chuẩn hóa, rõ ràng với FastAPI & Laravel' : 'Standardized RESTful APIs with FastAPI & Laravel',
+                      lang === 'vi' ? 'Xử lý xác thực người dùng (JWT, Bearer token) & phân quyền' : 'User authentication (JWT, Bearer token) & authorization',
+                      lang === 'vi' ? 'Cấu trúc mã nguồn module hóa, dễ bảo trì và mở rộng' : 'Modular codebase architecture, clean and maintainable',
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs text-foreground/85 leading-relaxed">
+                        <CheckCircle2 size={14} className="text-emerald-500 shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <h3 className="mt-5 font-outfit text-xl font-bold text-foreground">
-                  Backend Architecture & APIs
-                </h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
-                  {lang === 'vi'
-                    ? 'Thiết kế RESTful APIs chuẩn OpenAPI với FastAPI/Python và Laravel. Xử lý bất đồng bộ, tối ưu latency P99 và bảo mật JWT authentication.'
-                    : 'Designing RESTful APIs with FastAPI/Python and Laravel. Async request handling, P99 latency optimization, and JWT auth.'}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-1.5 pt-4 border-t border-border/60 text-[11px] font-mono text-muted-foreground dark:border-white/5">
-                  <span>FastAPI</span> • <span>Python</span> • <span>REST</span> • <span>OpenAPI</span>
+
+                <div className="mt-5 pt-3.5 border-t border-border/60 dark:border-white/5">
+                  <div className="flex flex-wrap gap-1.5">
+                    {['FastAPI', 'Python', 'Laravel', 'REST APIs', 'JWT'].map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-md border border-border/60 bg-muted/40 px-2 py-0.5 text-[11px] font-mono text-muted-foreground dark:border-white/5 dark:bg-white/[0.03] group-hover:text-amber-400 transition-colors"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Pillar 2 */}
-              <div className="rounded-2xl border border-border/80 bg-card p-6 shadow-sm transition-all hover:border-amber-400/50 dark:border-white/8 dark:bg-[#121922]">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/15 text-amber-500 dark:text-amber-400">
-                  <Database size={22} />
+              {/* Pillar 02 */}
+              <div className="group relative flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-6 shadow-sm transition-all duration-300 hover:border-amber-400/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.06)] hover:-translate-y-1 dark:border-white/8 dark:bg-[#121922]">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-500 dark:text-amber-400 transition-transform duration-300 group-hover:scale-105">
+                      <Database size={22} />
+                    </div>
+                    <span className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-0.5 font-mono text-xs font-extrabold text-amber-500 dark:text-amber-400">
+                      02
+                    </span>
+                  </div>
+
+                  <h3 className="mt-4 font-outfit text-lg font-bold text-foreground group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors">
+                    {lang === 'vi' ? 'Cơ Sở Dữ Liệu & ORM' : 'Database & ORM'}
+                  </h3>
+
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                    {lang === 'vi'
+                      ? 'Thiết kế cấu trúc bảng và quản lý dữ liệu với PostgreSQL, MySQL và Redis.'
+                      : 'Relational data modeling and database operations with PostgreSQL, MySQL and Redis.'}
+                  </p>
+
+                  <ul className="mt-4 space-y-2">
+                    {[
+                      lang === 'vi' ? 'Mô hình hóa dữ liệu quan hệ chuẩn hóa với PostgreSQL & MySQL' : 'Normalized relational schema design with PostgreSQL & MySQL',
+                      lang === 'vi' ? 'Thao tác dữ liệu hiệu quả qua SQLAlchemy và Eloquent ORM' : 'Efficient data operations via SQLAlchemy and Eloquent ORM',
+                      lang === 'vi' ? 'Ứng dụng Redis cho bộ nhớ đệm (caching) và quản lý session' : 'Redis caching layer and session management',
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs text-foreground/85 leading-relaxed">
+                        <CheckCircle2 size={14} className="text-emerald-500 shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <h3 className="mt-5 font-outfit text-xl font-bold text-foreground">
-                  Database & Performance
-                </h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
-                  {lang === 'vi'
-                    ? 'Thiết kế mô hình cơ sở dữ liệu quan hệ với PostgreSQL và MySQL. Tối ưu hóa truy vấn, lập chỉ mục (indexing), caching với Redis và migrations an toàn.'
-                    : 'Relational data modeling with PostgreSQL and MySQL. Query indexing, Redis caching layers, and zero-downtime migrations.'}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-1.5 pt-4 border-t border-border/60 text-[11px] font-mono text-muted-foreground dark:border-white/5">
-                  <span>PostgreSQL</span> • <span>MySQL</span> • <span>Redis</span> • <span>SQLAlchemy</span>
+
+                <div className="mt-5 pt-3.5 border-t border-border/60 dark:border-white/5">
+                  <div className="flex flex-wrap gap-1.5">
+                    {['PostgreSQL', 'MySQL', 'Redis', 'SQLAlchemy', 'Alembic'].map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-md border border-border/60 bg-muted/40 px-2 py-0.5 text-[11px] font-mono text-muted-foreground dark:border-white/5 dark:bg-white/[0.03] group-hover:text-amber-400 transition-colors"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Pillar 3 */}
-              <div className="rounded-2xl border border-border/80 bg-card p-6 shadow-sm transition-all hover:border-amber-400/50 dark:border-white/8 dark:bg-[#121922]">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/15 text-amber-500 dark:text-amber-400">
-                  <Boxes size={22} />
+              {/* Pillar 03 */}
+              <div className="group relative flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-6 shadow-sm transition-all duration-300 hover:border-amber-400/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.06)] hover:-translate-y-1 dark:border-white/8 dark:bg-[#121922]">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-500 dark:text-amber-400 transition-transform duration-300 group-hover:scale-105">
+                      <Boxes size={22} />
+                    </div>
+                    <span className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-0.5 font-mono text-xs font-extrabold text-amber-500 dark:text-amber-400">
+                      03
+                    </span>
+                  </div>
+
+                  <h3 className="mt-4 font-outfit text-lg font-bold text-foreground group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors">
+                    {lang === 'vi' ? 'Container & Môi Trường' : 'Container & Environment'}
+                  </h3>
+
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                    {lang === 'vi'
+                      ? 'Đóng gói ứng dụng nhất quán và làm việc trên môi trường Linux & Git.'
+                      : 'Containerizing applications for consistency and working with Linux & Git.'}
+                  </p>
+
+                  <ul className="mt-4 space-y-2">
+                    {[
+                      lang === 'vi' ? 'Đóng gói ứng dụng với Docker & Docker Compose chạy ổn định' : 'Containerizing applications with Docker & Docker Compose',
+                      lang === 'vi' ? 'Làm việc và vận hành trên môi trường Linux (Ubuntu, Bash)' : 'Working on Linux environments (Ubuntu, Bash commands)',
+                      lang === 'vi' ? 'Quản lý mã nguồn với Git/GitHub & tích hợp API bên thứ ba' : 'Version control with Git/GitHub & third-party API integration',
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs text-foreground/85 leading-relaxed">
+                        <CheckCircle2 size={14} className="text-emerald-500 shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <h3 className="mt-5 font-outfit text-xl font-bold text-foreground">
-                  Cloud, DevOps & Automation
-                </h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
-                  {lang === 'vi'
-                    ? 'Đóng gói Docker multi-stage tối ưu dung lượng, xây dựng pipeline GitHub Actions CI/CD tự động test & deploy, và cấu hình Nginx reverse proxy.'
-                    : 'Docker multi-stage builds, automated GitHub Actions CI/CD pipelines, Kubernetes manifests, and Nginx reverse proxy configs.'}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-1.5 pt-4 border-t border-border/60 text-[11px] font-mono text-muted-foreground dark:border-white/5">
-                  <span>Docker</span> • <span>CI/CD</span> • <span>Kubernetes</span> • <span>Nginx</span>
+
+                <div className="mt-5 pt-3.5 border-t border-border/60 dark:border-white/5">
+                  <div className="flex flex-wrap gap-1.5">
+                    {['Docker', 'Docker Compose', 'Linux', 'Git', 'Postman'].map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-md border border-border/60 bg-muted/40 px-2 py-0.5 text-[11px] font-mono text-muted-foreground dark:border-white/5 dark:bg-white/[0.03] group-hover:text-amber-400 transition-colors"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
