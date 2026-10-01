@@ -1,10 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import {
-  AppWindow,
   Boxes,
+  Cpu,
   Database,
   ServerCog,
+  Sparkles,
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -13,40 +14,40 @@ const Skills = () => {
 
   const categories = [
     {
-      title: 'Backend',
+      title: 'Backend Systems',
       icon: ServerCog,
       description:
         lang === 'vi'
-          ? 'API design, service layers, auth, business logic và các tích hợp backend.'
-          : 'API design, service layers, auth, business logic, and backend integrations.',
-      skills: ['Python', 'FastAPI', 'Laravel', 'PHP'],
+          ? 'API design, asynchronous services, JWT auth, business logic và kiến trúc microservices.'
+          : 'High-throughput API design, async microservices, auth, and business logic.',
+      skills: ['Python', 'FastAPI', 'Laravel', 'REST & OpenAPI', 'Redis Caching'],
     },
     {
-      title: 'Data',
+      title: 'Data & Storage',
       icon: Database,
       description:
         lang === 'vi'
-          ? 'Thiết kế schema, tối ưu truy vấn và giữ dữ liệu nhất quán cho sản phẩm.'
-          : 'Schema design, query optimization, and data consistency for product workloads.',
-      skills: ['PostgreSQL', 'MySQL', 'SQL Server', 'ETL'],
+          ? 'Thiết kế schema, tối ưu hóa indexing, toàn vẹn giao dịch và ORM data mapping.'
+          : 'Schema modeling, index optimization, transactional integrity, and async ORMs.',
+      skills: ['PostgreSQL', 'MySQL', 'SQLAlchemy', 'Redis', 'Database Migrations'],
     },
     {
-      title: 'Delivery',
+      title: 'DevOps & Cloud',
       icon: Boxes,
       description:
         lang === 'vi'
-          ? 'Containerization, môi trường triển khai và quy trình release ổn định.'
-          : 'Containerization, deployment environments, and reliable release workflows.',
-      skills: ['Docker', 'Nginx', 'CI/CD', 'AWS'],
+          ? 'Container hóa Docker, tự động hóa CI/CD, điều phối Kubernetes và cấu hình Nginx.'
+          : 'Docker containerization, GitHub Actions CI/CD, Kubernetes, and Nginx reverse proxy.',
+      skills: ['Docker', 'Kubernetes', 'CI/CD Pipelines', 'Linux OS', 'Nginx'],
     },
     {
-      title: 'Support',
-      icon: AppWindow,
+      title: 'AI & Automation',
+      icon: Sparkles,
       description:
         lang === 'vi'
-          ? 'Đủ để phối hợp với frontend, debug flow end-to-end và hỗ trợ khi cần chạm vào bề mặt sản phẩm.'
-          : 'Enough to collaborate with frontend, debug end-to-end flows, and support product delivery when needed.',
-      skills: ['React', 'JavaScript', 'Debugging', 'Vite'],
+          ? 'Tích hợp mô hình AI, kiến trúc RAG, vector search và tự động hóa quy trình nghiệp vụ.'
+          : 'AI integrations, RAG architecture, vector search pipelines, and workflow automation.',
+      skills: ['RAG Architecture', 'Vector DB', 'FastAPI AI Endpoints', 'PyTorch / Vision', 'Automation'],
     },
   ];
 

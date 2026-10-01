@@ -17,6 +17,8 @@ const AdminVisitsPage = lazy(() => import('./features/admin/pages/AdminVisitsPag
 const AdminProfilePage = lazy(() => import('./features/admin/pages/AdminProfilePage.jsx'));
 const AdminPasswordPage = lazy(() => import('./features/admin/pages/AdminPasswordPage.jsx'));
 const AboutPage = lazy(() => import('./features/public/pages/AboutPage.jsx'));
+const ProjectsPage = lazy(() => import('./features/public/pages/ProjectsPage.jsx'));
+const ContactPage = lazy(() => import('./features/public/pages/ContactPage.jsx'));
 
 const RouteFallback = () => <div className="min-h-screen bg-background" />;
 
@@ -45,7 +47,9 @@ function App() {
             <Suspense fallback={<RouteFallback />}>
               <Routes>
                 <Route path="/" element={<PortfolioPage theme={theme} setTheme={setTheme} />} />
-                <Route path="/nguyen-minh-dien" element={<AboutPage />} />
+                <Route path="/nguyen-minh-dien" element={<AboutPage theme={theme} setTheme={setTheme} />} />
+                <Route path="/projects" element={<ProjectsPage theme={theme} setTheme={setTheme} />} />
+                <Route path="/contact" element={<ContactPage theme={theme} setTheme={setTheme} />} />
                 <Route path="/login" element={<AdminLoginPage />} />
                 <Route
                   path="/admin"

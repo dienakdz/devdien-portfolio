@@ -24,35 +24,21 @@ import YouTubeShowcase from '../../../components/YouTubeShowcase';
 import AboutTimeline from '../../../components/AboutTimeline';
 import profileImg from '../../../assets/profile.jpg';
 
-export default function AboutPage() {
+import Navbar from '../../../components/Navbar';
+import Footer from '../../../components/Footer';
+
+export default function AboutPage({ theme, setTheme }) {
   const { t, lang, setLang } = useLanguage();
   const page = t?.aboutPage || {};
   const localizedName = getLocalizedName(lang);
 
-  // Independent theme state isolated from the main landing page
-  const [isDark, setIsDark] = useState(() => {
-    try {
-      const saved = localStorage.getItem('nmd_theme');
-      return saved ? saved === 'dark' : true; // Default to dark mode
-    } catch {
-      return true;
-    }
-  });
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // Shared global theme state
+  const isDark = theme ? theme === 'dark' : true;
 
   const toggleTheme = () => {
-    setIsDark((prev) => {
-      const next = !prev;
-      try {
-        localStorage.setItem('nmd_theme', next ? 'dark' : 'light');
-      } catch {
-        // Storage restricted
-      }
-      return next;
-    });
+    if (setTheme) {
+      setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    }
   };
 
   const toggleLanguage = () => {
@@ -99,105 +85,45 @@ export default function AboutPage() {
 
   return (
     <div
-      className={`min-h-screen antialiased transition-colors duration-300 selection:bg-amber-500/20 selection:text-amber-400 ${
+      className={`min-h-screen antialiased transition-colors duration-200 selection:bg-amber-500/20 selection:text-amber-400 ${
         isDark ? 'bg-[#0b1118] text-slate-100' : 'bg-slate-50 text-slate-900'
       }`}
     >
-      {/* Top Navigation */}
-      <header
-        className={`sticky top-0 z-40 border-b backdrop-blur-md transition-colors duration-300 ${
-          isDark
-            ? 'border-white/5 bg-[#0b1118]/90 text-white'
-            : 'border-slate-200 bg-white/90 text-slate-900 shadow-sm'
+      {/* Top Global Navigation */}
+      <Navbar theme={isDark ? 'dark' : 'light'} toggleTheme={toggleTheme} />
+
+      {/* Sub-navigation for In-page Sections */}
+      <div
+        className={`border-b text-xs font-semibold uppercase tracking-wider backdrop-blur-md transition-colors ${
+          isDark ? 'border-white/5 bg-[#0b1118]/80 text-slate-400' : 'border-slate-200 bg-white/80 text-slate-600'
         }`}
       >
-        <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <div className="flex items-center gap-6">
-            <Link
-              to="/"
-              className={`flex items-center gap-2 text-base font-bold tracking-tight transition ${
-                isDark ? 'text-white hover:text-amber-400' : 'text-slate-900 hover:text-amber-600'
-              }`}
-            >
-              <div
-                className={`flex h-8 w-8 items-center justify-center rounded-lg ${
-                  isDark ? 'bg-amber-500/15 text-amber-400' : 'bg-amber-500/20 text-amber-600'
-                }`}
-              >
-                <Tv size={18} />
-              </div>
-              <span className="font-outfit text-lg">DevDien</span>
-            </Link>
-
-            <nav
-              className={`hidden md:flex items-center gap-6 text-xs font-semibold uppercase tracking-wider ${
-                isDark ? 'text-slate-400' : 'text-slate-600'
-              }`}
-            >
-              <Link to="/" className={`transition ${isDark ? 'hover:text-white' : 'hover:text-slate-900'}`}>
-                Portfolio
-              </Link>
-              <a href="#story" className={isDark ? 'text-amber-400 font-bold' : 'text-amber-600 font-bold'}>
-                {lang === 'vi' ? 'Tiểu sử' : 'Story'}
-              </a>
-              <a href="#gallery" className={`transition ${isDark ? 'hover:text-white' : 'hover:text-slate-900'}`}>
-                {lang === 'vi' ? 'Khoảnh khắc' : 'Moments'}
-              </a>
-              <a
-                href="#youtube"
-                className={`transition flex items-center gap-1 ${
-                  isDark ? 'hover:text-white' : 'hover:text-slate-900'
-                }`}
-              >
-                <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                YouTube
-              </a>
-              <a href="#timeline" className={`transition ${isDark ? 'hover:text-white' : 'hover:text-slate-900'}`}>
-                {lang === 'vi' ? 'Sự nghiệp' : 'Timeline'}
-              </a>
-            </nav>
+        <div className="container mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 py-2.5 overflow-x-auto">
+          <div className="flex items-center gap-6 shrink-0">
+            <span className="text-[10px] text-amber-500 font-mono font-bold">MỤC LỤC:</span>
+            <a href="#story" className="hover:text-amber-500 transition-colors">
+              {lang === 'vi' ? 'Tiểu sử' : 'Story'}
+            </a>
+            <a href="#gallery" className="hover:text-amber-500 transition-colors">
+              {lang === 'vi' ? 'Khoảnh khắc' : 'Moments'}
+            </a>
+            <a href="#youtube" className="flex items-center gap-1 hover:text-red-500 transition-colors">
+              <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+              YouTube
+            </a>
+            <a href="#timeline" className="hover:text-amber-500 transition-colors">
+              {lang === 'vi' ? 'Sự nghiệp' : 'Timeline'}
+            </a>
           </div>
 
-          <div className="flex items-center gap-3">
-            <button
-              onClick={toggleLanguage}
-              className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
-                isDark
-                  ? 'border border-white/10 bg-[#121922] text-slate-300 hover:border-amber-400'
-                  : 'border border-slate-300 bg-white text-slate-700 shadow-sm hover:border-amber-500'
-              }`}
-              aria-label="Toggle language"
-            >
-              <Globe size={13} className={isDark ? 'text-amber-400' : 'text-amber-600'} />
-              <span>{lang.toUpperCase()}</span>
-            </button>
-
-            <button
-              onClick={toggleTheme}
-              className={`flex h-8 w-8 items-center justify-center rounded-lg transition ${
-                isDark
-                  ? 'border border-white/10 bg-[#121922] text-slate-400 hover:text-white'
-                  : 'border border-slate-300 bg-white text-slate-700 shadow-sm hover:text-amber-600'
-              }`}
-              aria-label="Toggle theme"
-            >
-              {isDark ? <Sun size={15} /> : <Moon size={15} />}
-            </button>
-
-            <Link
-              to="/"
-              className={`hidden sm:inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
-                isDark
-                  ? 'border border-white/10 bg-[#121922] text-slate-300 hover:text-white hover:border-white/20'
-                  : 'border border-slate-300 bg-white text-slate-700 shadow-sm hover:text-slate-900 hover:border-slate-400'
-              }`}
-            >
-              <ArrowLeft size={14} />
-              <span>{page.backToHome || 'Quay lại Portfolio'}</span>
-            </Link>
-          </div>
+          <Link
+            to="/projects"
+            className="shrink-0 hidden sm:inline-flex items-center gap-1 text-[11px] text-amber-500 hover:underline"
+          >
+            <span>{lang === 'vi' ? 'Xem các dự án ->' : 'Explore Projects ->'}</span>
+          </Link>
         </div>
-      </header>
+      </div>
 
       <main>
         {/* HERO SECTION */}
@@ -543,72 +469,7 @@ export default function AboutPage() {
       </main>
 
       {/* Footer */}
-      <footer
-        className={`border-t py-10 text-center text-xs transition-colors duration-300 ${
-          isDark
-            ? 'border-white/5 bg-[#080d14] text-slate-500'
-            : 'border-slate-200 bg-slate-100 text-slate-600'
-        }`}
-      >
-        <div className="container mx-auto max-w-6xl px-4">
-          <div
-            className={`flex items-center justify-center gap-5 mb-4 ${
-              isDark ? 'text-slate-400' : 'text-slate-600'
-            }`}
-          >
-            <a
-              href={siteConfig.youtubeChannel}
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-red-500 transition-colors"
-              aria-label="YouTube"
-            >
-              <Youtube size={18} />
-            </a>
-            <a
-              href={siteConfig.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-cyan-500 transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin size={18} />
-            </a>
-            <a
-              href={siteConfig.github}
-              target="_blank"
-              rel="noreferrer"
-              className={`transition-colors ${isDark ? 'hover:text-white' : 'hover:text-black'}`}
-              aria-label="GitHub"
-            >
-              <Github size={18} />
-            </a>
-            <a
-              href={siteConfig.facebook}
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-blue-500 transition-colors"
-              aria-label="Facebook"
-            >
-              <Facebook size={18} />
-            </a>
-            <a
-              href={siteConfig.emailHref}
-              className="hover:text-amber-500 transition-colors"
-              aria-label="Email"
-            >
-              <Mail size={18} />
-            </a>
-          </div>
-
-          <p className={`font-mono ${isDark ? 'text-slate-400' : 'text-slate-700'}`}>
-            © {new Date().getFullYear()} {siteConfig.name} ({siteConfig.brand}) - All rights reserved
-          </p>
-          <p className={`mt-1 text-[11px] ${isDark ? 'text-slate-600' : 'text-slate-500'}`}>
-            Official Personal Entity Page • Google Knowledge Graph &amp; Schema.org Profile
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

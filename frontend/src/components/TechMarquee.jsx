@@ -1,12 +1,13 @@
-import React from 'react';
 import {
   AppWindow,
   Boxes,
   Braces,
   Code2,
+  Cpu,
   Database,
   Layers3,
   ServerCog,
+  Terminal,
   Workflow,
 } from 'lucide-react';
 
@@ -14,16 +15,16 @@ const TechMarquee = () => {
   const techRow = [
     { label: 'Python', icon: Code2 },
     { label: 'FastAPI', icon: ServerCog },
-    { label: 'Laravel', icon: Layers3 },
     { label: 'PostgreSQL', icon: Database },
-    { label: 'MySQL', icon: Database },
+    { label: 'Redis & Cache', icon: Cpu },
     { label: 'Docker', icon: Boxes },
+    { label: 'Kubernetes', icon: Boxes },
+    { label: 'Linux OS', icon: Terminal },
     { label: 'Nginx', icon: ServerCog },
-    { label: 'AWS', icon: Boxes },
-    { label: 'CI/CD', icon: Workflow },
-    { label: 'VS Code', icon: AppWindow },
-    { label: 'Postman', icon: Workflow },
-    { label: 'Git', icon: Braces },
+    { label: 'Laravel', icon: Layers3 },
+    { label: 'CI/CD Pipelines', icon: Workflow },
+    { label: 'AWS Cloud', icon: Boxes },
+    { label: 'Git & GitHub', icon: Braces },
   ];
 
   return (
