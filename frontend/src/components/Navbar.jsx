@@ -1,291 +1,171 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
-import { ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import {
+  ArrowUpRight,
+  Globe,
+  Menu,
+  Moon,
+  Send,
+  Sun,
+  Tv,
+  X,
+} from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { useToast } from '../context/ToastContext';
 import { siteConfig } from '../data/siteConfig';
 
 const Navbar = ({ theme, toggleTheme }) => {
-  const { lang, t, toggleLang } = useLanguage();
-  const { showToast } = useToast();
-  const [scrolled, setScrolled] = useState(false);
+  const { lang, toggleLang } = useLanguage();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  const [activeHref, setActiveHref] = useState('');
-
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 30,
-    restDelta: 0.001,
-  });
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 16);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const sectionLinks = ['#focus', '#projects', '#experience', '#skills', '#contact'];
-    let frameId = 0;
-
-    const updateActiveSection = () => {
-      frameId = 0;
-
-      const marker = Math.max(112, window.innerHeight * 0.24);
-      let nextActive = '';
-
-      for (const href of sectionLinks) {
-        const section = document.getElementById(href.slice(1));
-
-        if (!section) {
-          continue;
-        }
-
-        const rect = section.getBoundingClientRect();
-
-        if (rect.top <= marker) {
-          nextActive = href;
-        }
-
-        if (rect.top <= marker && rect.bottom >= marker) {
-          nextActive = href;
-          break;
-        }
-      }
-
-      setActiveHref((current) => (current === nextActive ? current : nextActive));
-    };
-
-    const requestActiveUpdate = () => {
-      if (frameId) {
-        return;
-      }
-
-      frameId = window.requestAnimationFrame(updateActiveSection);
-    };
-
-    updateActiveSection();
-    window.addEventListener('scroll', requestActiveUpdate, { passive: true });
-    window.addEventListener('resize', requestActiveUpdate);
-    window.addEventListener('hashchange', requestActiveUpdate);
-
-    return () => {
-      if (frameId) {
-        window.cancelAnimationFrame(frameId);
-      }
-
-      window.removeEventListener('scroll', requestActiveUpdate);
-      window.removeEventListener('resize', requestActiveUpdate);
-      window.removeEventListener('hashchange', requestActiveUpdate);
-    };
-  }, []);
 
   const navLinks = [
-    { name: t.nav.aboutMe || (lang === 'vi' ? 'Về tôi' : 'About Me'), href: '/nguyen-minh-dien', isRoute: true },
-    { name: t.nav.about, href: '#focus' },
-    { name: t.nav.projects, href: '#projects' },
-    { name: t.nav.experience, href: '#experience' },
-    { name: t.nav.skills, href: '#skills' },
-    { name: t.nav.contact, href: '#contact' },
+    { name: lang === 'vi' ? 'Trang chủ' : 'Home', href: '/' },
+    { name: lang === 'vi' ? 'Về tôi' : 'About Me', href: '/nguyen-minh-dien' },
+    { name: lang === 'vi' ? 'Dự án' : 'Projects', href: '/projects' },
+    { name: lang === 'vi' ? 'Liên hệ' : 'Contact', href: '/contact' },
   ];
 
-  const handleThemeToggle = () => {
-    toggleTheme();
-    showToast(t.toasts.themeChanged, 'info');
-  };
-
-  const handleLangToggle = () => {
-    toggleLang();
-    showToast(lang === 'vi' ? 'English activated' : 'Đã kích hoạt Tiếng Việt', 'info');
-  };
-
-  const handleNavClick = (href) => {
-    setActiveHref(href);
-    setIsOpen(false);
-  };
-
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-6">
-      <motion.div
-        className="fixed left-0 right-0 top-0 h-[2px] origin-left bg-gradient-to-r from-primary/0 via-primary to-primary/0"
-        style={{ scaleX }}
-      />
-
-      <div
-        className={`mx-auto max-w-7xl rounded-[28px] border px-4 py-3 transition-all duration-300 md:px-5 ${
-          scrolled
-            ? 'border-border/90 bg-background/82 shadow-[0_28px_90px_-48px_rgba(3,11,16,0.5)] backdrop-blur-2xl dark:bg-[#08141d]/82'
-            : 'border-white/12 bg-background/62 backdrop-blur-xl dark:border-white/8 dark:bg-[#07121a]/62'
-        }`}
-      >
-        <div className="flex items-center gap-4">
-          <a href="#hero" onClick={() => setActiveHref('')} className="flex min-w-0 items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-[18px] border border-primary/30 bg-primary/14 text-sm font-black tracking-[0.2em] text-primary">
-              DD
-            </div>
-            <div className="min-w-0">
-              <p className="truncate text-sm font-black uppercase tracking-[0.25em] text-foreground">
-                {siteConfig.brand}
-              </p>
-              <p className="truncate text-xs text-muted-foreground/90">
-                {siteConfig.role}
-              </p>
-            </div>
-          </a>
-
-          <div className="hidden xl:flex flex-1 justify-center">
-            <div className="nav-pill-shell inline-flex items-center gap-1 rounded-full border border-border/80 bg-background/64 px-2 py-2 dark:bg-card/86">
-              {navLinks.map((link) => {
-                const isActive = activeHref === link.href;
-
-                if (link.isRoute) {
-                  return (
-                    <Link
-                      key={link.name}
-                      to={link.href}
-                      onClick={() => handleNavClick(link.href)}
-                      className={`nav-link ${isActive ? 'nav-link--active' : ''}`}
-                    >
-                      <span className="nav-link__label">{link.name}</span>
-                    </Link>
-                  );
-                }
-
-                return (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => handleNavClick(link.href)}
-                    aria-current={isActive ? 'page' : undefined}
-                    className={`nav-link ${isActive ? 'nav-link--active' : ''}`}
-                  >
-                    {isActive ? <motion.span layoutId="navbar-active-pill" className="nav-link__pill" /> : null}
-                    <span className="nav-link__label">{link.name}</span>
-                  </a>
-                );
-              })}
-            </div>
+    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/85 backdrop-blur-md transition-colors duration-200 dark:border-white/5 dark:bg-[#0b1118]/85">
+      <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+        
+        {/* BRAND LOGO: Sleek & Clean */}
+        <Link
+          to="/"
+          className="group flex items-center gap-2.5 transition-opacity hover:opacity-90"
+        >
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-amber-500/25 bg-amber-500/10 text-amber-500 transition-transform group-hover:scale-105 dark:text-amber-400">
+            <Tv size={16} />
           </div>
+          <span className="font-outfit text-lg font-bold tracking-tight text-foreground transition-colors group-hover:text-amber-500">
+            DevDien
+          </span>
+        </Link>
 
-          <div className="ml-auto hidden lg:flex items-center gap-2">
-            <a
-              href={siteConfig.resumeUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="button-secondary px-4 py-2 text-xs"
-            >
-              {t.nav.resume}
-              <ArrowUpRight size={16} />
-            </a>
+        {/* DESKTOP NAV LINKS: Airy, Text-based with subtle active indicator */}
+        <nav className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => {
+            const isActive =
+              link.href === '/'
+                ? location.pathname === '/'
+                : location.pathname.startsWith(link.href);
 
-            <button
-              type="button"
-              onClick={handleThemeToggle}
-              aria-label="Toggle theme"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-border/90 bg-background/84 text-foreground/88 transition-colors hover:bg-background dark:bg-card/88 dark:hover:bg-card"
-            >
-              {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-            </button>
+            return (
+              <Link
+                key={link.href}
+                to={link.href}
+                className={`relative text-sm font-semibold tracking-wide transition-colors duration-200 py-1 ${
+                  isActive
+                    ? 'text-amber-500 dark:text-amber-400 font-bold'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                {link.name}
+                {isActive && (
+                  <span className="absolute inset-x-0 -bottom-1 h-0.5 rounded-full bg-amber-500" />
+                )}
+              </Link>
+            );
+          })}
+        </nav>
 
-            <button
-              type="button"
-              onClick={handleLangToggle}
-              aria-label="Toggle language"
-              className="rounded-full border border-border/90 bg-background/84 px-4 py-3 text-xs font-black uppercase tracking-[0.24em] text-foreground/88 transition-colors hover:bg-background dark:bg-card/88 dark:hover:bg-card"
-            >
-              {lang === 'vi' ? 'EN' : 'VI'}
-            </button>
-          </div>
-
+        {/* RIGHT CONTROLS: Minimalist & Sleek */}
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          
+          {/* Language Switcher */}
           <button
             type="button"
-            onClick={() => setIsOpen((open) => !open)}
-            aria-expanded={isOpen}
-            aria-controls="mobile-nav"
-            aria-label="Toggle navigation"
-            className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-border/90 bg-background/84 text-foreground/88 transition-colors hover:bg-background lg:hidden dark:bg-card/88 dark:hover:bg-card"
+            onClick={toggleLang}
+            aria-label="Toggle language"
+            className="flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+            title="Switch Language (VI/EN)"
           >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
+            <Globe size={13} className="text-amber-500" />
+            <span>{lang.toUpperCase()}</span>
+          </button>
+
+          {/* Theme Toggle */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-black/5 transition-colors cursor-pointer dark:hover:bg-white/5"
+            title="Toggle Dark/Light Mode"
+          >
+            {theme === 'light' ? <Moon size={15} /> : <Sun size={15} />}
+          </button>
+
+          {/* Direct CTA */}
+          <Link
+            to="/contact"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 px-3.5 py-1.5 text-xs font-bold transition-all shadow-sm shadow-amber-500/10 active:scale-95"
+          >
+            <Send size={12} />
+            <span>{lang === 'vi' ? 'Liên hệ' : 'Contact'}</span>
+          </Link>
+
+          {/* Mobile Menu Button */}
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle mobile menu"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-foreground md:hidden hover:bg-black/5 dark:hover:bg-white/5"
+          >
+            {isOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
+
       </div>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            id="mobile-nav"
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            className="mx-auto mt-3 max-w-7xl lg:hidden"
-          >
-            <div className="panel overflow-hidden p-4">
-              <div className="grid gap-2">
-                {navLinks.map((link) => {
-                  if (link.isRoute) {
-                    return (
-                      <Link
-                        key={link.name}
-                        to={link.href}
-                        onClick={() => {
-                          setIsOpen(false);
-                          setActiveHref(link.href);
-                        }}
-                        className={`mobile-nav-link ${activeHref === link.href ? 'mobile-nav-link--active' : ''}`}
-                      >
-                        {link.name}
-                      </Link>
-                    );
-                  }
+      {/* MOBILE DRAWER */}
+      {isOpen && (
+        <div className="border-b border-border/80 bg-background/98 px-4 py-4 md:hidden dark:border-white/10 dark:bg-[#0b1118]">
+          <div className="flex flex-col gap-2">
+            {navLinks.map((link) => {
+              const isActive =
+                link.href === '/'
+                  ? location.pathname === '/'
+                  : location.pathname.startsWith(link.href);
 
-                  return (
-                    <a
-                      key={link.name}
-                      href={link.href}
-                      onClick={() => handleNavClick(link.href)}
-                      aria-current={activeHref === link.href ? 'page' : undefined}
-                      className={`mobile-nav-link ${activeHref === link.href ? 'mobile-nav-link--active' : ''}`}
-                    >
-                      {link.name}
-                    </a>
-                  );
-                })}
-              </div>
-
-              <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                <a
-                  href={siteConfig.resumeUrl}
-                  target="_blank"
-                  rel="noreferrer"
+              return (
+                <Link
+                  key={link.href}
+                  to={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="button-primary w-full text-xs"
+                  className={`rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors ${
+                    isActive
+                      ? 'bg-amber-500 text-slate-950 font-bold'
+                      : 'text-muted-foreground hover:bg-muted hover:text-foreground dark:hover:bg-white/5'
+                  }`}
                 >
-                  {t.nav.resume}
-                  <ArrowUpRight size={16} />
-                </a>
-                <button
-                  type="button"
-                  onClick={handleThemeToggle}
-                  className="button-secondary w-full text-xs"
-                >
-                  {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
-                  {theme === 'light' ? 'Dark' : 'Light'}
-                </button>
-                <button
-                  type="button"
-                  onClick={handleLangToggle}
-                  className="button-secondary w-full text-xs"
-                >
-                  {lang === 'vi' ? 'English' : 'Tiếng Việt'}
-                </button>
-              </div>
+                  {link.name}
+                </Link>
+              );
+            })}
+
+            <div className="mt-2 pt-3 border-t border-border/60 flex items-center justify-between dark:border-white/10">
+              <a
+                href={siteConfig.resumeUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-500"
+              >
+                <span>{lang === 'vi' ? 'Mở CV trực tuyến' : 'Open Resume'}</span>
+                <ArrowUpRight size={13} />
+              </a>
+
+              <Link
+                to="/contact"
+                onClick={() => setIsOpen(false)}
+                className="button-primary text-xs py-1.5 px-3"
+              >
+                {lang === 'vi' ? 'Gửi lời nhắn' : 'Contact'}
+              </Link>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
+          </div>
+        </div>
+      )}
+    </header>
   );
 };
 

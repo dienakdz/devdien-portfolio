@@ -61,10 +61,10 @@
 
 [data-theme='dark'] .cosmic-background__base {
   background:
-    radial-gradient(circle at 50% 10%, rgba(48, 91, 150, 0.18), transparent 13%),
-    radial-gradient(circle at 18% 18%, rgba(22, 63, 112, 0.22), transparent 24%),
-    radial-gradient(circle at 82% 16%, rgba(14, 84, 112, 0.18), transparent 24%),
-    linear-gradient(180deg, #010205 0%, #01040b 24%, #020916 56%, #010206 100%);
+    radial-gradient(circle at 50% 10%, rgba(245, 158, 11, 0.05), transparent 18%),
+    radial-gradient(circle at 18% 18%, rgba(30, 41, 59, 0.25), transparent 24%),
+    radial-gradient(circle at 82% 16%, rgba(245, 158, 11, 0.04), transparent 24%),
+    linear-gradient(180deg, #0b1118 0%, #090e15 35%, #0b1118 100%);
 }
 
 .cosmic-background__void {
@@ -74,7 +74,7 @@
 
 [data-theme='dark'] .cosmic-background__void {
   background:
-    radial-gradient(circle at 50% 38%, rgba(0, 0, 0, 0) 0%, rgba(1, 6, 12, 0.08) 18%, rgba(1, 6, 14, 0.58) 56%, rgba(0, 0, 0, 0.88) 100%);
+    radial-gradient(circle at 50% 38%, rgba(0, 0, 0, 0) 0%, rgba(11, 17, 24, 0.08) 18%, rgba(11, 17, 24, 0.58) 56%, rgba(11, 17, 24, 0.88) 100%);
 }
 
 .cosmic-background__nebula--core {
@@ -84,7 +84,7 @@
 }
 
 [data-theme='dark'] .cosmic-background__nebula--core {
-  background: radial-gradient(ellipse 65% 45% at 50% 0%, rgba(53, 109, 181, 0.2) 0%, rgba(13, 31, 62, 0.12) 32%, transparent 70%);
+  background: radial-gradient(ellipse 65% 45% at 50% 0%, rgba(245, 158, 11, 0.06) 0%, rgba(18, 25, 34, 0.15) 32%, transparent 70%);
 }
 
 .cosmic-background__nebula--left {
@@ -95,7 +95,7 @@
 }
 
 [data-theme='dark'] .cosmic-background__nebula--left {
-  background: radial-gradient(circle at center, rgba(19, 74, 142, 0.22) 0%, rgba(10, 30, 61, 0.1) 35%, transparent 68%);
+  background: radial-gradient(circle at center, rgba(30, 41, 59, 0.25) 0%, rgba(18, 25, 34, 0.1) 35%, transparent 68%);
 }
 
 .cosmic-background__nebula--right {
@@ -106,7 +106,7 @@
 }
 
 [data-theme='dark'] .cosmic-background__nebula--right {
-  background: radial-gradient(circle at center, rgba(14, 95, 125, 0.2) 0%, rgba(9, 34, 52, 0.08) 35%, transparent 68%);
+  background: radial-gradient(circle at center, rgba(245, 158, 11, 0.05) 0%, rgba(18, 25, 34, 0.1) 35%, transparent 68%);
 }
 
 .cosmic-background__dust {

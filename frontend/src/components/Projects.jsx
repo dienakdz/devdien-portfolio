@@ -15,25 +15,6 @@ const Projects = () => {
   );
   const hasMoreProjects = projects.length > 4;
 
-  const handleProjectPointerMove = (event) => {
-    if (event.pointerType === 'touch') {
-      return;
-    }
-
-    const card = event.currentTarget;
-    const rect = card.getBoundingClientRect();
-
-    card.style.setProperty('--project-spotlight-x', `${event.clientX - rect.left}px`);
-    card.style.setProperty('--project-spotlight-y', `${event.clientY - rect.top}px`);
-  };
-
-  const handleProjectPointerLeave = (event) => {
-    const card = event.currentTarget;
-
-    card.style.removeProperty('--project-spotlight-x');
-    card.style.removeProperty('--project-spotlight-y');
-  };
-
   return (
     <section id="projects" className="section-padding relative overflow-hidden">
       <div
@@ -87,8 +68,6 @@ const Projects = () => {
                   whileHover={{ y: -4 }}
                   viewport={{ once: true, margin: '-40px' }}
                   transition={{ delay: index * 0.05 }}
-                  onPointerMove={handleProjectPointerMove}
-                  onPointerLeave={handleProjectPointerLeave}
                   className="project-card content-plane rounded-[28px] p-4 md:p-5"
                 >
                   <span aria-hidden="true" className="project-spotlight" />
