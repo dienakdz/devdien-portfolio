@@ -5,26 +5,18 @@ import {
   ArrowUpRight,
   Boxes,
   CheckCircle2,
-  Code2,
-  Cpu,
   Database,
-  ExternalLink,
   Github,
-  GraduationCap,
   Linkedin,
   Mail,
-  MapPin,
-  Send,
   ServerCog,
   ShieldCheck,
   Sparkles,
-  Tv,
   User,
   Youtube,
 } from 'lucide-react';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
-import profileImg from '../../../assets/profile.jpg';
 import heroCover from '../../../assets/hero-cover.jpg';
 import { useLanguage } from '../../../context/LanguageContext';
 import { getLocalizedName, siteConfig } from '../../../data/siteConfig';
@@ -133,8 +125,8 @@ export default function PortfolioPage({ theme, setTheme }) {
                 {/* Bio Description */}
                 <p className="mt-4 max-w-2xl text-base sm:text-lg leading-relaxed text-muted-foreground">
                   {lang === 'vi'
-                    ? 'Tôi tập trung thiết kế và xây dựng các hệ thống backend chịu tải cao, tối ưu cơ sở dữ liệu quan hệ, phát triển REST APIs chuẩn OpenAPI và tự động hóa quy trình triển khai với Docker & CI/CD.'
-                    : 'Designing and building high-throughput backend architectures, clean OpenAPI services, robust relational data pipelines, and cloud automation with Docker & CI/CD.'}
+                    ? 'Tôi tập trung thiết kế và xây dựng các dịch vụ backend ổn định, tối ưu cơ sở dữ liệu quan hệ, phát triển REST APIs chuẩn mực và đóng gói môi trường với Docker.'
+                    : 'Designing and building reliable backend services, standardized REST APIs, relational database schemas, and containerized workflows with Docker.'}
                 </p>
 
                 {/* Action CTAs */}
@@ -389,13 +381,15 @@ export default function PortfolioPage({ theme, setTheme }) {
         </section>
 
         {/* ========================================================================= */}
-        {/* 3. FEATURED PROJECTS PREVIEW */}
         {/* ========================================================================= */}
-        <section className="py-16 md:py-20 border-b border-border/60 dark:border-white/5">
+        {/* ========================================================================= */}
+        {/* 3. FEATURED PROJECTS PREVIEW (BENTO GRID SPOTLIGHT: CAR SHOWROOM + VEGGIE & FASTAPI) */}
+        {/* ========================================================================= */}
+        <section className="py-14 md:py-18 border-b border-border/60 dark:border-white/5">
           <div className="container mx-auto max-w-6xl px-4 sm:px-6">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-amber-500">
+                <span className="text-xs font-bold uppercase tracking-wider text-amber-500 font-mono">
                   {lang === 'vi' ? 'Dự Án Chọn Lọc' : 'Featured Work'}
                 </span>
                 <h2 className="mt-2 font-outfit text-3xl sm:text-4xl font-extrabold text-foreground">
@@ -403,8 +397,8 @@ export default function PortfolioPage({ theme, setTheme }) {
                 </h2>
                 <p className="mt-2 text-sm sm:text-base text-muted-foreground max-w-xl">
                   {lang === 'vi'
-                    ? 'Các dự án thể hiện cách tôi giải quyết bài toán nghiệp vụ, độ trễ và luồng dữ liệu thực tế.'
-                    : 'Demonstrating architecture decisions, throughput optimization, and real business flows.'}
+                    ? '3 dự án thực tế thể hiện tư duy thiết kế cơ sở dữ liệu quan hệ, API chuẩn mực và nghiệp vụ backend.'
+                    : '3 practical projects showcasing relational database design, clean APIs, and backend business logic.'}
                 </p>
               </div>
 
@@ -417,198 +411,391 @@ export default function PortfolioPage({ theme, setTheme }) {
               </Link>
             </div>
 
-            {/* Grid of 3 featured projects */}
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {featuredProjects.map((p, idx) => (
-                <div
-                  key={p.title}
-                  className="flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-5 shadow-sm transition-all hover:border-amber-400/40 dark:border-white/8 dark:bg-[#121922]"
-                >
+            {/* Bento Grid: 60% Left Hero Spotlight (Car Showroom) + 40% Right Stacked (Veggie & FastAPI) */}
+            <div className="mt-10 grid gap-6 lg:grid-cols-12 lg:items-stretch">
+              {/* Left Column (60%): Car Showroom Spotlight */}
+              {featuredProjects[0] && (
+                <div className="lg:col-span-7 group flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-6 lg:p-7 shadow-sm transition-all duration-300 hover:border-amber-400/50 hover:shadow-[0_0_35px_rgba(245,158,11,0.08)] dark:border-white/8 dark:bg-[#121922]">
                   <div>
-                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-slate-950">
+                    {/* Top Mockup Image (16:10 Full Width) */}
+                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-slate-950 border border-border/60 dark:border-white/10">
                       <img
-                        src={p.image}
-                        alt={p.title}
-                        className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                        src={featuredProjects[0].image}
+                        alt={featuredProjects[0].title}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                      <span className="absolute top-2.5 left-2.5 rounded-md bg-slate-950/80 px-2 py-0.5 text-[10px] font-bold text-white border border-white/10">
-                        {p.status}
+                      <span className="absolute top-3 left-3 rounded-md bg-slate-950/85 backdrop-blur-md px-2.5 py-1 text-xs font-bold text-amber-400 border border-amber-500/30">
+                        {featuredProjects[0].status}
                       </span>
                     </div>
 
-                    <h3 className="mt-4 font-outfit text-xl font-bold text-foreground">
-                      {p.title}
-                    </h3>
-                    <p className="mt-2 text-xs leading-relaxed text-muted-foreground line-clamp-3">
-                      {p.summary}
-                    </p>
+                    {/* Content Below */}
+                    <div className="mt-5">
+                      <h3 className="font-outfit text-2xl font-bold text-foreground group-hover:text-amber-500 transition-colors">
+                        {featuredProjects[0].title}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground line-clamp-2">
+                        {featuredProjects[0].summary}
+                      </p>
 
-                    <div className="mt-3 flex flex-wrap gap-1">
-                      {p.tech.slice(0, 3).map((t) => (
-                        <span
-                          key={t}
-                          className="rounded-md border border-border/60 bg-muted/40 px-2 py-0.5 text-[10px] font-medium text-foreground/80 dark:border-white/5 dark:bg-white/[0.03]"
-                        >
-                          {t}
-                        </span>
-                      ))}
+                      {/* Architecture Highlights */}
+                      <div className="mt-4 space-y-2 text-xs text-foreground/85">
+                        <div className="flex items-center gap-2">
+                          <span className="h-1.5 w-1.5 rounded-full bg-amber-400 shrink-0" />
+                          <span>
+                            {lang === 'vi'
+                              ? 'Danh mục phân cấp đa tầng (Makes / Models / Trims)'
+                              : 'Multi-tier catalog hierarchy (Makes / Models / Trims)'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="h-1.5 w-1.5 rounded-full bg-amber-400 shrink-0" />
+                          <span>
+                            {lang === 'vi'
+                              ? 'Lưu trữ thuộc tính động EAV & quản trị kho xe (VIN, trạng thái giữ chỗ)'
+                              : 'Dynamic EAV attributes & vehicle inventory tracking (VIN, hold states)'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="h-1.5 w-1.5 rounded-full bg-amber-400 shrink-0" />
+                          <span>
+                            {lang === 'vi'
+                              ? 'Tiếp nhận Lead khách hàng & lịch hẹn lái thử (Appointments)'
+                              : 'CRM Lead capture & test-drive appointment scheduling'}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Tech Badges */}
+                      <div className="mt-4 flex flex-wrap gap-1.5">
+                        {featuredProjects[0].tech.map((t) => (
+                          <span
+                            key={t}
+                            className="rounded-md border border-border/60 bg-muted/40 px-2.5 py-1 text-xs font-mono text-muted-foreground dark:border-white/5 dark:bg-white/[0.03]"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
 
-                  <div className="mt-5 pt-3 border-t border-border/60 flex items-center justify-between dark:border-white/5">
+                  {/* Footer Actions */}
+                  <div className="mt-6 pt-4 border-t border-border/60 flex items-center justify-between dark:border-white/5">
                     <a
-                      href={p.repoUrl}
+                      href={featuredProjects[0].repoUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-bold text-foreground hover:text-amber-500 transition-colors"
+                      className="button-primary inline-flex items-center gap-2 text-xs font-bold"
                     >
-                      <Github size={13} />
-                      <span>{lang === 'vi' ? 'Mã nguồn' : 'Source'}</span>
-                      <ArrowUpRight size={12} />
+                      <Github size={15} />
+                      <span>{lang === 'vi' ? 'Mã nguồn GitHub' : 'View Source on GitHub'}</span>
+                      <ArrowUpRight size={13} />
                     </a>
 
                     <Link
                       to="/projects"
-                      className="text-xs font-semibold text-amber-500 hover:underline"
+                      className="text-xs font-semibold text-amber-500 hover:underline inline-flex items-center gap-1"
                     >
-                      {lang === 'vi' ? 'Chi tiết ->' : 'Details ->'}
+                      <span>{lang === 'vi' ? 'Chi tiết dự án' : 'Project Details'}</span>
+                      <ArrowRight size={13} />
                     </Link>
                   </div>
                 </div>
-              ))}
+              )}
+
+              {/* Right Column (40%): Veggie & FastAPI Book API Stacked (Both Image Top, Text Bottom) */}
+              <div className="lg:col-span-5 flex flex-col justify-between gap-6">
+                {/* Project 2: Veggie */}
+                {featuredProjects[1] && (
+                  <div className="flex-1 group flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-5 shadow-sm transition-all duration-300 hover:border-amber-400/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.08)] dark:border-white/8 dark:bg-[#121922]">
+                    <div>
+                      {/* Image on Top (Full Width) */}
+                      <div className="relative aspect-[16/8] w-full overflow-hidden rounded-xl bg-slate-950 border border-border/60 dark:border-white/10">
+                        <img
+                          src={featuredProjects[1].image}
+                          alt={featuredProjects[1].title}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <span className="absolute top-2.5 left-2.5 rounded-md bg-slate-950/85 backdrop-blur-md px-2 py-0.5 text-[11px] font-bold text-emerald-400 border border-emerald-500/30">
+                          {featuredProjects[1].status}
+                        </span>
+                      </div>
+
+                      {/* Text Below */}
+                      <h3 className="mt-3.5 font-outfit text-lg font-bold text-foreground group-hover:text-amber-500 transition-colors">
+                        {featuredProjects[1].title}
+                      </h3>
+                      <p className="mt-1 text-xs leading-relaxed text-muted-foreground line-clamp-2">
+                        {featuredProjects[1].summary}
+                      </p>
+
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {featuredProjects[1].tech.slice(0, 4).map((t) => (
+                          <span
+                            key={t}
+                            className="rounded-md border border-border/60 bg-muted/40 px-2 py-0.5 text-[11px] font-mono text-muted-foreground dark:border-white/5 dark:bg-white/[0.03]"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-border/60 flex items-center justify-between dark:border-white/5">
+                      <a
+                        href={featuredProjects[1].repoUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-foreground hover:text-amber-500 transition-colors"
+                      >
+                        <Github size={14} />
+                        <span>{lang === 'vi' ? 'Mã nguồn GitHub' : 'View Source'}</span>
+                        <ArrowUpRight size={12} />
+                      </a>
+
+                      <Link
+                        to="/projects"
+                        className="text-xs font-semibold text-amber-500 hover:underline inline-flex items-center gap-1"
+                      >
+                        <span>{lang === 'vi' ? 'Chi tiết' : 'Details'}</span>
+                        <ArrowRight size={12} />
+                      </Link>
+                    </div>
+                  </div>
+                )}
+
+                {/* Project 3: FastAPI Book Management API */}
+                {featuredProjects[2] && (
+                  <div className="flex-1 group flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-5 shadow-sm transition-all duration-300 hover:border-amber-400/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.08)] dark:border-white/8 dark:bg-[#121922]">
+                    <div>
+                      {/* Image on Top (Full Width) */}
+                      <div className="relative aspect-[16/8] w-full overflow-hidden rounded-xl bg-slate-950 border border-border/60 dark:border-white/10">
+                        <img
+                          src={featuredProjects[2].image}
+                          alt={featuredProjects[2].title}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <span className="absolute top-2.5 left-2.5 rounded-md bg-slate-950/85 backdrop-blur-md px-2 py-0.5 text-[11px] font-bold text-amber-400 border border-amber-500/30">
+                          {featuredProjects[2].status}
+                        </span>
+                      </div>
+
+                      {/* Text Below */}
+                      <h3 className="mt-3.5 font-outfit text-lg font-bold text-foreground group-hover:text-amber-500 transition-colors">
+                        {featuredProjects[2].title}
+                      </h3>
+                      <p className="mt-1 text-xs leading-relaxed text-muted-foreground line-clamp-2">
+                        {featuredProjects[2].summary}
+                      </p>
+
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {featuredProjects[2].tech.slice(0, 4).map((t) => (
+                          <span
+                            key={t}
+                            className="rounded-md border border-border/60 bg-muted/40 px-2 py-0.5 text-[11px] font-mono text-muted-foreground dark:border-white/5 dark:bg-white/[0.03]"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-border/60 flex items-center justify-between dark:border-white/5">
+                      <a
+                        href={featuredProjects[2].repoUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-foreground hover:text-amber-500 transition-colors"
+                      >
+                        <Github size={14} />
+                        <span>{lang === 'vi' ? 'Mã nguồn GitHub' : 'View Source'}</span>
+                        <ArrowUpRight size={12} />
+                      </a>
+
+                      <Link
+                        to="/projects"
+                        className="text-xs font-semibold text-amber-500 hover:underline inline-flex items-center gap-1"
+                      >
+                        <span>{lang === 'vi' ? 'Chi tiết' : 'Details'}</span>
+                        <ArrowRight size={12} />
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </section>
 
         {/* ========================================================================= */}
-        {/* 4. ABOUT ME TEASER */}
+        {/* 4. CAREER & EXPERIENCE TIMELINE (MẪU 1: TIMELINE + STATS CARD) */}
         {/* ========================================================================= */}
-        <section className="py-16 md:py-20 border-b border-border/60 dark:border-white/5">
+        <section className="py-14 md:py-20">
           <div className="container mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="rounded-3xl border border-border/80 bg-card p-8 sm:p-10 shadow-sm dark:border-white/8 dark:bg-[#121922]">
-              <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
-                <div className="lg:col-span-8">
-                  <span className="text-xs font-bold uppercase tracking-wider text-amber-500">
-                    {lang === 'vi' ? 'Về Nguyễn Minh Diện' : 'About Nguyễn Minh Diện'}
+            {/* Header: Title + Subtitle + Badge */}
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <div className="flex flex-wrap items-center gap-3">
+                  <h2 className="font-outfit text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
+                    {lang === 'vi' ? 'Kinh Nghiệm Nghề Nghiệp' : 'Professional Experience'}
+                  </h2>
+                  <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-[11px] font-bold tracking-wider text-amber-400 font-mono uppercase">
+                    TIMELINE & MILESTONES
                   </span>
-                  <h2 className="mt-2 font-outfit text-3xl sm:text-4xl font-extrabold text-foreground">
-                    {lang === 'vi' ? 'Hành Trình & Định Hướng Nghề Nghiệp' : 'Background & Engineering Philosophy'}
-                  </h2>
-                  <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-                    {lang === 'vi'
-                      ? 'Từ những ngày đầu mày mò code và dựng server, tôi luôn giữ nguyên tắc: một hệ thống tốt không phải là một hệ thống phức tạp, mà là một hệ thống giải quyết đúng bài toán, dễ đọc, dễ duy trì và ổn định khi dữ liệu tăng trưởng.'
-                      : 'I believe great backend engineering is not about over-complicating systems, but about delivering clear, reliable, and easily maintainable services that scale gracefully.'}
-                  </p>
-
-                  <div className="mt-6 flex flex-wrap gap-4">
-                    <Link
-                      to="/nguyen-minh-dien"
-                      className="button-primary inline-flex items-center gap-2"
-                    >
-                      <ShieldCheck size={16} />
-                      <span>{lang === 'vi' ? 'Xem toàn bộ tiểu sử & sự nghiệp' : 'Read Full Story & Timeline'}</span>
-                      <ArrowRight size={15} />
-                    </Link>
-                  </div>
                 </div>
-
-                <div className="lg:col-span-4 rounded-2xl border border-border/60 bg-muted/20 p-5 dark:border-white/5 dark:bg-[#0b1118]/60">
-                  <p className="font-outfit text-xs font-bold uppercase tracking-wider text-foreground">
-                    {lang === 'vi' ? 'Thông tin nhanh' : 'Quick Facts'}
-                  </p>
-                  <ul className="mt-3 space-y-2 text-xs text-muted-foreground">
-                    <li>• {lang === 'vi' ? 'Vai trò:' : 'Role:'} Backend Engineer</li>
-                    <li>• {lang === 'vi' ? 'Địa điểm:' : 'Location:'} Hà Nội, Việt Nam</li>
-                    <li>• {lang === 'vi' ? 'Học vấn:' : 'Education:'} Đại học Mỏ - Địa chất (HUMG)</li>
-                    <li>• {lang === 'vi' ? 'Kênh YouTube:' : 'YouTube:'} @devdien</li>
-                  </ul>
-                </div>
+                <p className="mt-1 font-outfit text-xl sm:text-2xl font-semibold text-muted-foreground/80">
+                  {lang === 'vi' ? 'Career Experience' : 'Milestones & Growth'}
+                </p>
               </div>
-            </div>
-          </div>
-        </section>
 
-        {/* ========================================================================= */}
-        {/* 5. YOUTUBE SHOWCASE */}
-        {/* ========================================================================= */}
-        <section className="py-16 md:py-20 border-b border-border/60 dark:border-white/5">
-          <div className="container mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="rounded-3xl border border-red-500/20 bg-gradient-to-br from-red-500/5 via-card to-card p-8 sm:p-10 shadow-sm dark:border-white/8 dark:bg-[#121922]">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-                <div>
-                  <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-red-500">
-                    <Youtube size={16} className="fill-current" />
-                    <span>YouTube @devdien</span>
-                  </div>
-                  <h2 className="mt-2 font-outfit text-2xl sm:text-3xl font-extrabold text-foreground">
-                    {lang === 'vi' ? 'Chia Sẻ Kiến Thức Lập Trình Thực Chiến' : 'Hands-on Coding Masterclasses'}
-                  </h2>
-                  <p className="mt-2 text-sm text-muted-foreground max-w-xl">
-                    {lang === 'vi'
-                      ? 'Nơi tôi hướng dẫn chi tiết từ việc thiết kế REST API bằng FastAPI 3 giờ đến trọn bộ xây dựng website thương mại điện tử với Laravel.'
-                      : 'Free tutorials covering FastAPI Book Management REST APIs from scratch and fullstack eCommerce platforms with Laravel.'}
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-3 shrink-0">
-                  <a
-                    href={siteConfig.youtubeSubscribeUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-xl bg-red-600 hover:bg-red-500 px-5 py-2.5 text-xs font-bold text-white shadow-md transition-all cursor-pointer"
-                  >
-                    <Youtube size={16} className="fill-current" />
-                    <span>{lang === 'vi' ? 'Đăng ký kênh @devdien' : 'Subscribe @devdien'}</span>
-                  </a>
-
-                  <a
-                    href={siteConfig.youtubeChannel}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="button-secondary text-xs"
-                  >
-                    <span>{lang === 'vi' ? 'Xem kênh' : 'View Channel'}</span>
-                    <ExternalLink size={13} />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* 6. CALL TO ACTION BANNER */}
-        {/* ========================================================================= */}
-        <section className="py-16 md:py-24">
-          <div className="container mx-auto max-w-4xl px-4 sm:px-6 text-center">
-            <h2 className="font-outfit text-3xl sm:text-5xl font-extrabold text-foreground">
-              {lang === 'vi' ? 'Bạn Đang Có Dự Án Hoặc Muốn Kết Nối?' : 'Ready to Build Something Great?'}
-            </h2>
-            <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto">
-              {lang === 'vi'
-                ? 'Tôi luôn sẵn sàng trao đổi về các cơ hội kỹ thuật, vị trí backend phù hợp và các giải pháp hệ thống.'
-                : 'I am always open to exploring technical opportunities, backend positions, or collaboration on scalable systems.'}
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
-                to="/contact"
-                className="button-primary inline-flex items-center gap-2 text-base px-6 py-3"
+                to="/nguyen-minh-dien#timeline"
+                className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-amber-500 hover:underline"
               >
-                <Send size={16} />
-                <span>{lang === 'vi' ? 'Liên hệ ngay với tôi' : 'Get in Touch'}</span>
-                <ArrowRight size={16} />
+                <span>{lang === 'vi' ? 'Xem toàn bộ tiểu sử' : 'View Full Story'}</span>
+                <ArrowRight size={13} />
               </Link>
+            </div>
 
-              <a
-                href={siteConfig.resumeUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="button-secondary inline-flex items-center gap-2 text-base px-6 py-3"
-              >
-                <span>{lang === 'vi' ? 'Tải / Xem CV' : 'Open Resume'}</span>
-                <ArrowUpRight size={16} />
-              </a>
+            {/* Grid: 2 Columns (Left ~65% Timeline, Right ~35% Stats Box) */}
+            <div className="mt-10 grid gap-8 lg:grid-cols-12 lg:items-stretch">
+              {/* Left Column (8 cols): Vertical Timeline */}
+              <div className="lg:col-span-8 relative">
+                {/* Vertical Line */}
+                <div className="absolute left-[7px] top-3 bottom-3 w-[2px] bg-gradient-to-b from-amber-400/50 via-amber-400/25 to-amber-400/10" />
+
+                <div className="space-y-9 sm:space-y-10">
+                  {/* Item 1: TMA Solutions */}
+                  <div className="relative flex items-start">
+                    {/* Glowing Node Dot */}
+                    <div className="relative z-10 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-amber-400 shadow-[0_0_14px_rgba(245,158,11,0.85)] ring-4 ring-background dark:ring-[#0b1118]" />
+
+                    {/* Content */}
+                    <div className="pl-6 sm:pl-8 flex-1">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <h3 className="font-outfit text-xl sm:text-2xl font-bold text-foreground">
+                          TMA Solutions
+                        </h3>
+                        <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-0.5 text-xs font-semibold text-amber-400 font-mono">
+                          {lang === 'vi' ? 'Đang đảm nhiệm' : 'Current'}
+                        </span>
+                      </div>
+
+                      <p className="mt-1 text-sm font-medium text-muted-foreground">
+                        {lang === 'vi'
+                          ? 'Backend Developer (08/2025 - Hiện tại)'
+                          : 'Backend Developer (08/2025 - Present)'}
+                      </p>
+
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {['Python', 'FastAPI', 'PostgreSQL', 'Docker'].map((t) => (
+                          <span
+                            key={t}
+                            className="rounded-lg border border-border/80 bg-card px-3 py-1 text-xs font-mono text-foreground/80 dark:border-white/8 dark:bg-[#121922]"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Item 2: EFE Technology */}
+                  <div className="relative flex items-start">
+                    {/* Glowing Node Dot */}
+                    <div className="relative z-10 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-amber-400 shadow-[0_0_14px_rgba(245,158,11,0.85)] ring-4 ring-background dark:ring-[#0b1118]" />
+
+                    {/* Content */}
+                    <div className="pl-6 sm:pl-8 flex-1">
+                      <h3 className="font-outfit text-xl sm:text-2xl font-bold text-foreground">
+                        EFE Technology
+                      </h3>
+
+                      <p className="mt-1 text-sm font-medium text-muted-foreground">
+                        {lang === 'vi'
+                          ? '- Junior PHP Developer (04/2024 - 08/2025)'
+                          : '- Junior PHP Developer (04/2024 - 08/2025)'}
+                      </p>
+
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {['PHP', 'WordPress', 'MySQL'].map((t) => (
+                          <span
+                            key={t}
+                            className="rounded-lg border border-border/80 bg-card px-3 py-1 text-xs font-mono text-foreground/80 dark:border-white/8 dark:bg-[#121922]"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Item 3: Đại học VKU */}
+                  <div className="relative flex items-start">
+                    {/* Glowing Node Dot */}
+                    <div className="relative z-10 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-amber-400 shadow-[0_0_14px_rgba(245,158,11,0.85)] ring-4 ring-background dark:ring-[#0b1118]" />
+
+                    {/* Content */}
+                    <div className="pl-6 sm:pl-8 flex-1">
+                      <h3 className="font-outfit text-xl sm:text-2xl font-bold text-foreground">
+                        {lang === 'vi'
+                          ? 'Đại học CNTT & Truyền thông Việt - Hàn (VKU)'
+                          : 'Vietnam - Korea University of ICT (VKU)'}
+                      </h3>
+
+                      <p className="mt-1 text-sm font-medium text-muted-foreground">
+                        {lang === 'vi'
+                          ? 'Kỹ sư Kỹ thuật Phần mềm Bằng Giỏi GPA 3.55/4.0'
+                          : 'B.S. in Software Engineering (Honors Degree - GPA 3.55/4.0)'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column (4 cols): Stats Card */}
+              <div className="lg:col-span-4 flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-6 sm:p-8 shadow-sm dark:border-white/8 dark:bg-[#121922]">
+                <div className="space-y-6">
+                  {/* Stat 1 */}
+                  <div>
+                    <div className="font-outfit text-4xl sm:text-5xl font-black text-amber-400 tracking-tight">
+                      3+
+                    </div>
+                    <p className="mt-1 text-sm sm:text-base font-medium text-muted-foreground">
+                      {lang === 'vi' ? 'Năm kinh nghiệm' : 'Years Experience'}
+                    </p>
+                  </div>
+
+                  {/* Stat 2 */}
+                  <div>
+                    <div className="font-outfit text-4xl sm:text-5xl font-black text-amber-400 tracking-tight">
+                      10+
+                    </div>
+                    <p className="mt-1 text-sm sm:text-base font-medium text-muted-foreground">
+                      {lang === 'vi' ? 'Dự án' : 'Projects Completed'}
+                    </p>
+                  </div>
+
+                  {/* Stat 3 */}
+                  <div>
+                    <div className="font-outfit text-4xl sm:text-5xl font-black text-amber-400 tracking-tight">
+                      100%
+                    </div>
+                    <p className="mt-1 text-sm sm:text-base font-medium text-muted-foreground">
+                      {lang === 'vi' ? 'Cam kết chất lượng' : 'Quality Commitment'}
+                    </p>
+                  </div>
+                </div>
+
+                <Link
+                  to="/nguyen-minh-dien#timeline"
+                  className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-3.5 text-sm transition-all shadow-md hover:shadow-amber-500/20 active:scale-[0.98]"
+                >
+                  <span>{lang === 'vi' ? 'Xem chi tiết tiểu sử' : 'View Full Story'}</span>
+                  <ArrowRight size={15} />
+                </Link>
+              </div>
             </div>
           </div>
         </section>

@@ -1,8 +1,59 @@
 import project1 from '../assets/optimized/project1.webp';
 import project2 from '../assets/optimized/project2.webp';
+import carShowroomImg from '../assets/car-showroom.jpg';
+import veggieImg from '../assets/veggie.jpg';
+import fastapiBookImg from '../assets/fastapi-book.jpg';
 
 export const projectData = {
   en: [
+    {
+      title: 'Car Showroom',
+      summary:
+        'A comprehensive automotive dealership platform and vehicle inventory management system featuring multi-tier catalogs, dynamic EAV attributes, and CRM lead capture.',
+      problem:
+        'Managing automotive dealerships requires complex relational modeling across makes, models, trims, dynamic specifications, and synchronizing vehicle hold states.',
+      solution:
+        'Architected a robust Laravel & MySQL backend with multi-table catalog hierarchy, EAV attribute values, inventory price tracking, and appointment scheduling workflows.',
+      impact:
+        'Provides a complete dealership workflow engine handling vehicles from intake to customer test-drive booking and sales.',
+      tech: ['Laravel', 'PHP', 'MySQL', 'Docker', 'TailwindCSS'],
+      repoUrl: 'https://github.com/dienakdz/car-showroom',
+      liveUrl: null,
+      status: 'Showroom & Kho Xe',
+      image: carShowroomImg,
+    },
+    {
+      title: 'Veggie',
+      summary:
+        'An e-commerce platform for organic food retail with real-time delivery logistics integration and inventory-aware order processing.',
+      problem:
+        'The retail shop needed seamless order orchestration, shipping fee calculations, and tight synchronization between catalog and stock data.',
+      solution:
+        'Implemented backend workflows for product catalog, checkout, Giao Hang Nhanh (GHN) delivery APIs, and inventory reconciliation.',
+      impact:
+        'Streamlined order fulfillment and kept inventory accurate across online sales and logistics partners.',
+      tech: ['Laravel', 'PHP', 'MySQL', 'GHN API', 'TailwindCSS'],
+      repoUrl: 'https://github.com/dienakdz/veggie',
+      liveUrl: null,
+      status: 'E-Commerce',
+      image: veggieImg,
+    },
+    {
+      title: 'FastAPI Book Management API',
+      summary:
+        'A production-ready RESTful service with async PostgreSQL, SQLAlchemy ORM, JWT authentication, and automated integration test suites.',
+      problem:
+        'Building scalable API services requires clean architecture, dependency injection, reliable database connection pooling, and secure token validation.',
+      solution:
+        'Structured with FastAPI best practices: Pydantic v2 schemas, async database sessions, role-based access control, and Dockerized dev environment.',
+      impact:
+        'Serves as the reference architecture for building clean, maintainable, and high-throughput Python REST services.',
+      tech: ['FastAPI', 'Python', 'PostgreSQL', 'SQLAlchemy', 'Docker'],
+      repoUrl: 'https://github.com/dienakdz/fastapi-book-management-api',
+      liveUrl: null,
+      status: 'Production API',
+      image: fastapiBookImg,
+    },
     {
       title: 'DinQuant',
       summary:
@@ -101,6 +152,54 @@ export const projectData = {
     },
   ],
   vi: [
+    {
+      title: 'Car Showroom',
+      summary:
+        'Nền tảng quản lý showroom ô tô & kho xe: Danh mục xe phân cấp đa tầng (Makes/Models/Trims), thuộc tính động EAV, theo dõi kho xe và tiếp nhận leads khách hàng.',
+      problem:
+        'Quản lý showroom xe hơi đòi hỏi mô hình dữ liệu quan hệ phức tạp giữa hãng xe, dòng xe, phiên bản, thông số kỹ thuật tùy biến và quản lý trạng thái giữ chỗ.',
+      solution:
+        'Xây dựng hệ thống backend với Laravel & MySQL, thiết kế cấu trúc phân cấp Makes/Models/Trims, lưu trữ thuộc tính động EAV, lịch sử biến động giá và đặt lịch hẹn lái thử.',
+      impact:
+        'Cung cấp quy trình vận hành toàn diện cho showroom từ lúc nhập kho phương tiện đến khi tiếp nhận lead và chốt giao dịch.',
+      tech: ['Laravel', 'PHP', 'MySQL', 'Docker', 'TailwindCSS'],
+      repoUrl: 'https://github.com/dienakdz/car-showroom',
+      liveUrl: null,
+      status: 'Showroom & Kho Xe',
+      image: carShowroomImg,
+    },
+    {
+      title: 'Veggie',
+      summary:
+        'Nền tảng thương mại điện tử thực phẩm sạch với tích hợp vận chuyển thời gian thực và quản lý tồn kho bám sát đơn hàng.',
+      problem:
+        'Cửa hàng cần luồng checkout mượt mà, tính cước vận chuyển tự động và kiểm soát đồng bộ tồn kho với đối tác giao nhận.',
+      solution:
+        'Thiết kế backend cho catalog sản phẩm, checkout, tích hợp API Giao Hàng Nhanh (GHN) và xử lý đối soát tồn kho tự động.',
+      impact:
+        'Tối ưu hóa quy trình xử lý đơn hàng và đảm bảo tính nhất quán dữ liệu giữa cửa hàng online và đơn vị giao vận.',
+      tech: ['Laravel', 'PHP', 'MySQL', 'GHN API', 'TailwindCSS'],
+      repoUrl: 'https://github.com/dienakdz/veggie',
+      liveUrl: null,
+      status: 'E-Commerce',
+      image: veggieImg,
+    },
+    {
+      title: 'FastAPI Book Management API',
+      summary:
+        'RESTful API chuẩn production với FastAPI, kết nối async PostgreSQL, SQLAlchemy ORM, phân quyền JWT và bộ unit test tự động.',
+      problem:
+        'Xây dựng dịch vụ API mở rộng cần kiến trúc sạch (clean architecture), dependency injection, connection pool tối ưu và bảo mật token.',
+      solution:
+        'Áp dụng FastAPI best practices: schema Pydantic v2, async database session, bảo mật RBAC với JWT và đóng gói Docker hoàn chỉnh.',
+      impact:
+        'Đóng vai trò là kiến trúc tham chiếu mẫu cho việc xây dựng các REST service bằng Python có thông lượng cao và dễ bảo trì.',
+      tech: ['FastAPI', 'Python', 'PostgreSQL', 'SQLAlchemy', 'Docker'],
+      repoUrl: 'https://github.com/dienakdz/fastapi-book-management-api',
+      liveUrl: null,
+      status: 'Production API',
+      image: fastapiBookImg,
+    },
     {
       title: 'DinQuant',
       summary:
