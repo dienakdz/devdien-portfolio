@@ -47,7 +47,7 @@ function App() {
             <Suspense fallback={<RouteFallback />}>
               <Routes>
                 <Route path="/" element={<PortfolioPage theme={theme} setTheme={setTheme} />} />
-                <Route path="/nguyen-minh-dien" element={<AboutPage theme={theme} setTheme={setTheme} />} />
+                <Route path="/about" element={<AboutPage theme={theme} setTheme={setTheme} />} />
                 <Route path="/projects" element={<ProjectsPage theme={theme} setTheme={setTheme} />} />
                 <Route path="/contact" element={<ContactPage theme={theme} setTheme={setTheme} />} />
                 <Route path="/login" element={<AdminLoginPage />} />

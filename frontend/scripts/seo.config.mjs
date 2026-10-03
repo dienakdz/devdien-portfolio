@@ -34,10 +34,7 @@ export const getDefaultSeo = (siteUrl = resolveSiteUrl()) => ({
 });
 
 export const createStructuredData = (siteUrl = resolveSiteUrl(), pathname = '/') => {
-  const isProfilePage =
-    pathname === '/nguyen-minh-dien' ||
-    pathname === '/about' ||
-    pathname === '/ve-toi';
+  const isProfilePage = pathname === '/about';
 
   const personImages = (siteConfig.entityImages || []).map((img) => buildAbsoluteUrl(img, siteUrl));
   if (siteConfig.ogImagePath) {
@@ -96,8 +93,8 @@ export const createStructuredData = (siteUrl = resolveSiteUrl(), pathname = '/')
   if (isProfilePage) {
     graph.push({
       '@type': 'ProfilePage',
-      '@id': `${siteUrl}/nguyen-minh-dien#webpage`,
-      url: `${siteUrl}/nguyen-minh-dien`,
+      '@id': `${siteUrl}/about#webpage`,
+      url: `${siteUrl}/about`,
       name: siteConfig.aboutTitleVi,
       description: siteConfig.aboutDescriptionVi,
       isPartOf: {
@@ -129,8 +126,18 @@ export const publicSitemapEntries = [
     priority: '1.0',
   },
   {
-    path: '/nguyen-minh-dien',
+    path: '/about',
     changefreq: 'weekly',
     priority: '0.9',
+  },
+  {
+    path: '/projects',
+    changefreq: 'weekly',
+    priority: '0.8',
+  },
+  {
+    path: '/contact',
+    changefreq: 'monthly',
+    priority: '0.7',
   },
 ];

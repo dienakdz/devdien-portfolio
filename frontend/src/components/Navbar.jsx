@@ -20,7 +20,7 @@ const Navbar = ({ theme, toggleTheme }) => {
 
   const navLinks = [
     { name: lang === 'vi' ? 'Trang chủ' : 'Home', href: '/' },
-    { name: lang === 'vi' ? 'Về tôi' : 'About Me', href: '/nguyen-minh-dien' },
+    { name: lang === 'vi' ? 'Về tôi' : 'About Me', href: '/about' },
     { name: lang === 'vi' ? 'Dự án' : 'Projects', href: '/projects' },
     { name: lang === 'vi' ? 'Liên hệ' : 'Contact', href: '/contact' },
   ];

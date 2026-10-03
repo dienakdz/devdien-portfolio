@@ -99,7 +99,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/nguyen-minh-dien" className="hover:text-amber-500 transition-colors">
+                <Link to="/about" className="hover:text-amber-500 transition-colors">
                   {lang === 'vi' ? 'Về tôi (Tiểu sử)' : 'About Me (Story)'}
                 </Link>
               </li>
