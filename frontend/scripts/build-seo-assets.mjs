@@ -67,17 +67,17 @@ await Promise.all([
   writeFile(path.join(distDir, 'robots.txt'), robots, 'utf8'),
 ]);
 
-// 2. Pre-render static HTML for /nguyen-minh-dien and redirect for /about
+// 2. Pre-render static HTML for /about and legacy /nguyen-minh-dien
 try {
   const baseHtmlPath = path.join(distDir, 'index.html');
   const baseHtml = await readFile(baseHtmlPath, 'utf8');
 
-  // Pre-rendered ProfilePage HTML
-  const profileDir = path.join(distDir, 'nguyen-minh-dien');
-  await mkdir(profileDir, { recursive: true });
+  // Pre-rendered AboutPage HTML (/about)
+  const aboutDir = path.join(distDir, 'about');
+  await mkdir(aboutDir, { recursive: true });
 
-  const profileStructuredData = JSON.stringify(createStructuredData(siteUrl, '/nguyen-minh-dien'));
-  const profileCanonical = buildAbsoluteUrl('/nguyen-minh-dien', siteUrl);
+  const profileStructuredData = JSON.stringify(createStructuredData(siteUrl, '/about'));
+  const profileCanonical = buildAbsoluteUrl('/about', siteUrl);
   const profileImage = buildAbsoluteUrl(siteConfig.entityImages[0], siteUrl);
 
   let profileHtml = baseHtml
@@ -111,7 +111,7 @@ try {
       `<script type="application/ld+json" data-seo-schema="portfolio">${profileStructuredData}</script>`,
     );
 
-  await writeFile(path.join(profileDir, 'index.html'), profileHtml, 'utf8');
+  await writeFile(path.join(aboutDir, 'index.html'), profileHtml, 'utf8');
 } catch (err) {
   console.warn('[seo] Could not pre-render static profile page:', err.message);
 }

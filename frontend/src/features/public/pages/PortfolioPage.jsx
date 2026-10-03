@@ -140,7 +140,7 @@ export default function PortfolioPage({ theme, setTheme }) {
                   </Link>
 
                   <Link
-                    to="/nguyen-minh-dien"
+                    to="/about"
                     className="button-secondary inline-flex items-center gap-2"
                   >
                     <User size={15} />
@@ -650,7 +650,7 @@ export default function PortfolioPage({ theme, setTheme }) {
               </div>
 
               <Link
-                to="/nguyen-minh-dien#timeline"
+                to="/about#timeline"
                 className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-amber-500 hover:underline"
               >
                 <span>{lang === 'vi' ? 'Xem toàn bộ tiểu sử' : 'View Full Story'}</span>
@@ -789,7 +789,7 @@ export default function PortfolioPage({ theme, setTheme }) {
                 </div>
 
                 <Link
-                  to="/nguyen-minh-dien#timeline"
+                  to="/about#timeline"
                   className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-3.5 text-sm transition-all shadow-md hover:shadow-amber-500/20 active:scale-[0.98]"
                 >
                   <span>{lang === 'vi' ? 'Xem chi tiết tiểu sử' : 'View Full Story'}</span>

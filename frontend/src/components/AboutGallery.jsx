@@ -147,7 +147,7 @@ export default function AboutGallery({ isDark = true }) {
   }, [activePhotoIndex, handleClose, handlePrev, handleNext]);
 
   return (
-    <section id="gallery" className={`relative py-16 md:py-24 border-t ${isDark ? 'border-white/5' : 'border-slate-200'}`}>
+    <section id="gallery" className={`relative py-16 md:py-24 border-b ${isDark ? 'border-white/5' : 'border-slate-200'}`}>
       <div className="container mx-auto max-w-6xl px-4 sm:px-6">
         {/* Section Header */}
         <div className="mx-auto mb-10 max-w-3xl text-center">

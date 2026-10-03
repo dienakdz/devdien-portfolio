@@ -11,11 +11,10 @@ import {
   FileText,
   ArrowLeft,
   ArrowUpRight,
-  Sun,
-  Moon,
-  Globe,
   HeartHandshake,
-  Tv,
+  ServerCog,
+  Building2,
+  GraduationCap,
 } from 'lucide-react';
 import { useLanguage } from '../../../context/LanguageContext';
 import { siteConfig, getLocalizedName } from '../../../data/siteConfig';
@@ -91,39 +90,6 @@ export default function AboutPage({ theme, setTheme }) {
     >
       {/* Top Global Navigation */}
       <Navbar theme={isDark ? 'dark' : 'light'} toggleTheme={toggleTheme} />
-
-      {/* Sub-navigation for In-page Sections */}
-      <div
-        className={`border-b text-xs font-semibold uppercase tracking-wider backdrop-blur-md transition-colors ${
-          isDark ? 'border-white/5 bg-[#0b1118]/80 text-slate-400' : 'border-slate-200 bg-white/80 text-slate-600'
-        }`}
-      >
-        <div className="container mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 py-2.5 overflow-x-auto">
-          <div className="flex items-center gap-6 shrink-0">
-            <span className="text-[10px] text-amber-500 font-mono font-bold">MỤC LỤC:</span>
-            <a href="#story" className="hover:text-amber-500 transition-colors">
-              {lang === 'vi' ? 'Tiểu sử' : 'Story'}
-            </a>
-            <a href="#gallery" className="hover:text-amber-500 transition-colors">
-              {lang === 'vi' ? 'Khoảnh khắc' : 'Moments'}
-            </a>
-            <a href="#youtube" className="flex items-center gap-1 hover:text-red-500 transition-colors">
-              <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
-              YouTube
-            </a>
-            <a href="#timeline" className="hover:text-amber-500 transition-colors">
-              {lang === 'vi' ? 'Sự nghiệp' : 'Timeline'}
-            </a>
-          </div>
-
-          <Link
-            to="/projects"
-            className="shrink-0 hidden sm:inline-flex items-center gap-1 text-[11px] text-amber-500 hover:underline"
-          >
-            <span>{lang === 'vi' ? 'Xem các dự án ->' : 'Explore Projects ->'}</span>
-          </Link>
-        </div>
-      </div>
 
       <main>
         {/* HERO SECTION */}
@@ -201,22 +167,26 @@ export default function AboutPage({ theme, setTheme }) {
 
                 {/* 4 Quick Stat Cards */}
                 <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {/* Card 1: Role */}
                   <div
-                    className={`rounded-xl p-3.5 ${
+                    className={`rounded-xl p-3.5 transition-all duration-200 ${
                       isDark
-                        ? 'border border-white/10 bg-[#121922]'
-                        : 'border border-slate-200 bg-white shadow-sm'
+                        ? 'border border-white/10 bg-[#121922] hover:border-amber-500/30'
+                        : 'border border-slate-200 bg-white shadow-sm hover:border-amber-500/40'
                     }`}
                   >
+                    <div className="flex items-center gap-1.5">
+                      <ServerCog size={13} className={isDark ? 'text-amber-400' : 'text-amber-600'} />
+                      <p
+                        className={`text-[11px] font-bold uppercase tracking-wider ${
+                          isDark ? 'text-slate-400' : 'text-slate-500'
+                        }`}
+                      >
+                        {page.stats?.roleLabel || 'Vị trí'}
+                      </p>
+                    </div>
                     <p
-                      className={`text-[11px] font-bold uppercase tracking-wider ${
-                        isDark ? 'text-slate-400' : 'text-slate-500'
-                      }`}
-                    >
-                      {page.stats?.roleLabel || 'Vị trí hiện tại'}
-                    </p>
-                    <p
-                      className={`mt-1 text-xs font-bold sm:text-sm ${
+                      className={`mt-1.5 text-xs font-bold sm:text-sm ${
                         isDark ? 'text-white' : 'text-slate-900'
                       }`}
                     >
@@ -224,22 +194,26 @@ export default function AboutPage({ theme, setTheme }) {
                     </p>
                   </div>
 
+                  {/* Card 2: Company */}
                   <div
-                    className={`rounded-xl p-3.5 ${
+                    className={`rounded-xl p-3.5 transition-all duration-200 ${
                       isDark
-                        ? 'border border-white/10 bg-[#121922]'
-                        : 'border border-slate-200 bg-white shadow-sm'
+                        ? 'border border-white/10 bg-[#121922] hover:border-cyan-400/30'
+                        : 'border border-slate-200 bg-white shadow-sm hover:border-cyan-500/40'
                     }`}
                   >
+                    <div className="flex items-center gap-1.5">
+                      <Building2 size={13} className="text-cyan-400" />
+                      <p
+                        className={`text-[11px] font-bold uppercase tracking-wider ${
+                          isDark ? 'text-slate-400' : 'text-slate-500'
+                        }`}
+                      >
+                        {page.stats?.companyLabel || 'Nơi làm việc'}
+                      </p>
+                    </div>
                     <p
-                      className={`text-[11px] font-bold uppercase tracking-wider ${
-                        isDark ? 'text-slate-400' : 'text-slate-500'
-                      }`}
-                    >
-                      {page.stats?.companyLabel || 'Nơi làm việc'}
-                    </p>
-                    <p
-                      className={`mt-1 text-xs font-bold sm:text-sm ${
+                      className={`mt-1.5 text-xs font-bold sm:text-sm ${
                         isDark ? 'text-white' : 'text-slate-900'
                       }`}
                     >
@@ -247,22 +221,26 @@ export default function AboutPage({ theme, setTheme }) {
                     </p>
                   </div>
 
+                  {/* Card 3: Education */}
                   <div
-                    className={`rounded-xl p-3.5 ${
+                    className={`rounded-xl p-3.5 transition-all duration-200 ${
                       isDark
-                        ? 'border border-white/10 bg-[#121922]'
-                        : 'border border-slate-200 bg-white shadow-sm'
+                        ? 'border border-white/10 bg-[#121922] hover:border-emerald-400/30'
+                        : 'border border-slate-200 bg-white shadow-sm hover:border-emerald-500/40'
                     }`}
                   >
+                    <div className="flex items-center gap-1.5">
+                      <GraduationCap size={13} className="text-emerald-400" />
+                      <p
+                        className={`text-[11px] font-bold uppercase tracking-wider ${
+                          isDark ? 'text-slate-400' : 'text-slate-500'
+                        }`}
+                      >
+                        {page.stats?.educationLabel || 'Học vấn'}
+                      </p>
+                    </div>
                     <p
-                      className={`text-[11px] font-bold uppercase tracking-wider ${
-                        isDark ? 'text-slate-400' : 'text-slate-500'
-                      }`}
-                    >
-                      {page.stats?.educationLabel || 'Học vấn'}
-                    </p>
-                    <p
-                      className={`mt-1 text-xs font-bold sm:text-sm ${
+                      className={`mt-1.5 text-xs font-bold sm:text-sm ${
                         isDark ? 'text-white' : 'text-slate-900'
                       }`}
                     >
@@ -270,33 +248,37 @@ export default function AboutPage({ theme, setTheme }) {
                     </p>
                   </div>
 
+                  {/* Card 4: YouTube */}
                   <div
-                    className={`rounded-xl p-3.5 ${
+                    className={`rounded-xl p-3.5 transition-all duration-200 ${
                       isDark
-                        ? 'border border-white/10 bg-[#121922]'
-                        : 'border border-slate-200 bg-white shadow-sm'
+                        ? 'border border-white/10 bg-[#121922] hover:border-red-400/30'
+                        : 'border border-slate-200 bg-white shadow-sm hover:border-red-500/40'
                     }`}
                   >
-                    <p
-                      className={`text-[11px] font-bold uppercase tracking-wider ${
-                        isDark ? 'text-slate-400' : 'text-slate-500'
-                      }`}
-                    >
-                      {page.stats?.channelLabel || 'Kênh cộng đồng'}
-                    </p>
-                    <p className="mt-1 text-xs font-bold text-red-500 sm:text-sm">
+                    <div className="flex items-center gap-1.5">
+                      <Youtube size={13} className="text-red-500" />
+                      <p
+                        className={`text-[11px] font-bold uppercase tracking-wider ${
+                          isDark ? 'text-slate-400' : 'text-slate-500'
+                        }`}
+                      >
+                        {page.stats?.channelLabel || 'Kênh cộng đồng'}
+                      </p>
+                    </div>
+                    <p className="mt-1.5 text-xs font-bold text-red-500 sm:text-sm">
                       {page.stats?.channelValue || 'YouTube @devdien'}
                     </p>
                   </div>
                 </div>
 
                 {/* Action Buttons */}
-                <div className="mt-8 flex flex-wrap items-center gap-4">
+                <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
                   <a
                     href={siteConfig.resumeUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-lg bg-[#e5a93c] hover:bg-[#d9982b] px-6 py-2.5 text-sm font-bold text-black shadow-md transition-all hover:scale-105"
+                    className="inline-flex items-center gap-2 rounded-xl bg-amber-500 hover:bg-amber-400 px-6 py-2.5 text-sm font-bold text-slate-950 shadow-md shadow-amber-500/20 transition-all hover:scale-105 active:scale-95"
                   >
                     <FileText size={16} />
                     <span>{page.downloadCv || 'Mở CV Online'}</span>
@@ -307,7 +289,7 @@ export default function AboutPage({ theme, setTheme }) {
                     href={siteConfig.youtubeSubscribeUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 px-5 py-2.5 text-sm font-semibold text-red-500 hover:bg-red-500/20 transition-colors"
+                    className="inline-flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-5 py-2.5 text-sm font-semibold text-red-500 hover:bg-red-500/20 transition-all active:scale-95"
                   >
                     <Youtube size={16} />
                     <span>{page.youtube?.subscribeBtn || 'Đăng ký @devdien'}</span>
@@ -360,8 +342,11 @@ export default function AboutPage({ theme, setTheme }) {
                 className="lg:col-span-5"
               >
                 <div className="relative mx-auto max-w-[360px] lg:max-w-[400px]">
+                  {/* Subtle Ambient Backlight */}
+                  <div className="pointer-events-none absolute -inset-2 rounded-3xl bg-gradient-to-tr from-amber-500/15 via-emerald-500/10 to-transparent blur-2xl opacity-70" />
+
                   <div
-                    className={`overflow-hidden rounded-2xl shadow-2xl ${
+                    className={`relative overflow-hidden rounded-2xl shadow-2xl transition-all duration-300 ${
                       isDark
                         ? 'border border-white/10 bg-[#121922]'
                         : 'border border-slate-200 bg-white shadow-xl'
@@ -402,14 +387,14 @@ export default function AboutPage({ theme, setTheme }) {
           </div>
         </section>
 
-        {/* SECTION 1: KHOẢNH KHẮC & ĐỜI SỐNG (Bento Grid) */}
-        <AboutGallery isDark={isDark} />
+        {/* SECTION 1: DẤU ẤN NGHỀ NGHIỆP & HỌC VẤN (Detailed Milestone Timeline) */}
+        <AboutTimeline isDark={isDark} />
 
         {/* SECTION 2: KÊNH YOUTUBE @DEVDIEN (Clean & Focused Showcase) */}
         <YouTubeShowcase isDark={isDark} />
 
-        {/* SECTION 3: DẤU ẤN NGHỀ NGHIỆP & HỌC VẤN (Detailed Milestone Timeline) */}
-        <AboutTimeline isDark={isDark} />
+        {/* SECTION 3: KHOẢNH KHẮC & ĐỜI SỐNG (Bento Grid) */}
+        <AboutGallery isDark={isDark} />
 
         {/* SECTION 4: CTA LIÊN HỆ */}
         <section className="py-16 md:py-24">
@@ -446,14 +431,14 @@ export default function AboutPage({ theme, setTheme }) {
               <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
                 <a
                   href={`mailto:${siteConfig.email}`}
-                  className="inline-flex items-center gap-2 rounded-lg bg-[#e5a93c] hover:bg-[#d9982b] px-6 py-3 text-sm font-bold text-black shadow-md transition-all hover:scale-105"
+                  className="inline-flex items-center gap-2 rounded-xl bg-amber-500 hover:bg-amber-400 px-6 py-3 text-sm font-bold text-slate-950 shadow-md shadow-amber-500/20 transition-all hover:scale-105 active:scale-95"
                 >
                   <Mail size={16} />
                   <span>{page.contactCta?.button || 'Gửi tin nhắn cho tôi'}</span>
                 </a>
                 <Link
                   to="/"
-                  className={`inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold transition-colors ${
+                  className={`inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold transition-all active:scale-95 ${
                     isDark
                       ? 'border border-white/10 bg-[#121922] text-slate-300 hover:text-white hover:border-white/20'
                       : 'border border-slate-300 bg-white text-slate-700 shadow-sm hover:text-slate-900 hover:border-slate-400'

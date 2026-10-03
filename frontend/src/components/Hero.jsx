@@ -154,7 +154,7 @@ const Hero = () => {
               </a>
 
               <Link
-                to="/nguyen-minh-dien"
+                to="/about"
                 className="button-secondary inline-flex items-center gap-2 border-amber-500/30 text-amber-600 dark:text-amber-400 hover:border-amber-400"
               >
                 <ShieldCheck size={17} />
@@ -263,7 +263,7 @@ const Hero = () => {
 
                   <div className="mt-3.5 flex items-center justify-between border-t border-white/15 pt-3">
                     <Link
-                      to="/nguyen-minh-dien"
+                      to="/about"
                       className="inline-flex items-center gap-1 rounded-xl bg-amber-500 hover:bg-amber-400 px-3 py-1.5 text-xs font-bold text-slate-950 transition-colors shadow-sm"
                     >
                       <span>{lang === 'vi' ? 'Xem Profile đầy đủ' : 'View Full Profile'}</span>
