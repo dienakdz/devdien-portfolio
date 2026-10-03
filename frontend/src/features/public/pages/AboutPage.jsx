@@ -84,7 +84,7 @@ export default function AboutPage({ theme, setTheme }) {
 
   return (
     <div
-      className={`min-h-screen antialiased transition-colors duration-200 selection:bg-amber-500/20 selection:text-amber-400 ${
+      className={`min-h-screen antialiased overflow-x-hidden transition-colors duration-200 selection:bg-amber-500/20 selection:text-amber-400 ${
         isDark ? 'bg-[#0b1118] text-slate-100' : 'bg-slate-50 text-slate-900'
       }`}
     >
@@ -95,193 +95,182 @@ export default function AboutPage({ theme, setTheme }) {
         {/* HERO SECTION */}
         <section
           id="story"
-          className={`relative pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden border-b ${
+          className={`relative pt-10 pb-16 md:pt-16 md:pb-20 overflow-hidden border-b ${
             isDark ? 'border-white/5' : 'border-slate-200'
           }`}
         >
           <div className="container mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+            <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
               {/* Left Column */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="lg:col-span-7"
+                className="lg:col-span-7 min-w-0"
               >
-                {/* Verified Knowledge Entity Badge */}
+                {/* Verified Developer Badge (Matching Mẫu 2) */}
                 <div
-                  className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1 text-xs font-semibold backdrop-blur-sm ${
+                  className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1 text-xs font-medium backdrop-blur-sm ${
                     isDark
-                      ? 'border border-emerald-500/30 bg-emerald-500/10 text-emerald-400'
-                      : 'border border-emerald-500/40 bg-emerald-50 text-emerald-700'
+                      ? 'border border-amber-500/25 bg-amber-500/10 text-amber-300'
+                      : 'border border-amber-500/40 bg-amber-50 text-amber-800'
                   }`}
                 >
-                  <ShieldCheck size={15} className={isDark ? 'text-emerald-400' : 'text-emerald-600'} />
-                  <span>{page.badge || 'Verified Entity • Hồ Sơ Định Danh Cá Nhân'}</span>
+                  <ShieldCheck size={14} className="text-amber-400 shrink-0" />
+                  <span>Verified Developer</span>
                 </div>
 
+                {/* Name & Title */}
                 <h1
-                  className={`mt-5 font-outfit text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl ${
+                  className={`mt-4 font-outfit text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight ${
                     isDark ? 'text-white' : 'text-slate-900'
                   }`}
                 >
-                  {page.title || 'Nguyễn Minh Diện'}{' '}
-                  <span
-                    className={`font-light text-3xl sm:text-4xl ${
-                      isDark ? 'text-amber-400' : 'text-amber-600'
-                    }`}
-                  >
+                  {page.title || 'Nguyen Minh Dien'}{' '}
+                  <span className={isDark ? 'text-amber-400' : 'text-amber-600'}>
                     ({page.alias || 'DevDien'})
                   </span>
                 </h1>
 
+                {/* Subtitle */}
                 <p
-                  className={`mt-3 text-base font-semibold sm:text-lg ${
+                  className={`mt-2 text-lg sm:text-xl font-medium ${
                     isDark ? 'text-slate-300' : 'text-slate-700'
                   }`}
                 >
-                  Backend Developer at{' '}
-                  <span className={`font-bold ${isDark ? 'text-amber-400' : 'text-amber-600'}`}>
-                    TMA Solutions
-                  </span>{' '}
-                  &amp; Content Creator{' '}
-                  <span className={`font-bold ${isDark ? 'text-amber-400' : 'text-amber-600'}`}>
-                    @devdien
-                  </span>
+                  {lang === 'vi'
+                    ? 'Backend Developer & Tech Creator'
+                    : 'Backend Developer & Tech Creator'}
                 </p>
 
-                {/* Narrative Bio */}
-                <div
-                  className={`mt-6 space-y-4 text-sm leading-relaxed sm:text-base ${
+                {/* Narrative Bio (Condensed, Crisp & Punchy) */}
+                <p
+                  className={`mt-4 text-sm sm:text-base leading-relaxed max-w-2xl ${
                     isDark ? 'text-slate-400' : 'text-slate-600'
                   }`}
                 >
-                  {page.bioParagraphs ? (
-                    page.bioParagraphs.map((para, idx) => <p key={idx}>{para}</p>)
-                  ) : (
-                    <p>
-                      Hi, tôi là Nguyễn Minh Diện (DevDien) — Backend Developer tại TMA Solutions và là người sáng lập kênh YouTube @devdien.
-                    </p>
-                  )}
-                </div>
+                  {lang === 'vi'
+                    ? 'Kỹ sư Backend chuyên thiết kế hệ thống phân tán, kiến trúc microservices và hạ tầng cloud-native có độ sẵn sàng cao. Đam mê xây dựng sản phẩm tin cậy và lan tỏa kinh nghiệm thực chiến tới cộng đồng kỹ thuật.'
+                    : 'Passionate Backend Engineer specializing in scalable distributed systems, microservices architecture, and cloud solutions. Dedicated to building reliable software products and sharing practical insights with the developer community.'}
+                </p>
 
-                {/* 4 Quick Stat Cards */}
-                <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {/* 4 Quick Stat Cards (Matching Mẫu 2 Bento Strip) */}
+                <div className="mt-7 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
                   {/* Card 1: Role */}
                   <div
-                    className={`rounded-xl p-3.5 transition-all duration-200 ${
+                    className={`rounded-2xl p-3 sm:p-3.5 transition-all duration-200 ${
                       isDark
-                        ? 'border border-white/10 bg-[#121922] hover:border-amber-500/30'
-                        : 'border border-slate-200 bg-white shadow-sm hover:border-amber-500/40'
+                        ? 'border border-amber-500/35 bg-[#121922] shadow-[0_2px_12px_rgba(245,158,11,0.06)] hover:border-amber-500/60 hover:bg-[#151e2a]'
+                        : 'border border-amber-500/40 bg-white shadow-sm hover:border-amber-500'
                     }`}
                   >
-                    <div className="flex items-center gap-1.5">
-                      <ServerCog size={13} className={isDark ? 'text-amber-400' : 'text-amber-600'} />
-                      <p
-                        className={`text-[11px] font-bold uppercase tracking-wider ${
-                          isDark ? 'text-slate-400' : 'text-slate-500'
-                        }`}
-                      >
-                        {page.stats?.roleLabel || 'Vị trí'}
-                      </p>
+                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-500/10 text-amber-400 mb-2">
+                      <ServerCog size={16} />
                     </div>
                     <p
-                      className={`mt-1.5 text-xs font-bold sm:text-sm ${
+                      className={`text-[11px] font-semibold ${
+                        isDark ? 'text-slate-400' : 'text-slate-500'
+                      }`}
+                    >
+                      {lang === 'vi' ? 'Vị trí' : 'Role'}
+                    </p>
+                    <p
+                      className={`mt-0.5 text-xs sm:text-sm font-bold truncate ${
                         isDark ? 'text-white' : 'text-slate-900'
                       }`}
                     >
-                      {page.stats?.roleValue || 'Backend Developer'}
+                      Backend Dev
                     </p>
                   </div>
 
                   {/* Card 2: Company */}
                   <div
-                    className={`rounded-xl p-3.5 transition-all duration-200 ${
+                    className={`rounded-2xl p-3 sm:p-3.5 transition-all duration-200 ${
                       isDark
-                        ? 'border border-white/10 bg-[#121922] hover:border-cyan-400/30'
-                        : 'border border-slate-200 bg-white shadow-sm hover:border-cyan-500/40'
+                        ? 'border border-white/10 bg-[#121922] hover:border-cyan-400/40 hover:bg-[#151e2a]'
+                        : 'border border-slate-200 bg-white shadow-sm hover:border-cyan-500/50'
                     }`}
                   >
-                    <div className="flex items-center gap-1.5">
-                      <Building2 size={13} className="text-cyan-400" />
-                      <p
-                        className={`text-[11px] font-bold uppercase tracking-wider ${
-                          isDark ? 'text-slate-400' : 'text-slate-500'
-                        }`}
-                      >
-                        {page.stats?.companyLabel || 'Nơi làm việc'}
-                      </p>
+                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-400 mb-2">
+                      <Building2 size={16} />
                     </div>
                     <p
-                      className={`mt-1.5 text-xs font-bold sm:text-sm ${
+                      className={`text-[11px] font-semibold ${
+                        isDark ? 'text-slate-400' : 'text-slate-500'
+                      }`}
+                    >
+                      {lang === 'vi' ? 'Công ty' : 'Company'}
+                    </p>
+                    <p
+                      className={`mt-0.5 text-xs sm:text-sm font-bold truncate ${
                         isDark ? 'text-white' : 'text-slate-900'
                       }`}
                     >
-                      {page.stats?.companyValue || 'TMA Solutions'}
+                      TMA Solutions
                     </p>
                   </div>
 
                   {/* Card 3: Education */}
                   <div
-                    className={`rounded-xl p-3.5 transition-all duration-200 ${
+                    className={`rounded-2xl p-3 sm:p-3.5 transition-all duration-200 ${
                       isDark
-                        ? 'border border-white/10 bg-[#121922] hover:border-emerald-400/30'
-                        : 'border border-slate-200 bg-white shadow-sm hover:border-emerald-500/40'
+                        ? 'border border-white/10 bg-[#121922] hover:border-emerald-400/40 hover:bg-[#151e2a]'
+                        : 'border border-slate-200 bg-white shadow-sm hover:border-emerald-500/50'
                     }`}
                   >
-                    <div className="flex items-center gap-1.5">
-                      <GraduationCap size={13} className="text-emerald-400" />
-                      <p
-                        className={`text-[11px] font-bold uppercase tracking-wider ${
-                          isDark ? 'text-slate-400' : 'text-slate-500'
-                        }`}
-                      >
-                        {page.stats?.educationLabel || 'Học vấn'}
-                      </p>
+                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400 mb-2">
+                      <GraduationCap size={16} />
                     </div>
                     <p
-                      className={`mt-1.5 text-xs font-bold sm:text-sm ${
+                      className={`text-[11px] font-semibold ${
+                        isDark ? 'text-slate-400' : 'text-slate-500'
+                      }`}
+                    >
+                      {lang === 'vi' ? 'Học vấn' : 'Education'}
+                    </p>
+                    <p
+                      className={`mt-0.5 text-xs sm:text-sm font-bold truncate ${
                         isDark ? 'text-white' : 'text-slate-900'
                       }`}
                     >
-                      {page.stats?.educationValue || 'VKU (GPA 3.55)'}
+                      VKU • 3.55 GPA
                     </p>
                   </div>
 
                   {/* Card 4: YouTube */}
                   <div
-                    className={`rounded-xl p-3.5 transition-all duration-200 ${
+                    className={`rounded-2xl p-3 sm:p-3.5 transition-all duration-200 ${
                       isDark
-                        ? 'border border-white/10 bg-[#121922] hover:border-red-400/30'
-                        : 'border border-slate-200 bg-white shadow-sm hover:border-red-500/40'
+                        ? 'border border-red-500/25 bg-[#121922] hover:border-red-400/50 hover:bg-[#151e2a]'
+                        : 'border border-slate-200 bg-white shadow-sm hover:border-red-500/50'
                     }`}
                   >
-                    <div className="flex items-center gap-1.5">
-                      <Youtube size={13} className="text-red-500" />
-                      <p
-                        className={`text-[11px] font-bold uppercase tracking-wider ${
-                          isDark ? 'text-slate-400' : 'text-slate-500'
-                        }`}
-                      >
-                        {page.stats?.channelLabel || 'Kênh cộng đồng'}
-                      </p>
+                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-red-500/10 text-red-500 mb-2">
+                      <Youtube size={16} />
                     </div>
-                    <p className="mt-1.5 text-xs font-bold text-red-500 sm:text-sm">
-                      {page.stats?.channelValue || 'YouTube @devdien'}
+                    <p
+                      className={`text-[11px] font-semibold ${
+                        isDark ? 'text-slate-400' : 'text-slate-500'
+                      }`}
+                    >
+                      {lang === 'vi' ? 'Kênh YouTube' : 'YouTube'}
+                    </p>
+                    <p className="mt-0.5 text-xs sm:text-sm font-bold text-red-400 truncate">
+                      @devdien
                     </p>
                   </div>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
+                {/* Action Buttons (Pills matching Mẫu 2) */}
+                <div className="mt-7 flex flex-wrap items-center gap-3.5">
                   <a
                     href={siteConfig.resumeUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-xl bg-amber-500 hover:bg-amber-400 px-6 py-2.5 text-sm font-bold text-slate-950 shadow-md shadow-amber-500/20 transition-all hover:scale-105 active:scale-95"
+                    className="inline-flex items-center gap-2 rounded-full bg-amber-500 hover:bg-amber-400 px-7 py-3 text-sm font-bold text-slate-950 shadow-[0_4px_20px_rgba(245,158,11,0.35)] transition-all hover:scale-105 active:scale-95"
                   >
                     <FileText size={16} />
-                    <span>{page.downloadCv || 'Mở CV Online'}</span>
+                    <span>{page.downloadCv || 'Download CV'}</span>
                     <ArrowUpRight size={14} />
                   </a>
 
@@ -289,48 +278,35 @@ export default function AboutPage({ theme, setTheme }) {
                     href={siteConfig.youtubeSubscribeUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-5 py-2.5 text-sm font-semibold text-red-500 hover:bg-red-500/20 transition-all active:scale-95"
+                    className="inline-flex items-center gap-2 rounded-full border border-red-500/40 bg-[#160e10] hover:bg-red-950/40 px-6 py-3 text-sm font-semibold text-red-300 hover:border-red-500/70 transition-all active:scale-95"
                   >
-                    <Youtube size={16} />
-                    <span>{page.youtube?.subscribeBtn || 'Đăng ký @devdien'}</span>
+                    <Youtube size={16} className="text-red-500 fill-current" />
+                    <span>{lang === 'vi' ? 'Xem Kênh @devdien' : 'Watch Tech Content'}</span>
                   </a>
                 </div>
 
-                {/* Verified Social Links */}
-                <div
-                  className={`mt-8 pt-6 border-t ${
-                    isDark ? 'border-white/8' : 'border-slate-200'
-                  }`}
-                >
-                  <p
-                    className={`mb-3 text-xs font-bold uppercase tracking-wider ${
-                      isDark ? 'text-slate-400' : 'text-slate-500'
-                    }`}
-                  >
-                    {page.connect || 'Kết nối'}
-                  </p>
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
-                    {socialLinks.map((social) => {
-                      const Icon = social.icon;
-                      return (
-                        <a
-                          key={social.name}
-                          href={social.href}
-                          target="_blank"
-                          rel="noreferrer"
-                          className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                            isDark
-                              ? 'border border-white/10 bg-[#121922] text-slate-300 hover:bg-white/5'
-                              : 'border border-slate-300 bg-white text-slate-700 shadow-sm hover:bg-slate-50'
-                          } ${social.color}`}
-                          aria-label={social.name}
-                        >
-                          <Icon size={13} />
-                          <span>{social.badge}</span>
-                        </a>
-                      );
-                    })}
-                  </div>
+                {/* Minimalist Social Links Row */}
+                <div className="mt-7 flex items-center gap-2">
+                  {socialLinks.map((social) => {
+                    const Icon = social.icon;
+                    return (
+                      <a
+                        key={social.name}
+                        href={social.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all ${
+                          isDark
+                            ? 'text-slate-400 hover:bg-white/5 hover:text-white'
+                            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950'
+                        } ${social.color}`}
+                        aria-label={social.name}
+                        title={social.name}
+                      >
+                        <Icon size={16} />
+                      </a>
+                    );
+                  })}
                 </div>
               </motion.div>
 
@@ -339,68 +315,51 @@ export default function AboutPage({ theme, setTheme }) {
                 initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="lg:col-span-5"
+                className="lg:col-span-5 min-w-0"
               >
-                <div className="relative mx-auto max-w-[360px] lg:max-w-[400px] pt-3 pb-3">
-                  {/* Subtle Ambient Backlight */}
-                  <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-tr from-amber-500/20 via-cyan-500/10 to-transparent blur-3xl opacity-75" />
+                <div className="group relative mx-auto max-w-[340px] sm:max-w-[380px] lg:max-w-[400px] py-4">
+                  {/* Warm Amber Radial Lighting Glow Behind Card (Mẫu 2) */}
+                  <div className="pointer-events-none absolute -inset-6 rounded-[48px] bg-gradient-to-tr from-amber-500/25 via-amber-600/10 to-transparent blur-3xl opacity-80 transition-all duration-700 group-hover:opacity-100 group-hover:scale-105" />
 
                   {/* 1. Top-Right Floating Glass HUD Badge: TMA Solutions */}
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className={`absolute -top-1.5 right-3 sm:right-6 z-20 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-2xl backdrop-blur-md transition-colors ${
+                    className={`absolute -top-1.5 right-2 sm:right-6 z-20 inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-xs font-semibold shadow-2xl backdrop-blur-xl transition-all duration-300 group-hover:-translate-y-1 ${
                       isDark
-                        ? 'border border-white/15 bg-[#0b1118]/85 text-white'
-                        : 'border border-slate-300 bg-white/90 text-slate-800 shadow-md'
+                        ? 'border border-slate-700/80 bg-[#121922]/95 text-white shadow-black/70 group-hover:border-cyan-400/40'
+                        : 'border border-slate-300 bg-white/95 text-slate-800 shadow-md group-hover:border-cyan-500/50'
                     }`}
                   >
-                    <Building2 size={13} className="text-cyan-400 shrink-0" />
+                    <Building2 size={14} className="text-cyan-400 shrink-0" />
                     <span>TMA Solutions</span>
                     <span className={isDark ? 'text-slate-400 font-normal' : 'text-slate-500 font-normal'}>• Backend</span>
                   </motion.div>
 
-                  {/* 2. Main Portrait Card */}
+                  {/* 2. Main Portrait Card Container */}
                   <div
-                    className={`group relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl transition-all duration-300 ${
+                    className={`relative overflow-hidden rounded-[30px] sm:rounded-[36px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8),0_0_40px_-10px_rgba(245,158,11,0.2)] transition-all duration-500 group-hover:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.9),0_0_50px_-5px_rgba(245,158,11,0.35)] cursor-pointer ${
                       isDark
-                        ? 'border border-white/10 bg-[#121922] hover:border-amber-500/30'
-                        : 'border border-slate-200 bg-white shadow-xl hover:border-amber-500/40'
+                        ? 'border border-slate-700/70 bg-[#121922] group-hover:border-amber-500/50'
+                        : 'border border-slate-300 bg-white shadow-xl group-hover:border-amber-500/50'
                     }`}
                   >
                     <div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-950">
                       <img
                         src={profileImg}
                         alt="Nguyễn Minh Diện (DevDien) - Backend Developer at TMA Solutions"
-                        className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         fetchPriority="high"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0e1620]/90 via-transparent to-transparent opacity-60" />
+                      {/* Subtle Bottom Ambient Vignette */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none transition-opacity duration-500 group-hover:opacity-80" />
 
-                      {/* Floating Status Pill inside photo bottom-right */}
-                      <div className="absolute bottom-3 right-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-black/80 px-3 py-1 text-[11px] font-medium text-emerald-400 backdrop-blur-md shadow-lg">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      {/* Floating Live Status Pill inside photo bottom-right */}
+                      <div className="absolute bottom-4 right-4 z-10 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-slate-950/85 px-3.5 py-1.5 text-xs font-medium text-emerald-400 backdrop-blur-xl shadow-xl transition-transform duration-300 group-hover:scale-105">
+                        <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                         <span>Available for Collab</span>
                       </div>
-                    </div>
-
-                    {/* Bottom Caption Bar */}
-                    <div
-                      className={`p-3.5 text-center border-t ${
-                        isDark ? 'bg-[#0e1620] border-white/5' : 'bg-slate-50 border-slate-200'
-                      }`}
-                    >
-                      <p className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                        {localizedName}
-                      </p>
-                      <p
-                        className={`text-xs mt-0.5 ${
-                          isDark ? 'text-slate-400' : 'text-slate-600'
-                        }`}
-                      >
-                        Backend Developer • Content Creator @devdien
-                      </p>
                     </div>
                   </div>
 
@@ -409,15 +368,15 @@ export default function AboutPage({ theme, setTheme }) {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
-                    className={`absolute -bottom-1.5 left-3 sm:left-6 z-20 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-2xl backdrop-blur-md transition-colors ${
+                    className={`absolute -bottom-1.5 left-2 sm:left-6 z-20 inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-xs font-semibold shadow-2xl backdrop-blur-xl transition-all duration-300 group-hover:translate-y-1 ${
                       isDark
-                        ? 'border border-white/15 bg-[#0b1118]/85 text-white'
-                        : 'border border-slate-300 bg-white/90 text-slate-800 shadow-md'
+                        ? 'border border-slate-700/80 bg-[#121922]/95 text-white shadow-black/70 group-hover:border-amber-500/40'
+                        : 'border border-slate-300 bg-white/95 text-slate-800 shadow-md group-hover:border-amber-500/50'
                     }`}
                   >
-                    <GraduationCap size={14} className="text-amber-400 shrink-0" />
+                    <GraduationCap size={15} className="text-amber-400 shrink-0" />
                     <span>VKU Honors</span>
-                    <span className="font-mono text-amber-400 font-bold text-[11px]">• GPA 3.55</span>
+                    <span className="font-mono text-amber-400 font-bold text-xs">• GPA 3.55</span>
                   </motion.div>
                 </div>
               </motion.div>
