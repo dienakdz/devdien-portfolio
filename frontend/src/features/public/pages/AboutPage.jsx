@@ -334,35 +334,61 @@ export default function AboutPage({ theme, setTheme }) {
                 </div>
               </motion.div>
 
-              {/* Right Column: Natural Unconstrained Portrait */}
+              {/* Right Column: Cinematic Floating HUD Portrait (Mẫu 2) */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="lg:col-span-5"
               >
-                <div className="relative mx-auto max-w-[360px] lg:max-w-[400px]">
+                <div className="relative mx-auto max-w-[360px] lg:max-w-[400px] pt-3 pb-3">
                   {/* Subtle Ambient Backlight */}
-                  <div className="pointer-events-none absolute -inset-2 rounded-3xl bg-gradient-to-tr from-amber-500/15 via-emerald-500/10 to-transparent blur-2xl opacity-70" />
+                  <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-tr from-amber-500/20 via-cyan-500/10 to-transparent blur-3xl opacity-75" />
 
-                  <div
-                    className={`relative overflow-hidden rounded-2xl shadow-2xl transition-all duration-300 ${
+                  {/* 1. Top-Right Floating Glass HUD Badge: TMA Solutions */}
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className={`absolute -top-1.5 right-3 sm:right-6 z-20 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-2xl backdrop-blur-md transition-colors ${
                       isDark
-                        ? 'border border-white/10 bg-[#121922]'
-                        : 'border border-slate-200 bg-white shadow-xl'
+                        ? 'border border-white/15 bg-[#0b1118]/85 text-white'
+                        : 'border border-slate-300 bg-white/90 text-slate-800 shadow-md'
                     }`}
                   >
-                    <img
-                      src={profileImg}
-                      alt="Nguyễn Minh Diện (DevDien) - Backend Developer at TMA Solutions"
-                      className="aspect-[3/4] w-full object-cover object-top"
-                      fetchPriority="high"
-                    />
+                    <Building2 size={13} className="text-cyan-400 shrink-0" />
+                    <span>TMA Solutions</span>
+                    <span className={isDark ? 'text-slate-400 font-normal' : 'text-slate-500 font-normal'}>• Backend</span>
+                  </motion.div>
+
+                  {/* 2. Main Portrait Card */}
+                  <div
+                    className={`group relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl transition-all duration-300 ${
+                      isDark
+                        ? 'border border-white/10 bg-[#121922] hover:border-amber-500/30'
+                        : 'border border-slate-200 bg-white shadow-xl hover:border-amber-500/40'
+                    }`}
+                  >
+                    <div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-950">
+                      <img
+                        src={profileImg}
+                        alt="Nguyễn Minh Diện (DevDien) - Backend Developer at TMA Solutions"
+                        className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                        fetchPriority="high"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0e1620]/90 via-transparent to-transparent opacity-60" />
+
+                      {/* Floating Status Pill inside photo bottom-right */}
+                      <div className="absolute bottom-3 right-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-black/80 px-3 py-1 text-[11px] font-medium text-emerald-400 backdrop-blur-md shadow-lg">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        <span>Available for Collab</span>
+                      </div>
+                    </div>
+
+                    {/* Bottom Caption Bar */}
                     <div
-                      className={`p-4 text-center border-t ${
-                        isDark
-                          ? 'bg-[#0e1620] border-white/5'
-                          : 'bg-slate-50 border-slate-200'
+                      className={`p-3.5 text-center border-t ${
+                        isDark ? 'bg-[#0e1620] border-white/5' : 'bg-slate-50 border-slate-200'
                       }`}
                     >
                       <p className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
@@ -373,14 +399,26 @@ export default function AboutPage({ theme, setTheme }) {
                           isDark ? 'text-slate-400' : 'text-slate-600'
                         }`}
                       >
-                        Backend Developer • Content Creator
+                        Backend Developer • Content Creator @devdien
                       </p>
-                      <div className="mt-2.5 flex items-center justify-center gap-2 text-xs text-emerald-500 font-medium">
-                        <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                        <span>Open to tech discussions &amp; collaboration</span>
-                      </div>
                     </div>
                   </div>
+
+                  {/* 3. Bottom-Left Floating Glass HUD Badge: VKU Honors */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className={`absolute -bottom-1.5 left-3 sm:left-6 z-20 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-2xl backdrop-blur-md transition-colors ${
+                      isDark
+                        ? 'border border-white/15 bg-[#0b1118]/85 text-white'
+                        : 'border border-slate-300 bg-white/90 text-slate-800 shadow-md'
+                    }`}
+                  >
+                    <GraduationCap size={14} className="text-amber-400 shrink-0" />
+                    <span>VKU Honors</span>
+                    <span className="font-mono text-amber-400 font-bold text-[11px]">• GPA 3.55</span>
+                  </motion.div>
                 </div>
               </motion.div>
             </div>
