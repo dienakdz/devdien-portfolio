@@ -1,8 +1,8 @@
 import project1 from '../assets/optimized/project1.webp';
 import project2 from '../assets/optimized/project2.webp';
-import carShowroomImg from '../assets/car-showroom.jpg';
-import veggieImg from '../assets/veggie.jpg';
-import fastapiBookImg from '../assets/fastapi-book.jpg';
+import carShowroomImg from '../assets/optimized/car-showroom.webp';
+import veggieImg from '../assets/optimized/veggie.webp';
+import fastapiBookImg from '../assets/optimized/fastapi-book.webp';
 
 export const projectData = {
   vi: [

@@ -15,7 +15,7 @@ import {
   User,
   Youtube,
 } from 'lucide-react';
-import heroCover from '../../../assets/hero-cover.jpg';
+import heroCover from '../../../assets/optimized/hero-cover.webp';
 import { useLanguage } from '../../../context/LanguageContext';
 import { getLocalizedName, siteConfig } from '../../../data/siteConfig';
 import { projectData } from '../../../data/projectData';
