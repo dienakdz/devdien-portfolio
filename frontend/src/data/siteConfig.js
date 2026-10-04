@@ -70,6 +70,18 @@ export const siteConfig = {
     'Hồ sơ chính thức về Nguyễn Minh Diện (DevDien) - Kỹ sư Backend tại TMA Solutions, Tốt nghiệp Kỹ thuật Phần mềm VKU loại Giỏi, Content Creator tại YouTube @devdien.',
   aboutDescriptionEn:
     'Official profile of Nguyen Minh Dien (DevDien) - Backend Developer at TMA Solutions, VKU Software Engineering graduate with Honors, and Content Creator at YouTube @devdien.',
+  projectsTitleVi: 'Dự Án Tiêu Biểu & Kiến Trúc Hệ Thống | Nguyễn Minh Diện (DevDien)',
+  projectsTitleEn: 'Featured Projects & System Architecture | Nguyen Minh Dien (DevDien)',
+  projectsDescriptionVi:
+    'Tổng hợp các dự án kỹ thuật backend tiêu biểu của Nguyễn Minh Diện (DevDien): RESTful APIs FastAPI, hạ tầng Docker multi-container, mô hình EAV và thương mại điện tử tích hợp vận chuyển GHN.',
+  projectsDescriptionEn:
+    'Showcase of backend engineering projects by Nguyen Minh Dien (DevDien): FastAPI REST services, multi-container Docker labs, relational EAV architectures, and logistics integrations.',
+  contactTitleVi: 'Liên Hệ Trực Tiếp | Nguyễn Minh Diện (DevDien) - Backend Developer',
+  contactTitleEn: 'Contact & Connect | Nguyen Minh Dien (DevDien) - Backend Developer',
+  contactDescriptionVi:
+    'Kênh liên hệ trực tiếp với Nguyễn Minh Diện (DevDien) qua Email, GitHub, LinkedIn và biểu mẫu liên hệ cho các cơ hội hợp tác kỹ thuật backend.',
+  contactDescriptionEn:
+    'Direct contact channels with Nguyen Minh Dien (DevDien) via Email, GitHub, LinkedIn, and direct contact form for backend engineering opportunities.',
 };
 
 export const getLocalizedName = (lang = 'en') =>

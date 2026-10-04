@@ -6,7 +6,7 @@ import { siteConfig } from '../src/data/siteConfig.js';
 import {
   buildAbsoluteUrl,
   createStructuredData,
-  getDefaultSeo,
+  getRouteSeo,
   publicSitemapEntries,
   resolveSiteUrl,
 } from './seo.config.mjs';
@@ -38,7 +38,7 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${publicSitemapEntries
   .map((entry) => {
-    const isProfile = entry.path === '/nguyen-minh-dien' || entry.path === '/about';
+    const isProfile = entry.path === '/about';
     const imageBlock = isProfile ? `\n${buildImageTags()}` : '';
     return `  <url>
     <loc>${buildAbsoluteUrl(entry.path, siteUrl)}</loc>
@@ -67,53 +67,95 @@ await Promise.all([
   writeFile(path.join(distDir, 'robots.txt'), robots, 'utf8'),
 ]);
 
-// 2. Pre-render static HTML for /about and legacy /nguyen-minh-dien
+// 2. Pre-render static HTML for all public sub-routes: /about, /projects, /contact
+const staticRoutes = [
+  {
+    path: '/about',
+    heading: 'Nguyễn Minh Diện (DevDien) | Tiểu Sử & Quá Trình Làm Việc',
+    summary:
+      'Hồ sơ chi tiết về Nguyễn Minh Diện (DevDien) - Kỹ sư Backend tại TMA Solutions, Tốt nghiệp Kỹ thuật Phần mềm VKU loại Giỏi, người sáng tạo nội dung kênh YouTube @devdien.',
+  },
+  {
+    path: '/projects',
+    heading: 'Dự Án Kỹ Thuật Backend & Kiến Trúc Hệ Thống | Nguyễn Minh Diện (DevDien)',
+    summary:
+      'Tổng hợp các dự án kỹ thuật backend tiêu biểu của Nguyễn Minh Diện (DevDien): RESTful APIs FastAPI, hạ tầng Docker multi-container, mô hình cơ sở dữ liệu EAV và thương mại điện tử tích hợp vận chuyển.',
+  },
+  {
+    path: '/contact',
+    heading: 'Liên Hệ & Kết Nối Trực Tiếp | Nguyễn Minh Diện (DevDien)',
+    summary:
+      'Kênh liên hệ trực tiếp với Nguyễn Minh Diện (DevDien) qua Email minhdien.dev@gmail.com, GitHub, LinkedIn và biểu mẫu nhắn tin.',
+  },
+];
+
 try {
   const baseHtmlPath = path.join(distDir, 'index.html');
   const baseHtml = await readFile(baseHtmlPath, 'utf8');
 
-  // Pre-rendered AboutPage HTML (/about)
-  const aboutDir = path.join(distDir, 'about');
-  await mkdir(aboutDir, { recursive: true });
+  for (const route of staticRoutes) {
+    const targetDir = path.join(distDir, route.path.slice(1));
+    await mkdir(targetDir, { recursive: true });
 
-  const profileStructuredData = JSON.stringify(createStructuredData(siteUrl, '/about'));
-  const profileCanonical = buildAbsoluteUrl('/about', siteUrl);
-  const profileImage = buildAbsoluteUrl(siteConfig.entityImages[0], siteUrl);
+    const seo = getRouteSeo(route.path, siteUrl);
+    const structuredData = JSON.stringify(createStructuredData(siteUrl, route.path));
 
-  let profileHtml = baseHtml
-    .replace(/<title>.*?<\/title>/, `<title>${siteConfig.aboutTitleVi}</title>`)
-    .replace(
-      /<meta\s+name="description"\s+content=".*?"\s*\/?>/,
-      `<meta name="description" content="${siteConfig.aboutDescriptionVi}" />`,
-    )
-    .replace(
-      /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/,
-      `<meta property="og:title" content="${siteConfig.aboutTitleVi}" />`,
-    )
-    .replace(
-      /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/,
-      `<meta property="og:description" content="${siteConfig.aboutDescriptionVi}" />`,
-    )
-    .replace(
-      /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/,
-      `<meta property="og:url" content="${profileCanonical}" />`,
-    )
-    .replace(
-      /<meta\s+property="og:image"\s+content=".*?"\s*\/?>/,
-      `<meta property="og:image" content="${profileImage}" />`,
-    )
-    .replace(
-      /<link\s+rel="canonical"\s+href=".*?"\s*\/?>/,
-      `<link rel="canonical" href="${profileCanonical}" />`,
-    )
-    .replace(
-      /<script\s+type="application\/ld\+json"\s+data-seo-schema="portfolio">.*?<\/script>/s,
-      `<script type="application/ld+json" data-seo-schema="portfolio">${profileStructuredData}</script>`,
-    );
+    let html = baseHtml
+      .replace(/<title>.*?<\/title>/, `<title>${seo.title}</title>`)
+      .replace(
+        /<meta\s+name="description"\s+content=".*?"\s*\/?>/,
+        `<meta name="description" content="${seo.description}" />`,
+      )
+      .replace(
+        /<meta\s+name="keywords"\s+content=".*?"\s*\/?>/,
+        `<meta name="keywords" content="${seo.keywords}" />`,
+      )
+      .replace(
+        /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/,
+        `<meta property="og:title" content="${seo.title}" />`,
+      )
+      .replace(
+        /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/,
+        `<meta property="og:description" content="${seo.description}" />`,
+      )
+      .replace(
+        /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/,
+        `<meta property="og:url" content="${seo.canonicalUrl}" />`,
+      )
+      .replace(
+        /<meta\s+property="og:image"\s+content=".*?"\s*\/?>/,
+        `<meta property="og:image" content="${seo.imageUrl}" />`,
+      )
+      .replace(
+        /<meta\s+name="twitter:title"\s+content=".*?"\s*\/?>/,
+        `<meta name="twitter:title" content="${seo.title}" />`,
+      )
+      .replace(
+        /<meta\s+name="twitter:description"\s+content=".*?"\s*\/?>/,
+        `<meta name="twitter:description" content="${seo.description}" />`,
+      )
+      .replace(
+        /<meta\s+name="twitter:image"\s+content=".*?"\s*\/?>/,
+        `<meta name="twitter:image" content="${seo.imageUrl}" />`,
+      )
+      .replace(
+        /<link\s+rel="canonical"\s+href=".*?"\s*\/?>/,
+        `<link rel="canonical" href="${seo.canonicalUrl}" />`,
+      )
+      .replace(
+        /<script\s+type="application\/ld\+json"\s+data-seo-schema="portfolio">.*?<\/script>/s,
+        `<script type="application/ld+json" data-seo-schema="portfolio">${structuredData}</script>`,
+      )
+      .replace(
+        /<noscript>.*?<\/noscript>/s,
+        `<noscript>\n    <section style="padding: 2rem; font-family: system-ui, sans-serif; color: #061119;">\n      <h1>${route.heading}</h1>\n      <p>${route.summary}</p>\n      <p>Truy cập portfolio với JavaScript được bật để có trải nghiệm đầy đủ.</p>\n    </section>\n  </noscript>`,
+      );
 
-  await writeFile(path.join(aboutDir, 'index.html'), profileHtml, 'utf8');
+    await writeFile(path.join(targetDir, 'index.html'), html, 'utf8');
+    console.log(`[seo] Pre-rendered static HTML for route: ${route.path}`);
+  }
 } catch (err) {
-  console.warn('[seo] Could not pre-render static profile page:', err.message);
+  console.warn('[seo] Could not pre-render static pages:', err.message);
 }
 
 if (!env.VITE_SITE_URL) {

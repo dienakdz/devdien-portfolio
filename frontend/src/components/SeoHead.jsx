@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { siteConfig } from '../data/siteConfig.js';
-import { buildAbsoluteUrl, createStructuredData, getDefaultSeo } from '../lib/seo.js';
+import { useLanguage } from '../context/LanguageContext';
+import { getRouteSeo } from '../lib/seo.js';
 
 const ensureMeta = (selector, attributes) => {
   let element = document.head.querySelector(selector);
@@ -48,52 +49,14 @@ const ensureJsonLd = (schema) => {
   element.textContent = JSON.stringify(schema);
 };
 
-const getRouteSeo = (pathname) => {
-  const normalizedPath = pathname || '/';
-  const isPrivateRoute = normalizedPath === '/login' || normalizedPath.startsWith('/admin');
-  const canonicalUrl = buildAbsoluteUrl(normalizedPath);
-
-  if (isPrivateRoute) {
-    return {
-      title: `${siteConfig.brand} Admin`,
-      description: 'Private admin portal for managing portfolio data.',
-      keywords: `${siteConfig.brand}, admin`,
-      canonicalUrl,
-      robots: 'noindex, nofollow, noarchive',
-      schema: null,
-    };
-  }
-
-  const defaultSeo = getDefaultSeo();
-  const isProfileRoute = normalizedPath === '/about';
-
-  if (isProfileRoute) {
-    return {
-      title: siteConfig.aboutTitleVi,
-      description: siteConfig.aboutDescriptionVi,
-      keywords: `${siteConfig.keywords.join(', ')}, Tiểu sử Nguyễn Minh Diện, Quá trình làm việc Nguyễn Minh Diện, YouTube devdien, TMA Solutions, VKU`,
-      canonicalUrl: buildAbsoluteUrl('/about'),
-      imageUrl: buildAbsoluteUrl(siteConfig.entityImages[0], defaultSeo.siteUrl),
-      robots: 'index, follow, max-image-preview:large',
-      schema: createStructuredData(defaultSeo.siteUrl, '/about'),
-    };
-  }
-
-  return {
-    ...defaultSeo,
-    canonicalUrl,
-    robots: 'index, follow, max-image-preview:large',
-    schema: createStructuredData(defaultSeo.siteUrl, normalizedPath),
-  };
-};
-
 export default function SeoHead() {
   const location = useLocation();
+  const { lang } = useLanguage();
 
   useEffect(() => {
     const seo = getRouteSeo(location.pathname);
 
-    document.documentElement.lang = 'en';
+    document.documentElement.lang = lang || 'vi';
     document.title = seo.title;
 
     ensureMeta('meta[name="description"]', { name: 'description', content: seo.description });
@@ -119,7 +82,7 @@ export default function SeoHead() {
       property: 'og:site_name',
       content: siteConfig.name,
     });
-    ensureMeta('meta[property="og:locale"]', { property: 'og:locale', content: siteConfig.locale });
+    ensureMeta('meta[property="og:locale"]', { property: 'og:locale', content: lang === 'vi' ? 'vi_VN' : 'en_US' });
     ensureMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
     ensureMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: seo.title });
     ensureMeta('meta[name="twitter:description"]', {
@@ -144,7 +107,7 @@ export default function SeoHead() {
       href: '/favicon.svg',
     });
     ensureJsonLd(seo.schema);
-  }, [location.pathname]);
+  }, [location.pathname, lang]);
 
   return null;
 }
