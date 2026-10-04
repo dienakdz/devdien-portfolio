@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   ArrowUpRight,
   Eye,
+  Facebook,
   Github,
   Linkedin,
   Mail,
@@ -54,13 +55,36 @@ const Footer = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const socialLinks = [
+    {
+      name: 'GitHub',
+      href: siteConfig.github,
+      icon: Github,
+    },
+    {
+      name: 'LinkedIn',
+      href: siteConfig.linkedin,
+      icon: Linkedin,
+    },
+    {
+      name: 'YouTube',
+      href: siteConfig.youtubeChannel || siteConfig.youtube,
+      icon: Youtube,
+    },
+    {
+      name: 'Facebook',
+      href: siteConfig.facebook,
+      icon: Facebook,
+    },
+  ];
+
   return (
     <footer className="w-full border-t border-border/80 bg-card/60 transition-colors duration-200 dark:border-white/8 dark:bg-[#080d13]">
-      <div className="container mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="container mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10">
           
           {/* Brand Info */}
-          <div className="lg:col-span-2">
+          <div className="md:col-span-5">
             <Link to="/" className="flex items-center gap-2.5">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-amber-500/30 bg-amber-500/15 text-amber-500 dark:text-amber-400">
                 <Tv size={16} />
@@ -88,7 +112,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Navigation */}
-          <div>
+          <div className="md:col-span-3">
             <p className="font-outfit text-xs font-bold uppercase tracking-wider text-foreground">
               {lang === 'vi' ? 'Điều hướng' : 'Navigation'}
             </p>
@@ -117,63 +141,49 @@ const Footer = () => {
           </div>
 
           {/* Connect & Socials */}
-          <div>
+          <div className="md:col-span-4">
             <p className="font-outfit text-xs font-bold uppercase tracking-wider text-foreground">
               {lang === 'vi' ? 'Kênh kết nối' : 'Connect'}
             </p>
-            <ul className="mt-4 flex flex-col gap-2.5 text-sm text-muted-foreground">
-              <li>
-                <a
-                  href={siteConfig.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 hover:text-foreground transition-colors"
-                >
-                  <Github size={15} />
-                  <span>GitHub @dienakdz</span>
-                  <ArrowUpRight size={12} className="opacity-50" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href={siteConfig.youtubeChannel}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 hover:text-red-500 transition-colors"
-                >
-                  <Youtube size={15} />
-                  <span>YouTube @devdien</span>
-                  <ArrowUpRight size={12} className="opacity-50" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href={siteConfig.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 hover:text-cyan-500 transition-colors"
-                >
-                  <Linkedin size={15} />
-                  <span>LinkedIn</span>
-                  <ArrowUpRight size={12} className="opacity-50" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href={siteConfig.emailHref}
-                  className="flex items-center gap-2 hover:text-amber-500 transition-colors"
-                >
-                  <Mail size={15} />
-                  <span>minhdien.dev@gmail.com</span>
-                </a>
-              </li>
-            </ul>
+            <div className="mt-4 flex flex-col gap-3">
+              <a
+                href={siteConfig.emailHref}
+                className="group flex items-center justify-between rounded-lg border border-border/70 bg-background/50 px-3.5 py-2.5 text-xs text-foreground hover:border-amber-500/40 hover:text-amber-500 transition-all dark:border-white/10 dark:bg-[#121922] dark:hover:border-amber-500/30"
+              >
+                <div className="flex items-center gap-2.5">
+                  <Mail size={15} className="text-amber-500 flex-shrink-0" />
+                  <span className="font-mono text-xs text-foreground/90 group-hover:text-amber-500 transition-colors">
+                    {siteConfig.email}
+                  </span>
+                </div>
+                <ArrowUpRight size={13} className="text-muted-foreground opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+              </a>
+
+              <div className="flex items-center gap-2">
+                {socialLinks.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      title={item.name}
+                      aria-label={item.name}
+                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/70 bg-background/50 text-muted-foreground hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-500 transition-all dark:border-white/10 dark:bg-[#121922] dark:hover:border-amber-500/30 dark:hover:text-amber-400"
+                    >
+                      <Icon size={16} />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border/60 pt-6 text-xs text-muted-foreground sm:flex-row dark:border-white/8">
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border/60 pt-6 text-xs text-muted-foreground sm:flex-row dark:border-white/8">
           <p>© {year} {localizedName}. All rights reserved.</p>
 
           <div className="flex items-center gap-4">
