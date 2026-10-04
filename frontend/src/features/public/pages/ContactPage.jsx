@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import {
   Check,
-  Copy,
   Facebook,
   Github,
   Linkedin,
   Loader2,
   Mail,
   MapPin,
-  MessageSquare,
   Phone,
   Send,
-  Sparkles,
   Youtube,
 } from 'lucide-react';
 import Navbar from '../../../components/Navbar';
@@ -22,7 +19,7 @@ import { siteConfig } from '../../../data/siteConfig';
 import { apiUrl } from '../../../lib/api';
 
 export default function ContactPage({ theme, setTheme }) {
-  const { lang, t } = useLanguage();
+  const { lang } = useLanguage();
   const { showToast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
@@ -31,8 +28,12 @@ export default function ContactPage({ theme, setTheme }) {
     window.scrollTo(0, 0);
   }, []);
 
+  const isDark = theme ? theme === 'dark' : true;
+
   const toggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    if (setTheme) {
+      setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    }
   };
 
   const copyEmail = () => {
@@ -49,26 +50,27 @@ export default function ContactPage({ theme, setTheme }) {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const payload = {
-      name: String(formData.get('name') || '').trim(),
-      email: String(formData.get('email') || '').trim(),
-      message: String(formData.get('message') || '').trim(),
-    };
+    const name = String(formData.get('name') || '').trim();
+    const email = String(formData.get('email') || '').trim();
+    const subject = String(formData.get('subject') || '').trim();
+    const rawMessage = String(formData.get('message') || '').trim();
 
-    if (!payload.name || !payload.email || !payload.message) {
+    if (!name || !email || !rawMessage) {
       showToast(
-        lang === 'vi' ? 'Vui lòng điền đủ các trường.' : 'Please fill all required fields.',
+        lang === 'vi' ? 'Vui lòng điền đủ các trường bắt buộc.' : 'Please fill all required fields.',
         'error'
       );
       return;
     }
+
+    const message = subject ? `[Subject: ${subject}]\n\n${rawMessage}` : rawMessage;
 
     setIsSubmitting(true);
     try {
       const response = await fetch(apiUrl('/api/contact'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ name, email, message }),
       });
 
       if (!response.ok) throw new Error('submit_failed');
@@ -98,230 +100,353 @@ export default function ContactPage({ theme, setTheme }) {
       href: siteConfig.github,
       icon: Github,
       desc: '@dienakdz',
-      color: 'hover:text-white',
-    },
-    {
-      name: 'YouTube',
-      href: siteConfig.youtubeChannel,
-      icon: Youtube,
-      desc: '@devdien',
-      color: 'hover:text-red-500',
     },
     {
       name: 'LinkedIn',
       href: siteConfig.linkedin,
       icon: Linkedin,
       desc: 'Minh Dien Nguyen',
-      color: 'hover:text-cyan-400',
+    },
+    {
+      name: 'YouTube',
+      href: siteConfig.youtubeChannel,
+      icon: Youtube,
+      desc: '@devdien',
     },
     {
       name: 'Facebook',
       href: siteConfig.facebook,
       icon: Facebook,
       desc: 'Nguyễn Minh Diện',
-      color: 'hover:text-blue-500',
     },
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground transition-colors duration-200">
-      <Navbar theme={theme} toggleTheme={toggleTheme} />
+    <div
+      className={`min-h-screen antialiased overflow-x-hidden transition-colors duration-200 selection:bg-amber-500/20 selection:text-amber-400 ${
+        isDark ? 'bg-[#0b1118] text-slate-100' : 'bg-slate-50 text-slate-900'
+      }`}
+    >
+      <Navbar theme={isDark ? 'dark' : 'light'} toggleTheme={toggleTheme} />
 
-      <main className="container mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-        
-        {/* HEADER */}
-        <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/25 bg-amber-500/10 px-3.5 py-1 text-xs font-semibold text-amber-600 dark:text-amber-400">
-            <MessageSquare size={14} />
-            <span>{lang === 'vi' ? 'Sẵn Sàng Hợp Tác' : 'Open for Collaboration'}</span>
-          </div>
-
-          <h1 className="mt-4 font-outfit text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground">
-            {lang === 'vi' ? 'Kết Nối Với Tôi' : 'Let\'s Connect & Build'}
+      <main className="container mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-16">
+        {/* ========================================================================= */}
+        {/* HEADER SECTION (Matching Mẫu C: Center Aligned Typography)               */}
+        {/* ========================================================================= */}
+        <div className="text-center max-w-2xl mx-auto">
+          <h1
+            className={`font-outfit text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight ${
+              isDark ? 'text-white' : 'text-slate-900'
+            }`}
+          >
+            {lang === 'vi' ? 'Bắt Đầu Cuộc Trò Chuyện Trực Tiếp' : 'Start a Direct Conversation'}
           </h1>
 
-          <p className="mt-4 text-base sm:text-lg leading-relaxed text-muted-foreground">
+          <p
+            className={`mt-3 text-sm sm:text-base leading-relaxed ${
+              isDark ? 'text-slate-400' : 'text-slate-600'
+            }`}
+          >
             {lang === 'vi'
-              ? 'Bạn đang tìm kiếm kỹ sư backend cho dự án, cần tư vấn kiến trúc hệ thống hoặc muốn trao đổi chuyên môn? Hãy gửi lời nhắn cho tôi bên dưới.'
-              : 'Looking for a backend engineer for your team, need architecture consulting, or want to discuss technical ideas? Drop me a message below.'}
+              ? 'Liên hệ trực tiếp qua kênh phương thức thuận tiện hoặc gửi lời nhắn nhanh bên dưới.'
+              : 'Reach out via your preferred method or send a quick message.'}
           </p>
         </div>
 
-        {/* 2-COLUMN LAYOUT */}
-        <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:items-start">
+        {/* ========================================================================= */}
+        {/* SYMMETRICAL DUAL MONOLITH LAYOUT (Mẫu C Exact Match)                     */}
+        {/* ========================================================================= */}
+        <div className="mt-10 sm:mt-12 grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
           
-          {/* LEFT: Contact Cards & Info */}
-          <div className="lg:col-span-5 space-y-6">
-            
-            {/* Primary Email Card */}
-            <div className="rounded-2xl border border-border/80 bg-card p-6 shadow-sm dark:border-white/8 dark:bg-[#121922]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/15 text-amber-500 dark:text-amber-400">
-                    <Mail size={18} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      Email
-                    </p>
-                    <p className="font-outfit text-base font-bold text-foreground">
-                      {siteConfig.email}
-                    </p>
-                  </div>
-                </div>
+          {/* ======================================================================= */}
+          {/* LEFT MONOLITH CARD: Direct Contact Hub                                  */}
+          {/* ======================================================================= */}
+          <div
+            className={`flex flex-col justify-between rounded-2xl p-6 sm:p-8 transition-all duration-300 shadow-xl ${
+              isDark
+                ? 'border border-slate-800 bg-[#121922]'
+                : 'border border-slate-200 bg-white shadow-slate-100'
+            }`}
+          >
+            <div>
+              {/* Card Title */}
+              <h2
+                className={`font-outfit text-xl sm:text-2xl font-bold tracking-tight mb-5 ${
+                  isDark ? 'text-white' : 'text-slate-900'
+                }`}
+              >
+                {lang === 'vi' ? 'Thông tin liên hệ trực tiếp' : 'Direct email'}
+              </h2>
 
-                <button
-                  type="button"
-                  onClick={copyEmail}
-                  className="rounded-lg border border-border/70 bg-muted/40 p-2 text-muted-foreground hover:text-amber-500 hover:border-amber-400 transition-colors cursor-pointer dark:border-white/10 dark:bg-white/5"
-                  title="Sao chép email"
+              {/* Direct Info Blocks Stack */}
+              <div className="space-y-3.5">
+                {/* Block 1: Direct Email with Click-to-Copy Button */}
+                <div
+                  className={`rounded-xl p-4 border transition-colors flex items-center justify-between gap-3 ${
+                    isDark
+                      ? 'border-slate-800 bg-[#0c1117]'
+                      : 'border-slate-200 bg-slate-50'
+                  }`}
                 >
-                  {copiedEmail ? <Check size={16} className="text-emerald-500" /> : <Copy size={16} />}
-                </button>
-              </div>
-
-              <div className="mt-4 pt-4 border-t border-border/60 flex items-center justify-between text-xs text-muted-foreground dark:border-white/5">
-                <span>{lang === 'vi' ? 'Thời gian phản hồi:' : 'Response time:'}</span>
-                <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-                  {lang === 'vi' ? 'Trong vòng 24 giờ' : 'Within 24 hours'}
-                </span>
-              </div>
-            </div>
-
-            {/* Location & Details Card */}
-            <div className="rounded-2xl border border-border/80 bg-card p-6 shadow-sm dark:border-white/8 dark:bg-[#121922]">
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/60 bg-muted/30 text-muted-foreground dark:border-white/5 dark:bg-white/5">
-                    <MapPin size={16} />
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                      <Mail size={18} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                        {lang === 'vi' ? 'Email trực tiếp' : 'Direct email'}
+                      </p>
+                      <p
+                        className={`text-xs sm:text-sm font-semibold ${
+                          isDark ? 'text-slate-200' : 'text-slate-800'
+                        }`}
+                      >
+                        {siteConfig.email}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      {lang === 'vi' ? 'Địa điểm' : 'Location'}
-                    </p>
-                    <p className="text-sm font-semibold text-foreground">
-                      {siteConfig.location}
-                    </p>
-                  </div>
+
+                  <button
+                    type="button"
+                    onClick={copyEmail}
+                    className="shrink-0 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 px-3.5 py-1.5 text-xs font-bold shadow-md shadow-amber-500/20 transition-all hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-1.5"
+                    title={lang === 'vi' ? 'Sao chép email' : 'Click to copy'}
+                  >
+                    {copiedEmail ? (
+                      <>
+                        <Check size={13} strokeWidth={3} className="text-slate-950" />
+                        <span>{lang === 'vi' ? 'Đã sao chép' : 'Copied!'}</span>
+                      </>
+                    ) : (
+                      <span>{lang === 'vi' ? 'Sao chép' : 'Click to-copy'}</span>
+                    )}
+                  </button>
                 </div>
 
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/60 bg-muted/30 text-muted-foreground dark:border-white/5 dark:bg-white/5">
-                    <Phone size={16} />
+                {/* Block 2: Direct Phone Number */}
+                <div
+                  className={`rounded-xl p-4 border transition-colors flex items-center gap-3.5 ${
+                    isDark
+                      ? 'border-slate-800 bg-[#0c1117]'
+                      : 'border-slate-200 bg-slate-50'
+                  }`}
+                >
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                    <Phone size={18} />
                   </div>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      {lang === 'vi' ? 'Điện thoại' : 'Phone'}
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                      {lang === 'vi' ? 'Số điện thoại' : 'Direct phone number'}
                     </p>
-                    <p className="text-sm font-semibold text-foreground">
+                    <p
+                      className={`text-sm sm:text-base font-semibold ${
+                        isDark ? 'text-slate-200' : 'text-slate-800'
+                      }`}
+                    >
                       {siteConfig.phone}
                     </p>
                   </div>
                 </div>
+
+                {/* Block 3: Location */}
+                <div
+                  className={`rounded-xl p-4 border transition-colors flex items-center gap-3.5 ${
+                    isDark
+                      ? 'border-slate-800 bg-[#0c1117]'
+                      : 'border-slate-200 bg-slate-50'
+                  }`}
+                >
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                    <MapPin size={18} />
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                      {lang === 'vi' ? 'Địa điểm' : 'Location'}
+                    </p>
+                    <p
+                      className={`text-sm sm:text-base font-semibold ${
+                        isDark ? 'text-slate-200' : 'text-slate-800'
+                      }`}
+                    >
+                      {siteConfig.location}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Social Channels Grid */}
-            <div className="grid grid-cols-2 gap-3">
-              {socialLinks.map((s) => {
-                const Icon = s.icon;
-                return (
-                  <a
-                    key={s.name}
-                    href={s.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex flex-col rounded-xl border border-border/70 bg-card p-3.5 transition-all hover:border-amber-400/40 hover:shadow-sm dark:border-white/8 dark:bg-[#121922]"
-                  >
-                    <div className="flex items-center justify-between">
-                      <Icon size={16} className="text-muted-foreground" />
-                      <span className="text-[10px] font-mono text-muted-foreground/80">LINK</span>
-                    </div>
-                    <span className="mt-2 text-sm font-bold text-foreground">
-                      {s.name}
-                    </span>
-                    <span className="text-xs text-muted-foreground truncate">
-                      {s.desc}
-                    </span>
-                  </a>
-                );
-              })}
-            </div>
+            {/* Bottom: Social Channels Dock & SLA Pill */}
+            <div className="mt-8 pt-6 border-t border-slate-800/80">
+              {/* 4 Social Docks */}
+              <div className="flex items-center justify-center gap-3 sm:gap-4">
+                {socialLinks.map((s) => {
+                  const Icon = s.icon;
+                  return (
+                    <a
+                      key={s.name}
+                      href={s.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={s.name}
+                      className={`h-11 w-11 rounded-xl border flex items-center justify-center transition-all hover:-translate-y-0.5 ${
+                        isDark
+                          ? 'border-slate-800 bg-[#0c1117] text-slate-300 hover:text-amber-400 hover:border-amber-500/50 hover:shadow-[0_0_15px_rgba(245,158,11,0.25)]'
+                          : 'border-slate-200 bg-slate-50 text-slate-600 hover:text-amber-600 hover:border-amber-500/50 hover:shadow-md'
+                      }`}
+                      title={s.desc}
+                    >
+                      <Icon size={18} />
+                    </a>
+                  );
+                })}
+              </div>
 
+              {/* SLA Response Pill */}
+              <div className="mt-5 flex justify-center">
+                <span
+                  className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1 text-xs font-semibold ${
+                    isDark
+                      ? 'border border-slate-800 bg-[#0c1117] text-slate-400'
+                      : 'border border-slate-200 bg-slate-100 text-slate-600'
+                  }`}
+                >
+                  <span>&lt; 24h SLA</span>
+                </span>
+              </div>
+            </div>
           </div>
 
-          {/* RIGHT: Contact Form */}
-          <div className="lg:col-span-7">
-            <div className="rounded-2xl border border-border/80 bg-card p-6 sm:p-8 shadow-sm dark:border-white/8 dark:bg-[#121922]">
-              <h2 className="font-outfit text-xl sm:text-2xl font-bold text-foreground">
-                {lang === 'vi' ? 'Gửi Lời Nhắn Trực Tiếp' : 'Send a Direct Message'}
+          {/* ======================================================================= */}
+          {/* RIGHT MONOLITH CARD: Direct Message Form                                */}
+          {/* ======================================================================= */}
+          <div
+            className={`flex flex-col justify-between rounded-2xl p-6 sm:p-8 transition-all duration-300 shadow-xl ${
+              isDark
+                ? 'border border-slate-800 bg-[#121922]'
+                : 'border border-slate-200 bg-white shadow-slate-100'
+            }`}
+          >
+            <div>
+              {/* Card Title */}
+              <h2
+                className={`font-outfit text-xl sm:text-2xl font-bold tracking-tight mb-5 ${
+                  isDark ? 'text-white' : 'text-slate-900'
+                }`}
+              >
+                {lang === 'vi' ? 'Gửi tin nhắn trực tiếp' : 'Direct message form'}
               </h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {lang === 'vi'
-                  ? 'Điền thông tin và yêu cầu của bạn, tin nhắn sẽ được chuyển trực tiếp vào hộp thư của tôi.'
-                  : 'Fill in your details and message, and it will be routed directly to my inbox.'}
-              </p>
 
-              <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">
-                      {lang === 'vi' ? 'Họ và tên *' : 'Your Name *'}
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      placeholder={lang === 'vi' ? 'Nguyễn Văn A' : 'John Doe'}
-                      className="w-full rounded-xl border border-border/80 bg-background/80 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-amber-500 transition-colors dark:border-white/10 dark:bg-[#0b1118]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      required
-                      placeholder="name@company.com"
-                      className="w-full rounded-xl border border-border/80 bg-background/80 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-amber-500 transition-colors dark:border-white/10 dark:bg-[#0b1118]"
-                    />
-                  </div>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Name */}
+                <div>
+                  <label
+                    className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${
+                      isDark ? 'text-slate-400' : 'text-slate-600'
+                    }`}
+                  >
+                    {lang === 'vi' ? 'Họ và tên *' : 'Name'}
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    placeholder={lang === 'vi' ? 'Nguyễn Văn A' : 'Name'}
+                    className={`w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition-colors ${
+                      isDark
+                        ? 'border-slate-800 bg-[#0c1117] text-white placeholder:text-slate-600 focus:border-amber-500 focus:ring-1 focus:ring-amber-500'
+                        : 'border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500'
+                    }`}
+                  />
                 </div>
 
+                {/* Email */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">
-                    {lang === 'vi' ? 'Nội dung tin nhắn *' : 'Message *'}
+                  <label
+                    className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${
+                      isDark ? 'text-slate-400' : 'text-slate-600'
+                    }`}
+                  >
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="name@company.com"
+                    className={`w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition-colors ${
+                      isDark
+                        ? 'border-slate-800 bg-[#0c1117] text-white placeholder:text-slate-600 focus:border-amber-500 focus:ring-1 focus:ring-amber-500'
+                        : 'border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500'
+                    }`}
+                  />
+                </div>
+
+                {/* Subject */}
+                <div>
+                  <label
+                    className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${
+                      isDark ? 'text-slate-400' : 'text-slate-600'
+                    }`}
+                  >
+                    {lang === 'vi' ? 'Chủ đề' : 'Subject'}
+                  </label>
+                  <input
+                    type="text"
+                    name="subject"
+                    placeholder={lang === 'vi' ? 'Trao đổi về vị trí Backend Engineer...' : 'Subject'}
+                    className={`w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition-colors ${
+                      isDark
+                        ? 'border-slate-800 bg-[#0c1117] text-white placeholder:text-slate-600 focus:border-amber-500 focus:ring-1 focus:ring-amber-500'
+                        : 'border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500'
+                    }`}
+                  />
+                </div>
+
+                {/* Message */}
+                <div>
+                  <label
+                    className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${
+                      isDark ? 'text-slate-400' : 'text-slate-600'
+                    }`}
+                  >
+                    {lang === 'vi' ? 'Nội dung tin nhắn *' : 'Message'}
                   </label>
                   <textarea
                     name="message"
                     required
-                    rows={5}
+                    rows={4}
                     placeholder={
                       lang === 'vi'
                         ? 'Mô tả ngắn gọn về dự án, yêu cầu công việc hoặc nội dung bạn muốn trao đổi...'
-                        : 'Describe your project, team opportunity, or what you would like to discuss...'
+                        : 'Message'
                     }
-                    className="w-full rounded-xl border border-border/80 bg-background/80 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-amber-500 transition-colors dark:border-white/10 dark:bg-[#0b1118] resize-y"
+                    className={`w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition-colors resize-y ${
+                      isDark
+                        ? 'border-slate-800 bg-[#0c1117] text-white placeholder:text-slate-600 focus:border-amber-500 focus:ring-1 focus:ring-amber-500'
+                        : 'border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500'
+                    }`}
                   />
                 </div>
 
+                {/* Submit Button (Matching Mẫu C) */}
                 <div className="pt-2">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="button-primary w-full py-3 text-sm flex items-center justify-center gap-2"
+                    className={`w-full rounded-xl py-3 text-sm font-bold flex items-center justify-center gap-2 border transition-all cursor-pointer ${
+                      isDark
+                        ? 'border-amber-500/60 bg-[#0c1117] hover:bg-amber-500/10 text-white shadow-[0_0_20px_rgba(245,158,11,0.15)] hover:border-amber-400'
+                        : 'border-amber-500 bg-amber-50 hover:bg-amber-100 text-amber-900 shadow-sm'
+                    }`}
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 size={16} className="animate-spin" />
-                        <span>{lang === 'vi' ? 'Đang gửi...' : 'Sending...'}</span>
+                        <Loader2 size={16} className="animate-spin text-amber-400" />
+                        <span>{lang === 'vi' ? 'Đang gửi tin nhắn...' : 'Sending...'}</span>
                       </>
                     ) : (
                       <>
-                        <Send size={16} />
+                        <Send size={15} className="text-amber-400" />
                         <span>{lang === 'vi' ? 'Gửi tin nhắn ngay' : 'Send Message'}</span>
                       </>
                     )}
@@ -332,7 +457,6 @@ export default function ContactPage({ theme, setTheme }) {
           </div>
 
         </div>
-
       </main>
 
       <Footer />
