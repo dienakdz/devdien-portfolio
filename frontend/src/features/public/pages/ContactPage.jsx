@@ -11,30 +11,18 @@ import {
   Send,
   Youtube,
 } from 'lucide-react';
-import Navbar from '../../../components/Navbar';
-import Footer from '../../../components/Footer';
 import { useLanguage } from '../../../context/LanguageContext';
 import { useToast } from '../../../context/ToastContext';
+import { useTheme } from '../../../context/ThemeContext';
 import { siteConfig } from '../../../data/siteConfig';
 import { apiUrl } from '../../../lib/api';
 
-export default function ContactPage({ theme, setTheme }) {
+export default function ContactPage() {
   const { lang } = useLanguage();
+  const { isDark } = useTheme();
   const { showToast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const isDark = theme ? theme === 'dark' : true;
-
-  const toggleTheme = () => {
-    if (setTheme) {
-      setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
-    }
-  };
 
   const copyEmail = () => {
     navigator.clipboard.writeText(siteConfig.email);
@@ -122,16 +110,9 @@ export default function ContactPage({ theme, setTheme }) {
   ];
 
   return (
-    <div
-      className={`min-h-screen antialiased overflow-x-hidden transition-colors duration-200 selection:bg-amber-500/20 selection:text-amber-400 ${
-        isDark ? 'bg-[#0b1118] text-slate-100' : 'bg-slate-50 text-slate-900'
-      }`}
-    >
-      <Navbar theme={isDark ? 'dark' : 'light'} toggleTheme={toggleTheme} />
-
-      <main className="container mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-16">
+    <section className="container mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-16">
         {/* ========================================================================= */}
-        {/* HEADER SECTION (Matching Mẫu C: Center Aligned Typography)               */}
+        {/* Header Section */}
         {/* ========================================================================= */}
         <div className="text-center max-w-2xl mx-auto">
           <h1
@@ -154,7 +135,7 @@ export default function ContactPage({ theme, setTheme }) {
         </div>
 
         {/* ========================================================================= */}
-        {/* SYMMETRICAL DUAL MONOLITH LAYOUT (Mẫu C Exact Match)                     */}
+        {/* Dual Column Contact Layout */}
         {/* ========================================================================= */}
         <div className="mt-10 sm:mt-12 grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
           
@@ -428,7 +409,7 @@ export default function ContactPage({ theme, setTheme }) {
                   />
                 </div>
 
-                {/* Submit Button (Matching Mẫu C) */}
+                {/* Submit Button */}
                 <div className="pt-2">
                   <button
                     type="submit"
@@ -457,9 +438,6 @@ export default function ContactPage({ theme, setTheme }) {
           </div>
 
         </div>
-      </main>
-
-      <Footer />
-    </div>
+    </section>
   );
 }

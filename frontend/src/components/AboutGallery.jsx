@@ -18,10 +18,13 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useTheme } from '../context/ThemeContext';
 
 const INITIAL_VISIBLE_COUNT = 8;
 
-export default function AboutGallery({ isDark = true }) {
+export default function AboutGallery({ isDark: propIsDark }) {
+  const { isDark: ctxIsDark } = useTheme();
+  const isDark = propIsDark !== undefined ? propIsDark : ctxIsDark;
   const { t, lang } = useLanguage();
   const [activeCategory, setActiveCategory] = useState('all');
   const [activePhotoIndex, setActivePhotoIndex] = useState(null);

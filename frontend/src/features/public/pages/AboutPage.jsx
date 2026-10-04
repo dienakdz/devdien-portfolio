@@ -17,32 +17,18 @@ import {
   GraduationCap,
 } from 'lucide-react';
 import { useLanguage } from '../../../context/LanguageContext';
+import { useTheme } from '../../../context/ThemeContext';
 import { siteConfig, getLocalizedName } from '../../../data/siteConfig';
 import AboutGallery from '../../../components/AboutGallery';
 import YouTubeShowcase from '../../../components/YouTubeShowcase';
 import AboutTimeline from '../../../components/AboutTimeline';
 import profileImg from '../../../assets/profile.jpg';
 
-import Navbar from '../../../components/Navbar';
-import Footer from '../../../components/Footer';
-
-export default function AboutPage({ theme, setTheme }) {
-  const { t, lang, setLang } = useLanguage();
+export default function AboutPage() {
+  const { t, lang } = useLanguage();
+  const { isDark } = useTheme();
   const page = t?.aboutPage || {};
   const localizedName = getLocalizedName(lang);
-
-  // Shared global theme state
-  const isDark = theme ? theme === 'dark' : true;
-
-  const toggleTheme = () => {
-    if (setTheme) {
-      setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
-    }
-  };
-
-  const toggleLanguage = () => {
-    setLang((prev) => (prev === 'vi' ? 'en' : 'vi'));
-  };
 
   const socialLinks = [
     {
@@ -83,16 +69,8 @@ export default function AboutPage({ theme, setTheme }) {
   ];
 
   return (
-    <div
-      className={`min-h-screen antialiased overflow-x-hidden transition-colors duration-200 selection:bg-amber-500/20 selection:text-amber-400 ${
-        isDark ? 'bg-[#0b1118] text-slate-100' : 'bg-slate-50 text-slate-900'
-      }`}
-    >
-      {/* Top Global Navigation */}
-      <Navbar theme={isDark ? 'dark' : 'light'} toggleTheme={toggleTheme} />
-
-      <main>
-        {/* HERO SECTION */}
+    <>
+      {/* HERO SECTION */}
         <section
           id="story"
           className={`relative pt-10 pb-16 md:pt-16 md:pb-20 overflow-hidden border-b ${
@@ -108,7 +86,7 @@ export default function AboutPage({ theme, setTheme }) {
                 transition={{ duration: 0.5 }}
                 className="lg:col-span-7 min-w-0"
               >
-                {/* Verified Developer Badge (Matching Mẫu 2) */}
+                {/* Verified Developer Badge */}
                 <div
                   className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1 text-xs font-medium backdrop-blur-sm ${
                     isDark
@@ -154,7 +132,7 @@ export default function AboutPage({ theme, setTheme }) {
                     : 'Passionate Backend Engineer specializing in scalable distributed systems, microservices architecture, and cloud solutions. Dedicated to building reliable software products and sharing practical insights with the developer community.'}
                 </p>
 
-                {/* 4 Quick Stat Cards (Matching Mẫu 2 Bento Strip) */}
+                {/* Quick Stats Cards */}
                 <div className="mt-7 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
                   {/* Card 1: Role */}
                   <div
@@ -261,7 +239,7 @@ export default function AboutPage({ theme, setTheme }) {
                   </div>
                 </div>
 
-                {/* Action Buttons (Pills matching Mẫu 2) */}
+                {/* Action Buttons */}
                 <div className="mt-7 flex flex-wrap items-center gap-3.5">
                   <a
                     href={siteConfig.resumeUrl}
@@ -310,7 +288,7 @@ export default function AboutPage({ theme, setTheme }) {
                 </div>
               </motion.div>
 
-              {/* Right Column: Cinematic Floating HUD Portrait (Mẫu 2) */}
+              {/* Right Column: Portrait Photo */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -318,7 +296,7 @@ export default function AboutPage({ theme, setTheme }) {
                 className="lg:col-span-5 min-w-0"
               >
                 <div className="group relative mx-auto max-w-[340px] sm:max-w-[380px] lg:max-w-[400px] py-4">
-                  {/* Warm Amber Radial Lighting Glow Behind Card (Mẫu 2) */}
+                  {/* Radial Ambient Lighting */}
                   <div className="pointer-events-none absolute -inset-6 rounded-[48px] bg-gradient-to-tr from-amber-500/25 via-amber-600/10 to-transparent blur-3xl opacity-80 transition-all duration-700 group-hover:opacity-100 group-hover:scale-105" />
 
                   {/* 1. Top-Right Floating Glass HUD Badge: TMA Solutions */}
@@ -448,10 +426,6 @@ export default function AboutPage({ theme, setTheme }) {
             </div>
           </div>
         </section>
-      </main>
-
-      {/* Footer */}
-      <Footer />
-    </div>
+    </>
   );
 }

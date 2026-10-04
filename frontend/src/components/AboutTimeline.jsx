@@ -2,8 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase, GraduationCap, Calendar, CheckCircle2, Building2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useTheme } from '../context/ThemeContext';
 
-export default function AboutTimeline({ isDark = true }) {
+export default function AboutTimeline({ isDark: propIsDark }) {
+  const { isDark: ctxIsDark } = useTheme();
+  const isDark = propIsDark !== undefined ? propIsDark : ctxIsDark;
   const { t, lang } = useLanguage();
 
   const milestones = [

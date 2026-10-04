@@ -14,26 +14,14 @@ import {
   Monitor,
   Check,
 } from 'lucide-react';
-import Navbar from '../../../components/Navbar';
-import Footer from '../../../components/Footer';
 import { useLanguage } from '../../../context/LanguageContext';
+import { useTheme } from '../../../context/ThemeContext';
 import { siteConfig } from '../../../data/siteConfig';
 
-export default function ProjectsPage({ theme, setTheme }) {
+export default function ProjectsPage() {
   const { lang } = useLanguage();
+  const { isDark } = useTheme();
   const [selectedLayer, setSelectedLayer] = useState('ALL');
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const isDark = theme ? theme === 'dark' : true;
-
-  const toggleTheme = () => {
-    if (setTheme) {
-      setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
-    }
-  };
 
   const filterOptions = [
     { id: 'ALL', label: lang === 'vi' ? 'Tất cả hệ thống' : 'All Systems' },
@@ -46,16 +34,9 @@ export default function ProjectsPage({ theme, setTheme }) {
   const shouldShow = (layer) => selectedLayer === 'ALL' || selectedLayer === layer;
 
   return (
-    <div
-      className={`min-h-screen antialiased overflow-x-hidden transition-colors duration-200 selection:bg-amber-500/20 selection:text-amber-400 ${
-        isDark ? 'bg-[#0b1118] text-slate-100' : 'bg-slate-50 text-slate-900'
-      }`}
-    >
-      <Navbar theme={isDark ? 'dark' : 'light'} toggleTheme={toggleTheme} />
-
-      <main className="container mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+    <section className="container mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
         {/* ========================================================================= */}
-        {/* HEADER SECTION (Matching Mẫu A: Layered Architecture Grid)                */}
+        {/* Header Section */}
         {/* ========================================================================= */}
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
           <div>
@@ -93,7 +74,7 @@ export default function ProjectsPage({ theme, setTheme }) {
           </div>
         </div>
 
-        {/* ARCHITECTURAL LAYER FILTER BAR (Mẫu A: Pill Buttons) */}
+        {/* Architectural Layer Filter Bar */}
         <div className="mt-7 flex flex-wrap items-center gap-2.5">
           {filterOptions.map((opt) => {
             const isSelected = selectedLayer === opt.id;
@@ -117,7 +98,7 @@ export default function ProjectsPage({ theme, setTheme }) {
         </div>
 
         {/* ========================================================================= */}
-        {/* 2X2 LAYERED ARCHITECTURE GRID (Mẫu A Faithful Reproduction)              */}
+        {/* Layered Architecture Grid */}
         {/* ========================================================================= */}
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
           {/* ========================================================================= */}
@@ -242,7 +223,7 @@ export default function ProjectsPage({ theme, setTheme }) {
                       </div>
                     </div>
 
-                    {/* PostgreSQL Connection Pool Specs Box (Mẫu A) */}
+                    {/* PostgreSQL Connection Pool Specs Box */}
                     <div
                       className={`mt-4 rounded-xl p-3 border font-mono text-[11px] ${
                         isDark ? 'border-white/10 bg-[#0c1117]' : 'border-slate-200 bg-slate-50'
@@ -272,7 +253,7 @@ export default function ProjectsPage({ theme, setTheme }) {
                 </div>
               </div>
 
-              {/* Bottom Footer Bar (Matching Mẫu A: Dark sleek buttons) */}
+              {/* Card Footer */}
               <div
                 className={`mt-6 flex flex-wrap items-center justify-between gap-3 border-t pt-4 ${
                   isDark ? 'border-white/10' : 'border-slate-200'
@@ -341,7 +322,7 @@ export default function ProjectsPage({ theme, setTheme }) {
 
                 {/* 2-Column Interior Split (Left: Topology Diagram, Right: Stack List) */}
                 <div className="mt-5 grid grid-cols-1 md:grid-cols-12 gap-4">
-                  {/* Left: Docker Compose Multi-Container Diagram (Mẫu A: 3-tier horizontal flow) */}
+                  {/* Multi-Container Architecture Diagram */}
                   <div
                     className={`md:col-span-7 rounded-xl p-3 border font-mono text-xs flex flex-col justify-between ${
                       isDark ? 'border-white/10 bg-[#0c1117]' : 'border-slate-200 bg-slate-50'
@@ -355,7 +336,7 @@ export default function ProjectsPage({ theme, setTheme }) {
                       <span className="text-[10px] text-slate-400">Bridge Net</span>
                     </div>
 
-                    {/* 3-Tier Multi-Container Topology Diagram (Matching Mẫu A) */}
+                    {/* 3-Tier Container Topology Diagram */}
                     <div className="my-2 grid grid-cols-12 items-center gap-1.5 text-[10px]">
                       {/* Tier 1: Nginx Proxy (4 cols) */}
                       <div className="col-span-4 flex flex-col items-center">
@@ -436,7 +417,7 @@ export default function ProjectsPage({ theme, setTheme }) {
                 </div>
               </div>
 
-              {/* Bottom Footer Bar (Matching Mẫu A: Dark sleek buttons) */}
+              {/* Card Footer */}
               <div
                 className={`mt-6 flex flex-wrap items-center justify-between gap-3 border-t pt-4 ${
                   isDark ? 'border-white/10' : 'border-slate-200'
@@ -530,7 +511,7 @@ export default function ProjectsPage({ theme, setTheme }) {
                       </div>
                     </div>
 
-                    {/* Order #12345 Progress Pipeline (Matching Mẫu A horizontal track) */}
+                    {/* Order Progress Pipeline */}
                     <div className="mt-4 pt-3 border-t border-dashed dark:border-white/10 border-slate-200">
                       <div className="text-[10px] text-slate-400 mb-2">Order #12345</div>
                       <div className="flex items-center justify-between text-[9px]">
@@ -607,7 +588,7 @@ export default function ProjectsPage({ theme, setTheme }) {
                 </div>
               </div>
 
-              {/* Bottom Footer Bar (Matching Mẫu A: Dark sleek buttons) */}
+              {/* Card Footer */}
               <div
                 className={`mt-6 flex flex-wrap items-center justify-between gap-3 border-t pt-4 ${
                   isDark ? 'border-white/10' : 'border-slate-200'
@@ -674,7 +655,7 @@ export default function ProjectsPage({ theme, setTheme }) {
                     : 'Showcase a multi-step reservation pipeline for Microservices.'}
                 </p>
 
-                {/* Full-Width Horizontal Pipeline Flow (Mẫu A Exact Match) */}
+                {/* Reservation Pipeline Flow */}
                 <div
                   className={`mt-5 rounded-xl p-3 sm:p-4 border font-mono text-xs ${
                     isDark ? 'border-white/10 bg-[#0c1117]' : 'border-slate-200 bg-slate-50'
@@ -735,7 +716,7 @@ export default function ProjectsPage({ theme, setTheme }) {
                 </div>
               </div>
 
-              {/* Bottom Footer Bar (Matching Mẫu A: Dark sleek buttons) */}
+              {/* Card Footer */}
               <div
                 className={`mt-6 flex flex-wrap items-center justify-between gap-3 border-t pt-4 ${
                   isDark ? 'border-white/10' : 'border-slate-200'
@@ -899,7 +880,7 @@ export default function ProjectsPage({ theme, setTheme }) {
                       </div>
                     </div>
 
-                    {/* MySQL EAV Specs Box (Mẫu A Styling) */}
+                    {/* MySQL EAV Specs Box */}
                     <div
                       className={`mt-4 rounded-xl p-3 border font-mono text-[11px] ${
                         isDark ? 'border-white/10 bg-[#0c1117]' : 'border-slate-200 bg-slate-50'
@@ -929,7 +910,7 @@ export default function ProjectsPage({ theme, setTheme }) {
                 </div>
               </div>
 
-              {/* Bottom Footer Bar (Matching Mẫu A: Dark sleek buttons) */}
+              {/* Card Footer */}
               <div
                 className={`mt-6 flex flex-wrap items-center justify-between gap-3 border-t pt-4 ${
                   isDark ? 'border-white/10' : 'border-slate-200'
@@ -1018,9 +999,6 @@ export default function ProjectsPage({ theme, setTheme }) {
             </a>
           </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+    </section>
   );
 }

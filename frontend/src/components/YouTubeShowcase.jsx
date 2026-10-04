@@ -2,9 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Youtube, Play, ExternalLink, ListVideo } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useTheme } from '../context/ThemeContext';
 import { siteConfig } from '../data/siteConfig';
 
-export default function YouTubeShowcase({ isDark = true }) {
+export default function YouTubeShowcase({ isDark: propIsDark }) {
+  const { isDark: ctxIsDark } = useTheme();
+  const isDark = propIsDark !== undefined ? propIsDark : ctxIsDark;
   const { t, lang } = useLanguage();
   const yt = t?.aboutPage?.youtube || {};
 

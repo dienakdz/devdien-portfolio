@@ -1,11 +1,13 @@
-import React, { Suspense, lazy, useEffect, useState } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
 import { ToastProvider } from './context/ToastContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { AdminAuthProvider } from './features/admin/context/AdminAuthContext.jsx';
 import ProtectedAdminRoute from './features/admin/components/ProtectedAdminRoute.jsx';
+import PublicLayout from './features/public/components/PublicLayout.jsx';
 import PortfolioPage from './features/public/pages/PortfolioPage.jsx';
 import SeoHead from './components/SeoHead.jsx';
 
@@ -23,59 +25,53 @@ const ContactPage = lazy(() => import('./features/public/pages/ContactPage.jsx')
 const RouteFallback = () => <div className="min-h-screen bg-background" />;
 
 function App() {
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
-
-  useEffect(() => {
-    // Keep the root document theme in sync so global CSS responds immediately.
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    document.documentElement.style.colorScheme = theme;
-
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [theme]);
-
   return (
-    <LanguageProvider>
-      <ToastProvider>
-        <AdminAuthProvider>
-          <BrowserRouter>
-            <SeoHead />
-            <Suspense fallback={<RouteFallback />}>
-              <Routes>
-                <Route path="/" element={<PortfolioPage theme={theme} setTheme={setTheme} />} />
-                <Route path="/about" element={<AboutPage theme={theme} setTheme={setTheme} />} />
-                <Route path="/projects" element={<ProjectsPage theme={theme} setTheme={setTheme} />} />
-                <Route path="/contact" element={<ContactPage theme={theme} setTheme={setTheme} />} />
-                <Route path="/login" element={<AdminLoginPage />} />
-                <Route
-                  path="/admin"
-                  element={
-                    <ProtectedAdminRoute>
-                      <AdminLayout />
-                    </ProtectedAdminRoute>
-                  }
-                >
-                  <Route index element={<AdminDashboardPage />} />
-                  <Route path="profile" element={<AdminProfilePage />} />
-                  <Route path="password" element={<AdminPasswordPage />} />
-                  <Route path="contacts" element={<AdminContactsPage />} />
-                  <Route path="visits" element={<AdminVisitsPage />} />
-                </Route>
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-            </Suspense>
-            {/* Vercel traffic analytics */}
-            <Analytics />
-            {/* Vercel real-user performance metrics */}
-            <SpeedInsights />
-          </BrowserRouter>
-        </AdminAuthProvider>
-      </ToastProvider>
-    </LanguageProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <ToastProvider>
+          <AdminAuthProvider>
+            <BrowserRouter>
+              <SeoHead />
+              <Suspense fallback={<RouteFallback />}>
+                <Routes>
+                  {/* Public routes wrapped in PublicLayout */}
+                  <Route element={<PublicLayout />}>
+                    <Route path="/" element={<PortfolioPage />} />
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="/projects" element={<ProjectsPage />} />
+                    <Route path="/contact" element={<ContactPage />} />
+                  </Route>
+
+                  {/* Admin authentication & dashboard routes */}
+                  <Route path="/login" element={<AdminLoginPage />} />
+                  <Route
+                    path="/admin"
+                    element={
+                      <ProtectedAdminRoute>
+                        <AdminLayout />
+                      </ProtectedAdminRoute>
+                    }
+                  >
+                    <Route index element={<AdminDashboardPage />} />
+                    <Route path="profile" element={<AdminProfilePage />} />
+                    <Route path="password" element={<AdminPasswordPage />} />
+                    <Route path="contacts" element={<AdminContactsPage />} />
+                    <Route path="visits" element={<AdminVisitsPage />} />
+                  </Route>
+
+                  {/* Fallback route */}
+                  <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+              </Suspense>
+              {/* Vercel traffic analytics */}
+              <Analytics />
+              {/* Vercel real-user performance metrics */}
+              <SpeedInsights />
+            </BrowserRouter>
+          </AdminAuthProvider>
+        </ToastProvider>
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }
 

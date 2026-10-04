@@ -11,10 +11,14 @@ import {
   X,
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useTheme } from '../context/ThemeContext';
 import { siteConfig } from '../data/siteConfig';
 
-const Navbar = ({ theme, toggleTheme }) => {
+const Navbar = ({ theme: propTheme, toggleTheme: propToggleTheme }) => {
   const { lang, toggleLang } = useLanguage();
+  const { theme: ctxTheme, toggleTheme: ctxToggleTheme } = useTheme();
+  const theme = propTheme || ctxTheme;
+  const toggleTheme = propToggleTheme || ctxToggleTheme;
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 

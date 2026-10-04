@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
@@ -15,51 +15,21 @@ import {
   User,
   Youtube,
 } from 'lucide-react';
-import Navbar from '../../../components/Navbar';
-import Footer from '../../../components/Footer';
 import heroCover from '../../../assets/hero-cover.jpg';
 import { useLanguage } from '../../../context/LanguageContext';
 import { getLocalizedName, siteConfig } from '../../../data/siteConfig';
 import { projectData } from '../../../data/projectData';
-import { apiUrl } from '../../../lib/api';
+import { careerData } from '../../../data/careerData';
 
-export default function PortfolioPage({ theme, setTheme }) {
+export default function PortfolioPage() {
   const { lang } = useLanguage();
   const localizedName = getLocalizedName(lang);
   const projects = projectData[lang] || projectData.en;
   const featuredProjects = projects.slice(0, 3);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
-  };
-
-  useEffect(() => {
-    const visitKey = `portfolio-visit:${window.location.pathname}`;
-    if (sessionStorage.getItem(visitKey) === '1') return undefined;
-
-    const controller = new AbortController();
-    fetch(apiUrl('/api/visits'), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ path: window.location.pathname }),
-      signal: controller.signal,
-    })
-      .then((res) => {
-        if (res.ok) {
-          sessionStorage.setItem(visitKey, '1');
-          window.dispatchEvent(new CustomEvent('visit-recorded'));
-        }
-      })
-      .catch(() => {});
-
-    return () => controller.abort();
-  }, []);
+  const careerItems = careerData[lang] || careerData.en;
 
   return (
-    <div className="min-h-screen bg-background text-foreground transition-colors duration-200">
-      <Navbar theme={theme} toggleTheme={toggleTheme} />
-
-      <main>
+    <>
         {/* ========================================================================= */}
         {/* ========================================================================= */}
         {/* 1. HERO SECTION (Cinematic Split Hero — 60/40 Harmonious Balance) */}
@@ -666,91 +636,43 @@ export default function PortfolioPage({ theme, setTheme }) {
                 <div className="absolute left-[7px] top-3 bottom-3 w-[2px] bg-gradient-to-b from-amber-400/50 via-amber-400/25 to-amber-400/10" />
 
                 <div className="space-y-9 sm:space-y-10">
-                  {/* Item 1: TMA Solutions */}
-                  <div className="relative flex items-start">
-                    {/* Glowing Node Dot */}
-                    <div className="relative z-10 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-amber-400 shadow-[0_0_14px_rgba(245,158,11,0.85)] ring-4 ring-background dark:ring-[#0b1118]" />
+                  {careerItems.map((item, idx) => (
+                    <div key={`${item.organization}-${idx}`} className="relative flex items-start">
+                      {/* Glowing Node Dot */}
+                      <div className="relative z-10 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-amber-400 shadow-[0_0_14px_rgba(245,158,11,0.85)] ring-4 ring-background dark:ring-[#0b1118]" />
 
-                    {/* Content */}
-                    <div className="pl-6 sm:pl-8 flex-1">
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        <h3 className="font-outfit text-xl sm:text-2xl font-bold text-foreground">
-                          TMA Solutions
-                        </h3>
-                        <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-0.5 text-xs font-semibold text-amber-400 font-mono">
-                          {lang === 'vi' ? 'Đang đảm nhiệm' : 'Current'}
-                        </span>
-                      </div>
+                      {/* Content */}
+                      <div className="pl-6 sm:pl-8 flex-1">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <h3 className="font-outfit text-xl sm:text-2xl font-bold text-foreground">
+                            {item.organization}
+                          </h3>
+                          {item.badge && (
+                            <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-0.5 text-xs font-semibold text-amber-400 font-mono">
+                              {item.badge}
+                            </span>
+                          )}
+                        </div>
 
-                      <p className="mt-1 text-sm font-medium text-muted-foreground">
-                        {lang === 'vi'
-                          ? 'Backend Developer (08/2025 - Hiện tại)'
-                          : 'Backend Developer (08/2025 - Present)'}
-                      </p>
+                        <p className="mt-1 text-sm font-medium text-muted-foreground">
+                          {item.role} ({item.period})
+                        </p>
 
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {['Python', 'FastAPI', 'PostgreSQL', 'Docker'].map((t) => (
-                          <span
-                            key={t}
-                            className="rounded-lg border border-border/80 bg-card px-3 py-1 text-xs font-mono text-foreground/80 dark:border-white/8 dark:bg-[#121922]"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Item 2: EFE Technology */}
-                  <div className="relative flex items-start">
-                    {/* Glowing Node Dot */}
-                    <div className="relative z-10 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-amber-400 shadow-[0_0_14px_rgba(245,158,11,0.85)] ring-4 ring-background dark:ring-[#0b1118]" />
-
-                    {/* Content */}
-                    <div className="pl-6 sm:pl-8 flex-1">
-                      <h3 className="font-outfit text-xl sm:text-2xl font-bold text-foreground">
-                        EFE Technology
-                      </h3>
-
-                      <p className="mt-1 text-sm font-medium text-muted-foreground">
-                        {lang === 'vi'
-                          ? '- Junior PHP Developer (04/2024 - 08/2025)'
-                          : '- Junior PHP Developer (04/2024 - 08/2025)'}
-                      </p>
-
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {['PHP', 'WordPress', 'MySQL'].map((t) => (
-                          <span
-                            key={t}
-                            className="rounded-lg border border-border/80 bg-card px-3 py-1 text-xs font-mono text-foreground/80 dark:border-white/8 dark:bg-[#121922]"
-                          >
-                            {t}
-                          </span>
-                        ))}
+                        {item.tech && item.tech.length > 0 && (
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {item.tech.map((t) => (
+                              <span
+                                key={t}
+                                className="rounded-lg border border-border/80 bg-card px-3 py-1 text-xs font-mono text-foreground/80 dark:border-white/8 dark:bg-[#121922]"
+                              >
+                                {t}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
-                  </div>
-
-                  {/* Item 3: Đại học VKU */}
-                  <div className="relative flex items-start">
-                    {/* Glowing Node Dot */}
-                    <div className="relative z-10 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-amber-400 shadow-[0_0_14px_rgba(245,158,11,0.85)] ring-4 ring-background dark:ring-[#0b1118]" />
-
-                    {/* Content */}
-                    <div className="pl-6 sm:pl-8 flex-1">
-                      <h3 className="font-outfit text-xl sm:text-2xl font-bold text-foreground">
-                        {lang === 'vi'
-                          ? 'Đại học CNTT & Truyền thông Việt - Hàn (VKU)'
-                          : 'Vietnam - Korea University of ICT (VKU)'}
-                      </h3>
-
-                      <p className="mt-1 text-sm font-medium text-muted-foreground">
-                        {lang === 'vi'
-                          ? 'Kỹ sư Kỹ thuật Phần mềm Bằng Giỏi GPA 3.55/4.0'
-                          : 'B.S. in Software Engineering (Honors Degree - GPA 3.55/4.0)'}
-                      </p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
 
@@ -799,9 +721,6 @@ export default function PortfolioPage({ theme, setTheme }) {
             </div>
           </div>
         </section>
-      </main>
-
-      <Footer />
-    </div>
+    </>
   );
 }
