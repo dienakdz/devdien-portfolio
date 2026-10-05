@@ -38,8 +38,8 @@ const Navbar = ({ theme: propTheme, toggleTheme: propToggleTheme }) => {
           to="/"
           className="group flex items-center gap-2.5 transition-opacity hover:opacity-90"
         >
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-amber-500/25 bg-amber-500/10 text-amber-500 transition-transform group-hover:scale-105 dark:text-amber-400">
-            <BrandLogo size={19} />
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-amber-600/30 bg-amber-500/10 shadow-xs transition-transform group-hover:scale-105 dark:border-amber-500/25 dark:bg-amber-500/10 dark:shadow-none">
+            <BrandLogo size={20} />
           </div>
           <span className="font-outfit text-lg font-bold tracking-tight text-foreground transition-colors group-hover:text-amber-500">
             DevDien
