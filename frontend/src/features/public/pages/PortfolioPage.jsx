@@ -32,68 +32,65 @@ export default function PortfolioPage() {
     <>
         {/* ========================================================================= */}
         {/* ========================================================================= */}
-        {/* 1. HERO SECTION (Cinematic Split Hero — 60/40 Harmonious Balance) */}
+        {/* 1. HERO SECTION (Wide Ambient Bleed Layout) */}
         {/* ========================================================================= */}
-        <section className="relative overflow-hidden pt-12 pb-16 md:pt-20 md:pb-24 border-b border-border/60 dark:border-white/5 bg-background">
+        <section className="relative overflow-hidden pt-10 pb-16 md:pt-16 md:pb-20 border-b border-border/60 dark:border-white/5 bg-background transition-colors duration-200">
           
-          {/* Ambient Horizontal Photo (Right ~40-45%, Shifted Right & Harmonized Lighting) */}
+          {/* Ambient Horizontal Photo (Cinematic Bleed across both Light & Dark modes) */}
           <div className="absolute inset-y-0 right-0 w-full lg:w-[48%] xl:w-[45%] pointer-events-none overflow-hidden select-none">
             <img
               src={heroCover}
               alt={localizedName}
-              className="h-full w-full object-cover object-[center_35%] lg:object-[86%_center] filter brightness-[0.93] contrast-[1.04] saturate-[0.98] transition-all duration-700"
+              className="h-full w-full object-cover object-[center_35%] lg:object-[86%_center] filter brightness-[0.98] dark:brightness-[0.93] contrast-[1.03] saturate-[0.98] transition-all duration-700"
             />
-            {/* Seamless Soft Left Fade Gradient (Harmonious transition to deep dark) */}
-            <div className="absolute inset-y-0 left-0 w-44 sm:w-64 bg-gradient-to-r from-background via-background/75 to-transparent dark:from-[#0b1118] dark:via-[#0b1118]/75 dark:to-transparent" />
-            {/* Top & Bottom subtle ambient blends */}
-            <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background/90 via-background/40 to-transparent dark:from-[#0b1118]/90 dark:via-[#0b1118]/40 dark:to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-background/90 via-background/60 to-transparent dark:from-[#0b1118]/90 dark:via-[#0b1118]/60 dark:to-transparent" />
-            {/* Mobile scrim overlay so text is 100% legible on small screens */}
-            <div className="absolute inset-0 bg-background/88 dark:bg-[#0b1118]/88 lg:hidden" />
+            <div className="absolute inset-y-0 left-0 w-44 sm:w-64 bg-gradient-to-r from-[#f8fafc] via-[#f8fafc]/75 to-transparent dark:from-[#0b1118] dark:via-[#0b1118]/75 dark:to-transparent" />
+            <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#f8fafc]/90 via-[#f8fafc]/40 to-transparent dark:from-[#0b1118]/90 dark:via-[#0b1118]/40 dark:to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#f8fafc]/90 via-[#f8fafc]/60 to-transparent dark:from-[#0b1118]/90 dark:via-[#0b1118]/60 dark:to-transparent" />
+            <div className="absolute inset-0 bg-[#f8fafc]/88 dark:bg-[#0b1118]/88 lg:hidden" />
           </div>
 
           <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="grid gap-12 lg:grid-cols-12 lg:items-center min-h-[540px]">
+            <div className="grid gap-10 lg:gap-12 lg:grid-cols-12 lg:items-center min-h-[500px]">
               
               {/* Left Column: ~60% Width — Intro, Core Pillars, Metrics & CTAs */}
               <div className="lg:col-span-7">
                 
                 {/* Verified Knowledge Entity Badge & Google Graph ID & Experience Badge */}
                 <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
-                  <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/15 px-3 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400">
                     <ShieldCheck size={14} />
                     <span>VERIFIED KNOWLEDGE ENTITY</span>
                   </div>
 
-                  <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-bold text-amber-500 dark:text-amber-400 font-mono">
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-bold text-amber-700 dark:text-amber-400 font-mono">
                     <span>3+ {lang === 'vi' ? 'Năm Kinh Nghiệm' : 'Years Experience'}</span>
                   </div>
 
-                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                  <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-muted-foreground">
                     <span>Google Graph:</span>
-                    <span className="font-mono text-xs font-bold text-amber-500 dark:text-amber-400">
+                    <span className="font-mono text-xs font-bold text-amber-600 dark:text-amber-400">
                       kg:/g/11vsvs7f0_
                     </span>
                   </div>
                 </div>
 
                 {/* Main Headline */}
-                <h1 className="mt-6 font-outfit text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.12]">
+                <h1 className="mt-6 font-outfit text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12]">
                   <span>{localizedName}</span> <br className="hidden sm:inline" />
-                  <span className="text-amber-500 dark:text-amber-400">
+                  <span className="text-amber-600 dark:text-amber-400">
                     (DevDien)
                   </span>
                 </h1>
 
                 {/* Role Subtitle */}
-                <p className="mt-3 font-outfit text-xl sm:text-2xl font-bold tracking-tight text-foreground/90">
+                <p className="mt-3 font-outfit text-xl sm:text-2xl font-bold tracking-tight text-slate-800 dark:text-foreground/90">
                   {lang === 'vi'
                     ? 'Backend Engineer & System Architect'
                     : 'Backend Engineer & System Architect'}
                 </p>
 
                 {/* Bio Description */}
-                <p className="mt-4 max-w-2xl text-base sm:text-lg leading-relaxed text-muted-foreground">
+                <p className="mt-4 max-w-2xl text-base sm:text-lg leading-relaxed text-slate-600 dark:text-muted-foreground">
                   {lang === 'vi'
                     ? 'Tôi tập trung thiết kế và xây dựng các dịch vụ backend ổn định, tối ưu cơ sở dữ liệu quan hệ, phát triển REST APIs chuẩn mực và đóng gói môi trường với Docker.'
                     : 'Designing and building reliable backend services, standardized REST APIs, relational database schemas, and containerized workflows with Docker.'}
@@ -128,7 +125,7 @@ export default function PortfolioPage() {
 
                 {/* Social Links Row Underneath CTAs */}
                 <div className="mt-6 flex flex-wrap items-center gap-2.5 sm:gap-3">
-                  <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                  <span className="text-[11px] font-semibold text-slate-500 dark:text-muted-foreground uppercase tracking-wider">
                     {lang === 'vi' ? 'Kênh kết nối:' : 'Connect:'}
                   </span>
 
@@ -136,7 +133,7 @@ export default function PortfolioPage() {
                     href={siteConfig.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-xl border border-border/80 bg-card/80 px-3 py-1.5 text-xs font-medium text-foreground/80 hover:text-foreground hover:border-amber-400/50 hover:bg-card hover:-translate-y-0.5 transition-all dark:border-white/8 dark:bg-[#121922]/80"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/90 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:text-slate-950 hover:border-amber-400 hover:bg-slate-50 hover:-translate-y-0.5 transition-all shadow-sm dark:border-white/8 dark:bg-[#121922]/80 dark:text-foreground/80 dark:hover:text-white dark:shadow-none"
                     title="GitHub"
                   >
                     <Github size={14} />
@@ -147,7 +144,7 @@ export default function PortfolioPage() {
                     href={siteConfig.youtubeChannel}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-xl border border-border/80 bg-card/80 px-3 py-1.5 text-xs font-medium text-foreground/80 hover:text-red-500 hover:border-red-500/40 hover:bg-card hover:-translate-y-0.5 transition-all dark:border-white/8 dark:bg-[#121922]/80"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/90 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:text-red-500 hover:border-red-400 hover:bg-slate-50 hover:-translate-y-0.5 transition-all shadow-sm dark:border-white/8 dark:bg-[#121922]/80 dark:text-foreground/80 dark:hover:text-red-400 dark:shadow-none"
                     title="YouTube @devdien"
                   >
                     <Youtube size={14} className="text-red-500" />
@@ -158,16 +155,16 @@ export default function PortfolioPage() {
                     href={siteConfig.linkedin}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-xl border border-border/80 bg-card/80 px-3 py-1.5 text-xs font-medium text-foreground/80 hover:text-cyan-400 hover:border-cyan-400/40 hover:bg-card hover:-translate-y-0.5 transition-all dark:border-white/8 dark:bg-[#121922]/80"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/90 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:text-cyan-600 hover:border-cyan-400 hover:bg-slate-50 hover:-translate-y-0.5 transition-all shadow-sm dark:border-white/8 dark:bg-[#121922]/80 dark:text-foreground/80 dark:hover:text-cyan-400 dark:shadow-none"
                     title="LinkedIn"
                   >
-                    <Linkedin size={14} className="text-cyan-400" />
+                    <Linkedin size={14} className="text-cyan-500" />
                     <span>LinkedIn</span>
                   </a>
                 </div>
               </div>
 
-              {/* Right Column: ~40% Clean Space Letting Photo Breathe Fully */}
+              {/* Right Column: ~40% Clean Space revealing the ambient bleed photo */}
               <div className="hidden lg:block lg:col-span-5" />
 
             </div>

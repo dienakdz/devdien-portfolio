@@ -85,10 +85,12 @@ export default function ProjectsPage() {
                 onClick={() => setSelectedLayer(opt.id)}
                 className={`rounded-full px-5 py-2 text-xs font-semibold transition-all cursor-pointer ${
                   isSelected
-                    ? 'border border-amber-500 bg-amber-500/15 text-amber-400 font-bold shadow-md shadow-amber-500/20'
+                    ? isDark
+                      ? 'border border-amber-500 bg-amber-500/15 text-amber-400 font-bold shadow-md shadow-amber-500/20'
+                      : 'border border-amber-500 bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20'
                     : isDark
                     ? 'border border-slate-800 bg-[#121922] text-slate-400 hover:border-slate-700 hover:text-white'
-                    : 'border border-slate-200 bg-white text-slate-600 shadow-sm hover:border-slate-300 hover:text-slate-900'
+                    : 'border border-slate-200 bg-white text-slate-700 shadow-sm hover:border-amber-400/50 hover:text-slate-900'
                 }`}
               >
                 {opt.label}
@@ -113,7 +115,7 @@ export default function ProjectsPage() {
               className={`flex flex-col justify-between rounded-2xl p-6 transition-all duration-300 ${
                 isDark
                   ? 'border border-amber-500/50 bg-[#121922] shadow-[0_0_30px_rgba(245,158,11,0.14)] hover:border-amber-500/70'
-                  : 'border border-amber-500/40 bg-white shadow-xl hover:border-amber-500'
+                  : 'border border-slate-200/90 bg-white shadow-[0_8px_30px_rgba(15,23,42,0.05)] hover:border-amber-500/50 hover:shadow-lg'
               }`}
             >
               <div>
@@ -128,13 +130,9 @@ export default function ProjectsPage() {
 
                 {/* 2-Column Interior Split (Left: Swagger Box, Right: Specs & Tags) */}
                 <div className="mt-5 grid grid-cols-1 md:grid-cols-12 gap-4">
-                  {/* Left: Interactive Swagger Box */}
-                  <div
-                    className={`md:col-span-7 rounded-xl p-3 border font-mono text-xs ${
-                      isDark ? 'border-white/10 bg-[#0c1117]' : 'border-slate-200 bg-slate-50'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between border-b pb-2 dark:border-white/10 border-slate-200">
+                  {/* Left: Interactive Swagger Box (Always Sleek Dark Terminal for Crystal Contrast) */}
+                  <div className="md:col-span-7 rounded-xl p-3 border font-mono text-xs border-slate-800/80 bg-[#0d1520] text-slate-200 shadow-inner">
+                    <div className="flex items-center justify-between border-b pb-2 border-slate-800">
                       <div className="flex items-center gap-1.5 font-bold text-amber-400">
                         <Terminal size={13} />
                         <span>/api/v1</span>
@@ -151,7 +149,7 @@ export default function ProjectsPage() {
                       </div>
 
                       {/* GET /books */}
-                      <div className="flex items-center justify-between rounded p-1.5 mb-1.5 dark:bg-[#0e2a47]/70 bg-blue-50 border dark:border-blue-700/50 border-blue-200">
+                      <div className="flex items-center justify-between rounded p-1.5 mb-1.5 bg-[#0e2a47]/75 border border-blue-700/50">
                         <div className="flex items-center gap-1.5 truncate mr-1">
                           <span className="rounded bg-blue-600 text-white px-1.5 py-0.5 text-[9px] font-bold">
                             GET
@@ -159,20 +157,20 @@ export default function ProjectsPage() {
                           <span className="text-[11px] text-blue-200 font-semibold truncate">/books</span>
                           <span className="text-[9px] text-slate-400 hidden sm:inline">{'{page, limit}'}</span>
                         </div>
-                        <span className="shrink-0 text-[9px] text-slate-300 rounded px-1.5 py-0.5 dark:bg-slate-800/80 bg-white border dark:border-slate-700 border-slate-300">
+                        <span className="shrink-0 text-[9px] text-slate-300 rounded px-1.5 py-0.5 bg-slate-800/90 border border-slate-700">
                           Try it out
                         </span>
                       </div>
 
                       {/* POST /books */}
-                      <div className="flex items-center justify-between rounded p-1.5 dark:bg-[#0e382d]/70 bg-emerald-50 border dark:border-emerald-700/50 border-emerald-200">
+                      <div className="flex items-center justify-between rounded p-1.5 bg-[#0e382d]/75 border border-emerald-700/50">
                         <div className="flex items-center gap-1.5 truncate mr-1">
                           <span className="rounded bg-emerald-600 text-white px-1.5 py-0.5 text-[9px] font-bold">
                             POST
                           </span>
                           <span className="text-[11px] text-emerald-200 font-semibold truncate">/books</span>
                         </div>
-                        <span className="shrink-0 text-[9px] text-slate-300 rounded px-1.5 py-0.5 dark:bg-slate-800/80 bg-white border dark:border-slate-700 border-slate-300">
+                        <span className="shrink-0 text-[9px] text-slate-300 rounded px-1.5 py-0.5 bg-slate-800/90 border border-slate-700">
                           Try it out
                         </span>
                       </div>
@@ -186,14 +184,14 @@ export default function ProjectsPage() {
                       </div>
 
                       {/* POST /auth/login */}
-                      <div className="flex items-center justify-between rounded p-1.5 dark:bg-[#0e382d]/70 bg-emerald-50 border dark:border-emerald-700/50 border-emerald-200">
+                      <div className="flex items-center justify-between rounded p-1.5 bg-[#0e382d]/75 border border-emerald-700/50">
                         <div className="flex items-center gap-1.5 truncate mr-1">
                           <span className="rounded bg-emerald-600 text-white px-1.5 py-0.5 text-[9px] font-bold">
                             POST
                           </span>
                           <span className="text-[11px] text-emerald-200 font-semibold truncate">/auth/login</span>
                         </div>
-                        <span className="shrink-0 text-[9px] text-slate-300 rounded px-1.5 py-0.5 dark:bg-slate-800/80 bg-white border dark:border-slate-700 border-slate-300">
+                        <span className="shrink-0 text-[9px] text-slate-300 rounded px-1.5 py-0.5 bg-slate-800/90 border border-slate-700">
                           Try it out
                         </span>
                       </div>
@@ -211,24 +209,20 @@ export default function ProjectsPage() {
 
                       {/* Small Tech Pills */}
                       <div className="mt-2.5 flex flex-wrap gap-1.5">
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-700 bg-slate-800/80 text-amber-300">
+                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
                           Python
                         </span>
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-700 bg-slate-800/80 text-amber-300">
+                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
                           PostgreSQL
                         </span>
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-700 bg-slate-800/80 text-amber-300">
+                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
                           Alembic
                         </span>
                       </div>
                     </div>
 
-                    {/* PostgreSQL Connection Pool Specs Box */}
-                    <div
-                      className={`mt-4 rounded-xl p-3 border font-mono text-[11px] ${
-                        isDark ? 'border-white/10 bg-[#0c1117]' : 'border-slate-200 bg-slate-50'
-                      }`}
-                    >
+                    {/* PostgreSQL Connection Pool Specs Box (Always Dark Terminal) */}
+                    <div className="mt-4 rounded-xl p-3 border font-mono text-[11px] border-slate-800/80 bg-[#0d1520] text-slate-300 shadow-inner">
                       <div className="font-bold text-slate-200 mb-1.5">PostgreSQL Connection Pool Specs</div>
                       <div className="space-y-1 text-slate-400 text-[10px]">
                         <div className="flex justify-between">
@@ -260,13 +254,13 @@ export default function ProjectsPage() {
                 }`}
               >
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-700/80 bg-slate-800/60 text-slate-300">
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
                     FastAPI
                   </span>
-                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-700/80 bg-slate-800/60 text-slate-300">
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
                     PostgreSQL
                   </span>
-                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-700/80 bg-slate-800/60 text-slate-300">
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
                     Alembic
                   </span>
                 </div>
@@ -276,7 +270,7 @@ export default function ProjectsPage() {
                     href="https://github.com/dienakdz/fastapi-book-management-api"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-white transition-colors"
                   >
                     <Github size={14} />
                     <span>GitHub</span>
@@ -285,7 +279,7 @@ export default function ProjectsPage() {
                     href="https://github.com/dienakdz/fastapi-book-management-api#readme"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-white transition-colors"
                   >
                     <ExternalLink size={13} />
                     <span>Live Docs</span>
@@ -307,7 +301,7 @@ export default function ProjectsPage() {
               className={`flex flex-col justify-between rounded-2xl p-6 transition-all duration-300 ${
                 isDark
                   ? 'border border-slate-700/80 bg-[#121922] hover:border-slate-500/80'
-                  : 'border border-slate-200 bg-white shadow-xl hover:border-slate-400'
+                  : 'border border-slate-200/90 bg-white shadow-[0_8px_30px_rgba(15,23,42,0.05)] hover:border-slate-300 hover:shadow-lg'
               }`}
             >
               <div>
@@ -322,13 +316,9 @@ export default function ProjectsPage() {
 
                 {/* 2-Column Interior Split (Left: Topology Diagram, Right: Stack List) */}
                 <div className="mt-5 grid grid-cols-1 md:grid-cols-12 gap-4">
-                  {/* Multi-Container Architecture Diagram */}
-                  <div
-                    className={`md:col-span-7 rounded-xl p-3 border font-mono text-xs flex flex-col justify-between ${
-                      isDark ? 'border-white/10 bg-[#0c1117]' : 'border-slate-200 bg-slate-50'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between border-b pb-2 dark:border-white/10 border-slate-200">
+                  {/* Multi-Container Architecture Diagram (Always Sleek Dark Terminal) */}
+                  <div className="md:col-span-7 rounded-xl p-3 border font-mono text-xs flex flex-col justify-between border-slate-800/80 bg-[#0d1520] text-slate-200 shadow-inner">
+                    <div className="flex items-center justify-between border-b pb-2 border-slate-800">
                       <div className="flex items-center gap-1.5 font-bold text-cyan-400">
                         <Boxes size={13} />
                         <span>Docker topology</span>
@@ -396,8 +386,10 @@ export default function ProjectsPage() {
                       </p>
 
                       <div className="mt-3.5">
-                        <div className="font-bold text-slate-200 text-xs mb-2">Backend Tech Stack</div>
-                        <ul className="space-y-1.5 text-xs text-slate-400">
+                        <div className={`font-bold text-xs mb-2 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                          Backend Tech Stack
+                        </div>
+                        <ul className={`space-y-1.5 text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                           <li className="flex items-center gap-2">
                             <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
                             <span>Docker Compose</span>
@@ -424,13 +416,13 @@ export default function ProjectsPage() {
                 }`}
               >
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-700/80 bg-slate-800/60 text-slate-300">
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
                     Docker Compose
                   </span>
-                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-700/80 bg-slate-800/60 text-slate-300">
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
                     GitHub Actions
                   </span>
-                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-700/80 bg-slate-800/60 text-slate-300">
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
                     Terraform
                   </span>
                 </div>
@@ -440,7 +432,7 @@ export default function ProjectsPage() {
                     href="https://github.com/dienakdz/devops-foundations-labs"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-white transition-colors"
                   >
                     <Github size={14} />
                     <span>GitHub</span>
@@ -449,7 +441,7 @@ export default function ProjectsPage() {
                     href="https://github.com/dienakdz/devops-foundations-labs#readme"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-white transition-colors"
                   >
                     <Layers size={13} />
                     <span>Demo Lab</span>
@@ -471,7 +463,7 @@ export default function ProjectsPage() {
               className={`flex flex-col justify-between rounded-2xl p-6 transition-all duration-300 ${
                 isDark
                   ? 'border border-amber-500/50 bg-[#121922] shadow-[0_0_30px_rgba(245,158,11,0.14)] hover:border-amber-500/70'
-                  : 'border border-amber-500/40 bg-white shadow-xl hover:border-amber-500'
+                  : 'border border-slate-200/90 bg-white shadow-[0_8px_30px_rgba(15,23,42,0.05)] hover:border-amber-500/50 hover:shadow-lg'
               }`}
             >
               <div>
@@ -486,14 +478,10 @@ export default function ProjectsPage() {
 
                 {/* 2-Column Interior Split (Left: Webhook & Order Pipeline, Right: Specs) */}
                 <div className="mt-5 grid grid-cols-1 md:grid-cols-12 gap-4">
-                  {/* Left: Webhook Monitor & Order Pipeline */}
-                  <div
-                    className={`md:col-span-7 rounded-xl p-3 border font-mono text-xs flex flex-col justify-between ${
-                      isDark ? 'border-white/10 bg-[#0c1117]' : 'border-slate-200 bg-slate-50'
-                    }`}
-                  >
+                  {/* Left: Webhook Monitor & Order Pipeline (Always Sleek Dark Terminal) */}
+                  <div className="md:col-span-7 rounded-xl p-3 border font-mono text-xs flex flex-col justify-between border-slate-800/80 bg-[#0d1520] text-slate-200 shadow-inner">
                     <div>
-                      <div className="flex items-center justify-between border-b pb-2 dark:border-white/10 border-slate-200">
+                      <div className="flex items-center justify-between border-b pb-2 border-slate-800">
                         <span className="font-bold text-slate-200">Live Webhook Status</span>
                         <span className="text-[10px] text-emerald-400 font-sans">● Listening</span>
                       </div>
@@ -512,7 +500,7 @@ export default function ProjectsPage() {
                     </div>
 
                     {/* Order Progress Pipeline */}
-                    <div className="mt-4 pt-3 border-t border-dashed dark:border-white/10 border-slate-200">
+                    <div className="mt-4 pt-3 border-t border-dashed border-slate-800">
                       <div className="text-[10px] text-slate-400 mb-2">Order #12345</div>
                       <div className="flex items-center justify-between text-[9px]">
                         {/* Step 1: Created */}
@@ -567,17 +555,19 @@ export default function ProjectsPage() {
                       </p>
 
                       <div className="mt-3 flex flex-wrap gap-1.5">
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-700 bg-slate-800/80 text-amber-300">
+                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
                           Inventory Sync
                         </span>
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-700 bg-slate-800/80 text-amber-300">
+                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
                           Async Jobs
                         </span>
                       </div>
 
                       <div className="mt-3.5">
-                        <div className="font-bold text-slate-200 text-xs mb-1.5">Features</div>
-                        <ul className="space-y-1 text-slate-400 text-[11px]">
+                        <div className={`font-bold text-xs mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                          Features
+                        </div>
+                        <ul className={`space-y-1 text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                           <li>• Realtime shipping calculation</li>
                           <li>• GHN webhook status updates</li>
                           <li>• Order state machine validation</li>
@@ -595,7 +585,7 @@ export default function ProjectsPage() {
                 }`}
               >
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-700/80 bg-slate-800/60 text-slate-300">
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
                     Inventory Sync
                   </span>
                 </div>
@@ -605,7 +595,7 @@ export default function ProjectsPage() {
                     href="https://github.com/dienakdz/veggie"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-white transition-colors"
                   >
                     <Github size={14} />
                     <span>GitHub</span>
@@ -614,7 +604,7 @@ export default function ProjectsPage() {
                     href="https://github.com/dienakdz/veggie#readme"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-white transition-colors"
                   >
                     <FileText size={13} />
                     <span>Case Study</span>
@@ -636,7 +626,7 @@ export default function ProjectsPage() {
               className={`flex flex-col justify-between rounded-2xl p-6 transition-all duration-300 ${
                 isDark
                   ? 'border border-slate-700/80 bg-[#121922] hover:border-slate-500/80'
-                  : 'border border-slate-200 bg-white shadow-xl hover:border-slate-400'
+                  : 'border border-slate-200/90 bg-white shadow-[0_8px_30px_rgba(15,23,42,0.05)] hover:border-slate-300 hover:shadow-lg'
               }`}
             >
               <div>
@@ -655,16 +645,12 @@ export default function ProjectsPage() {
                     : 'Showcase a multi-step reservation pipeline for Microservices.'}
                 </p>
 
-                {/* Reservation Pipeline Flow */}
-                <div
-                  className={`mt-5 rounded-xl p-3 sm:p-4 border font-mono text-xs ${
-                    isDark ? 'border-white/10 bg-[#0c1117]' : 'border-slate-200 bg-slate-50'
-                  }`}
-                >
+                {/* Reservation Pipeline Flow (Always Sleek Dark Terminal) */}
+                <div className="mt-5 rounded-xl p-3 sm:p-4 border font-mono text-xs border-slate-800/80 bg-[#0d1520] text-slate-200 shadow-inner">
                   {/* 5 Connected Steps with arrows */}
                   <div className="grid grid-cols-5 items-center gap-1.5 sm:gap-2 text-center">
                     {/* Step 1: Select Tour */}
-                    <div className="rounded-lg p-2 border border-white/10 dark:bg-white/[0.02] bg-white min-h-[58px] flex flex-col justify-between">
+                    <div className="rounded-lg p-2 border border-slate-800 bg-slate-900/60 min-h-[58px] flex flex-col justify-between">
                       <div className="font-bold text-slate-200 text-[9px] sm:text-[10px] leading-tight">Select Tour</div>
                       <div className="mt-1">
                         <span className="inline-block rounded bg-amber-500/20 px-1.5 py-0.5 text-[8px] font-bold text-amber-400">
@@ -674,7 +660,7 @@ export default function ProjectsPage() {
                     </div>
 
                     {/* Step 2: Check Availability */}
-                    <div className="rounded-lg p-2 border border-white/10 dark:bg-white/[0.02] bg-white min-h-[58px] flex flex-col justify-between">
+                    <div className="rounded-lg p-2 border border-slate-800 bg-slate-900/60 min-h-[58px] flex flex-col justify-between">
                       <div className="font-bold text-slate-200 text-[9px] sm:text-[10px] leading-tight">Check Avail</div>
                       <div className="mt-1">
                         <span className="inline-block rounded bg-blue-500/20 px-1.5 py-0.5 text-[8px] font-bold text-blue-400">
@@ -684,7 +670,7 @@ export default function ProjectsPage() {
                     </div>
 
                     {/* Step 3: Payment */}
-                    <div className="rounded-lg p-2 border border-emerald-500/30 bg-emerald-950/20 min-h-[58px] flex flex-col justify-between">
+                    <div className="rounded-lg p-2 border border-emerald-500/30 bg-emerald-950/30 min-h-[58px] flex flex-col justify-between">
                       <div className="font-bold text-emerald-400 text-[9px] sm:text-[10px] leading-tight">Payment</div>
                       <div className="mt-1">
                         <span className="inline-block rounded bg-emerald-500/25 px-1.5 py-0.5 text-[8px] font-bold text-emerald-300">
@@ -694,7 +680,7 @@ export default function ProjectsPage() {
                     </div>
 
                     {/* Step 4: Confirmation */}
-                    <div className="rounded-lg p-2 border border-white/10 dark:bg-white/[0.02] bg-white min-h-[58px] flex flex-col justify-between">
+                    <div className="rounded-lg p-2 border border-slate-800 bg-slate-900/60 min-h-[58px] flex flex-col justify-between">
                       <div className="font-bold text-slate-200 text-[9px] sm:text-[10px] leading-tight">Confirmation</div>
                       <div className="mt-1">
                         <span className="inline-block rounded bg-slate-800 px-1.5 py-0.5 text-[8px] font-bold text-slate-400">
@@ -704,7 +690,7 @@ export default function ProjectsPage() {
                     </div>
 
                     {/* Step 5: Recs Engine */}
-                    <div className="rounded-lg p-2 border border-amber-500/30 bg-amber-950/20 min-h-[58px] flex flex-col justify-between">
+                    <div className="rounded-lg p-2 border border-amber-500/30 bg-amber-950/30 min-h-[58px] flex flex-col justify-between">
                       <div className="font-bold text-amber-400 text-[9px] sm:text-[10px] leading-tight">Recs Engine</div>
                       <div className="mt-1">
                         <span className="inline-block rounded bg-amber-500/20 px-1.5 py-0.5 text-[8px] font-bold text-amber-300">
@@ -723,23 +709,14 @@ export default function ProjectsPage() {
                 }`}
               >
                 <div className="flex flex-wrap items-center gap-1.5">
-                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-700/80 bg-slate-800/60 text-slate-300">
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
                     Microservices
                   </span>
-                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-700/80 bg-slate-800/60 text-slate-300">
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
                     Redis, Personalized Recs
                   </span>
-                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-700/80 bg-slate-800/60 text-slate-300">
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
                     Email/SMS Alerts
-                  </span>
-                  <span className="rounded-full px-2 py-0.5 text-[10px] font-mono border border-slate-700/60 bg-slate-800/40 text-slate-400">
-                    AWS
-                  </span>
-                  <span className="rounded-full px-2 py-0.5 text-[10px] font-mono border border-slate-700/60 bg-slate-800/40 text-slate-400">
-                    K8s
-                  </span>
-                  <span className="rounded-full px-2 py-0.5 text-[10px] font-mono border border-slate-700/60 bg-slate-800/40 text-slate-400">
-                    Laravel
                   </span>
                 </div>
 
@@ -748,7 +725,7 @@ export default function ProjectsPage() {
                     href="https://github.com/dienakdz/travela"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-white transition-colors"
                   >
                     <Github size={14} />
                     <span>GitHub</span>
@@ -757,7 +734,7 @@ export default function ProjectsPage() {
                     href="https://github.com/dienakdz/travela#readme"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-white transition-colors"
                   >
                     <Monitor size={13} />
                     <span>Live Demo</span>
@@ -781,7 +758,7 @@ export default function ProjectsPage() {
               } flex flex-col justify-between rounded-2xl p-6 transition-all duration-300 ${
                 isDark
                   ? 'border border-amber-500/50 bg-[#121922] shadow-[0_0_30px_rgba(245,158,11,0.14)] hover:border-amber-500/70'
-                  : 'border border-amber-500/40 bg-white shadow-xl hover:border-amber-500'
+                  : 'border border-slate-200/90 bg-white shadow-[0_8px_30px_rgba(15,23,42,0.05)] hover:border-amber-500/50 hover:shadow-lg'
               }`}
             >
               <div>
@@ -800,14 +777,10 @@ export default function ProjectsPage() {
 
                 {/* 2-Column Interior Split (Left: Dynamic EAV Schema Explorer, Right: Specs & Bullets) */}
                 <div className="mt-5 grid grid-cols-1 md:grid-cols-12 gap-4">
-                  {/* Left: Dynamic EAV Schema Explorer */}
-                  <div
-                    className={`md:col-span-7 rounded-xl p-3 border font-mono text-xs flex flex-col justify-between ${
-                      isDark ? 'border-white/10 bg-[#0c1117]' : 'border-slate-200 bg-slate-50'
-                    }`}
-                  >
+                  {/* Left: Dynamic EAV Schema Explorer (Always Sleek Dark Terminal) */}
+                  <div className="md:col-span-7 rounded-xl p-3 border font-mono text-xs flex flex-col justify-between border-slate-800/80 bg-[#0d1520] text-slate-200 shadow-inner">
                     <div>
-                      <div className="flex items-center justify-between border-b pb-2 dark:border-white/10 border-slate-200">
+                      <div className="flex items-center justify-between border-b pb-2 border-slate-800">
                         <div className="flex items-center gap-1.5 font-bold text-amber-400">
                           <Database size={13} />
                           <span>eav_catalog.sql</span>
@@ -817,7 +790,7 @@ export default function ProjectsPage() {
                       </div>
 
                       {/* Level 1: 3-Tier Entity Hierarchy */}
-                      <div className="mt-2.5 rounded-lg p-2 border border-white/5 dark:bg-white/[0.02] bg-white">
+                      <div className="mt-2.5 rounded-lg p-2 border border-slate-800 bg-slate-900/60">
                         <div className="text-[9px] text-slate-400 mb-1 font-sans">Entity Hierarchy (Normalized Core)</div>
                         <div className="flex items-center gap-1.5 text-[10px]">
                           <span className="font-bold text-amber-400">Makes</span>
@@ -826,25 +799,25 @@ export default function ProjectsPage() {
                           <span className="text-slate-500">→</span>
                           <span className="font-bold text-emerald-400">Trims</span>
                           <span className="text-slate-500">→</span>
-                          <span className="text-slate-300 font-sans">Porsche 911 GT3 RS</span>
+                          <span className="text-slate-200 font-sans">Porsche 911 GT3 RS</span>
                         </div>
                       </div>
 
                       {/* Level 2: Dynamic EAV Key-Value Store */}
                       <div className="mt-2 space-y-1 text-[10px]">
-                        <div className="flex items-center justify-between rounded p-1.5 dark:bg-white/[0.02] bg-white border border-white/5">
+                        <div className="flex items-center justify-between rounded p-1.5 bg-slate-900/60 border border-slate-800">
                           <span className="text-slate-400 font-mono text-[9px]">[attr: engine]</span>
                           <span className="font-bold text-slate-200 font-sans text-[10px]">4.0L Naturally Aspirated Flat-6</span>
                         </div>
-                        <div className="flex items-center justify-between rounded p-1.5 dark:bg-white/[0.02] bg-white border border-white/5">
+                        <div className="flex items-center justify-between rounded p-1.5 bg-slate-900/60 border border-slate-800">
                           <span className="text-slate-400 font-mono text-[9px]">[attr: output]</span>
                           <span className="font-bold text-amber-300 font-sans text-[10px]">518 HP @ 8,500 RPM / 465 Nm</span>
                         </div>
-                        <div className="flex items-center justify-between rounded p-1.5 dark:bg-white/[0.02] bg-white border border-white/5">
+                        <div className="flex items-center justify-between rounded p-1.5 bg-slate-900/60 border border-slate-800">
                           <span className="text-slate-400 font-mono text-[9px]">[attr: transmission]</span>
                           <span className="font-bold text-cyan-300 font-sans text-[10px]">7-Speed PDK Dual-Clutch</span>
                         </div>
-                        <div className="flex items-center justify-between rounded p-1.5 dark:bg-emerald-950/20 bg-emerald-50 border border-emerald-500/30">
+                        <div className="flex items-center justify-between rounded p-1.5 bg-emerald-950/25 border border-emerald-500/30">
                           <span className="text-emerald-400 font-mono text-[9px]">[inventory_status]</span>
                           <span className="font-bold text-emerald-300 font-sans text-[10px]">Hold Reserved [Row Lock]</span>
                         </div>
@@ -865,27 +838,23 @@ export default function ProjectsPage() {
 
                       {/* Small Tech Pills */}
                       <div className="mt-2.5 flex flex-wrap gap-1.5">
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-700 bg-slate-800/80 text-amber-300">
+                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
                           Laravel 9
                         </span>
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-700 bg-slate-800/80 text-amber-300">
+                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
                           MySQL 8.0
                         </span>
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-700 bg-slate-800/80 text-amber-300">
+                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
                           EAV Pattern
                         </span>
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-700 bg-slate-800/80 text-amber-300">
+                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
                           Docker
                         </span>
                       </div>
                     </div>
 
-                    {/* MySQL EAV Specs Box */}
-                    <div
-                      className={`mt-4 rounded-xl p-3 border font-mono text-[11px] ${
-                        isDark ? 'border-white/10 bg-[#0c1117]' : 'border-slate-200 bg-slate-50'
-                      }`}
-                    >
+                    {/* MySQL EAV Specs Box (Always Dark Terminal) */}
+                    <div className="mt-4 rounded-xl p-3 border font-mono text-[11px] border-slate-800/80 bg-[#0d1520] text-slate-300 shadow-inner">
                       <div className="font-bold text-slate-200 mb-1.5">MySQL EAV Relational Specs</div>
                       <div className="space-y-1 text-slate-400 text-[10px]">
                         <div className="flex justify-between">
@@ -917,16 +886,16 @@ export default function ProjectsPage() {
                 }`}
               >
                 <div className="flex flex-wrap items-center gap-1.5">
-                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-700/80 bg-slate-800/60 text-slate-300">
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
                     Laravel 9
                   </span>
-                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-700/80 bg-slate-800/60 text-slate-300">
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
                     MySQL
                   </span>
-                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-700/80 bg-slate-800/60 text-slate-300">
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
                     EAV Architecture
                   </span>
-                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-700/80 bg-slate-800/60 text-slate-300">
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
                     Inventory Hold
                   </span>
                 </div>
@@ -936,7 +905,7 @@ export default function ProjectsPage() {
                     href="https://github.com/dienakdz/car-showroom"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-white transition-colors"
                   >
                     <Github size={14} />
                     <span>GitHub</span>
@@ -945,7 +914,7 @@ export default function ProjectsPage() {
                     href="https://github.com/dienakdz/car-showroom#readme"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-white transition-colors"
                   >
                     <ExternalLink size={13} />
                     <span>Schema Docs</span>

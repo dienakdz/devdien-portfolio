@@ -174,7 +174,7 @@ export default function ContactPage() {
                       <Mail size={18} />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                      <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                         {lang === 'vi' ? 'Email trực tiếp' : 'Direct email'}
                       </p>
                       <p
@@ -216,7 +216,7 @@ export default function ContactPage() {
                     <Phone size={18} />
                   </div>
                   <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                       {lang === 'vi' ? 'Số điện thoại' : 'Direct phone number'}
                     </p>
                     <p
@@ -241,7 +241,7 @@ export default function ContactPage() {
                     <MapPin size={18} />
                   </div>
                   <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                       {lang === 'vi' ? 'Địa điểm' : 'Location'}
                     </p>
                     <p

@@ -31,6 +31,20 @@
   <link rel="canonical" href="__SEO_SITE_URL__" />
   <title>__SEO_TITLE__</title>
   <script type="application/ld+json" data-seo-schema="portfolio">__SEO_SCHEMA__</script>
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.style.colorScheme = theme;
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 
 <body>
