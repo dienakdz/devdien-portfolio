@@ -7,9 +7,9 @@ import {
   Moon,
   Send,
   Sun,
-  Tv,
   X,
 } from 'lucide-react';
+import BrandLogo from './BrandLogo';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { siteConfig } from '../data/siteConfig';
@@ -39,7 +39,7 @@ const Navbar = ({ theme: propTheme, toggleTheme: propToggleTheme }) => {
           className="group flex items-center gap-2.5 transition-opacity hover:opacity-90"
         >
           <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-amber-500/25 bg-amber-500/10 text-amber-500 transition-transform group-hover:scale-105 dark:text-amber-400">
-            <Tv size={16} />
+            <BrandLogo size={19} />
           </div>
           <span className="font-outfit text-lg font-bold tracking-tight text-foreground transition-colors group-hover:text-amber-500">
             DevDien

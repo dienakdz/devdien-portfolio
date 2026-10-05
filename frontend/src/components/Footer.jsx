@@ -8,9 +8,9 @@ import {
   Linkedin,
   Mail,
   MoveUp,
-  Tv,
   Youtube,
 } from 'lucide-react';
+import BrandLogo from './BrandLogo';
 import { useLanguage } from '../context/LanguageContext';
 import { getLocalizedName, siteConfig } from '../data/siteConfig';
 import { apiUrl } from '../lib/api';
@@ -87,7 +87,7 @@ const Footer = () => {
           <div className="md:col-span-5">
             <Link to="/" className="flex items-center gap-2.5">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-amber-500/30 bg-amber-500/15 text-amber-500 dark:text-amber-400">
-                <Tv size={16} />
+                <BrandLogo size={19} />
               </div>
               <span className="font-outfit text-lg font-bold text-foreground">
                 DevDien

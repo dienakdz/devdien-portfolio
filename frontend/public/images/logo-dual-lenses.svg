@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="lens-amber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+  </defs>
+  <path
+    d="M 28 20 C 56 20 74 36 74 50 C 74 64 56 80 28 80"
+    stroke="url(#lens-amber)"
+    stroke-width="11"
+    stroke-linecap="round"
+    fill="none"
+  />
+  <path
+    d="M 72 80 C 44 80 26 64 26 50 C 26 36 44 20 72 20"
+    stroke="#ffffff"
+    stroke-width="9"
+    stroke-linecap="round"
+    fill="none"
+  />
+  <polygon points="50,42 58,50 50,58 42,50" fill="#fef08a" />
+</svg>
