@@ -100,6 +100,21 @@ try {
     const seo = getRouteSeo(route.path, siteUrl);
     const structuredData = JSON.stringify(createStructuredData(siteUrl, route.path));
 
+    let noscriptContent = `<noscript>\n    <section style="padding: 2rem; font-family: system-ui, sans-serif; color: #061119;">\n      <h1>${route.heading}</h1>\n      <p>${route.summary}</p>\n      <p>Truy cập portfolio với JavaScript được bật để có trải nghiệm đầy đủ.</p>`;
+
+    if (route.path === '/about') {
+      const images = siteConfig.entityImages || [];
+      const imageFigures = images
+        .map(
+          (img) =>
+            `\n      <figure style="margin-bottom: 1.5rem;">\n        <img src="${buildAbsoluteUrl(img, siteUrl)}" alt="Nguyễn Minh Diện (DevDien) - Kỹ sư Backend tại TMA Solutions, Tốt nghiệp VKU" loading="lazy" decoding="async" style="max-width: 100%; height: auto;" />\n        <figcaption>Hình ảnh hồ sơ thực tế của Nguyễn Minh Diện (DevDien) - Kỹ sư Backend tại TMA Solutions, Tốt nghiệp VKU</figcaption>\n      </figure>`,
+        )
+        .join('');
+      noscriptContent += `\n      <div style="margin-top: 1.5rem;">${imageFigures}\n      </div>`;
+    }
+
+    noscriptContent += `\n    </section>\n  </noscript>`;
+
     let html = baseHtml
       .replace(/<title>.*?<\/title>/, `<title>${seo.title}</title>`)
       .replace(
@@ -146,10 +161,7 @@ try {
         /<script\s+type="application\/ld\+json"\s+data-seo-schema="portfolio">.*?<\/script>/s,
         `<script type="application/ld+json" data-seo-schema="portfolio">${structuredData}</script>`,
       )
-      .replace(
-        /<noscript>.*?<\/noscript>/s,
-        `<noscript>\n    <section style="padding: 2rem; font-family: system-ui, sans-serif; color: #061119;">\n      <h1>${route.heading}</h1>\n      <p>${route.summary}</p>\n      <p>Truy cập portfolio với JavaScript được bật để có trải nghiệm đầy đủ.</p>\n    </section>\n  </noscript>`,
-      );
+      .replace(/<noscript>.*?<\/noscript>/s, noscriptContent);
 
     await writeFile(path.join(targetDir, 'index.html'), html, 'utf8');
     console.log(`[seo] Pre-rendered static HTML for route: ${route.path}`);

@@ -242,6 +242,7 @@ export default function AboutGallery({ isDark: propIsDark }) {
                     src={photo.src}
                     alt={photo.alt || photo.caption}
                     loading="lazy"
+                    decoding="async"
                     className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-90" />

@@ -1,6 +1,6 @@
 import { siteConfig } from '../data/siteConfig.js';
 
-const DEFAULT_SITE_URL = 'http://localhost:5173';
+const DEFAULT_SITE_URL = 'https://www.devdien.site';
 
 export const normalizeSiteUrl = (value) => {
   if (!value) {

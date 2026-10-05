@@ -25,7 +25,9 @@ export default function PortfolioPage() {
   const { lang } = useLanguage();
   const localizedName = getLocalizedName(lang);
   const projects = projectData[lang] || projectData.en;
-  const featuredProjects = projects.slice(0, 3);
+  const carProject = projects.find((p) => p.id === 'car-showroom') || projects[0];
+  const veggieProject = projects.find((p) => p.id === 'veggie-logistics') || projects[1];
+  const fastapiProject = projects.find((p) => p.id === 'fastapi-book') || projects[2];
   const careerItems = careerData[lang] || careerData.en;
 
   return (
@@ -381,28 +383,28 @@ export default function PortfolioPage() {
             {/* Bento Grid: 60% Left Hero Spotlight (Car Showroom) + 40% Right Stacked (Veggie & FastAPI) */}
             <div className="mt-10 grid gap-6 lg:grid-cols-12 lg:items-stretch">
               {/* Left Column (60%): Car Showroom Spotlight */}
-              {featuredProjects[0] && (
+              {carProject && (
                 <div className="lg:col-span-7 group flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-6 lg:p-7 shadow-sm transition-all duration-300 hover:border-amber-400/50 hover:shadow-[0_0_35px_rgba(245,158,11,0.08)] dark:border-white/8 dark:bg-[#121922]">
                   <div>
                     {/* Top Mockup Image (16:10 Full Width) */}
                     <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-slate-950 border border-border/60 dark:border-white/10">
                       <img
-                        src={featuredProjects[0].image}
-                        alt={featuredProjects[0].title}
+                        src={carProject.image}
+                        alt={carProject.title}
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <span className="absolute top-3 left-3 rounded-md bg-slate-950/85 backdrop-blur-md px-2.5 py-1 text-xs font-bold text-amber-400 border border-amber-500/30">
-                        {featuredProjects[0].status}
+                        {carProject.status}
                       </span>
                     </div>
 
                     {/* Content Below */}
                     <div className="mt-5">
                       <h3 className="font-outfit text-2xl font-bold text-foreground group-hover:text-amber-500 transition-colors">
-                        {featuredProjects[0].title}
+                        {carProject.title}
                       </h3>
                       <p className="mt-2 text-sm leading-relaxed text-muted-foreground line-clamp-2">
-                        {featuredProjects[0].summary}
+                        {carProject.summary}
                       </p>
 
                       {/* Architecture Highlights */}
@@ -435,7 +437,7 @@ export default function PortfolioPage() {
 
                       {/* Tech Badges */}
                       <div className="mt-4 flex flex-wrap gap-1.5">
-                        {featuredProjects[0].tech.map((t) => (
+                        {carProject.tech.map((t) => (
                           <span
                             key={t}
                             className="rounded-md border border-border/60 bg-muted/40 px-2.5 py-1 text-xs font-mono text-muted-foreground dark:border-white/5 dark:bg-white/[0.03]"
@@ -450,7 +452,7 @@ export default function PortfolioPage() {
                   {/* Footer Actions */}
                   <div className="mt-6 pt-4 border-t border-border/60 flex items-center justify-between dark:border-white/5">
                     <a
-                      href={featuredProjects[0].repoUrl}
+                      href={carProject.repoUrl}
                       target="_blank"
                       rel="noreferrer"
                       className="button-primary inline-flex items-center gap-2 text-xs font-bold"
@@ -474,31 +476,31 @@ export default function PortfolioPage() {
               {/* Right Column (40%): Veggie & FastAPI Book API Stacked (Both Image Top, Text Bottom) */}
               <div className="lg:col-span-5 flex flex-col justify-between gap-6">
                 {/* Project 2: Veggie */}
-                {featuredProjects[1] && (
+                {veggieProject && (
                   <div className="flex-1 group flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-5 shadow-sm transition-all duration-300 hover:border-amber-400/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.08)] dark:border-white/8 dark:bg-[#121922]">
                     <div>
                       {/* Image on Top (Full Width) */}
                       <div className="relative aspect-[16/8] w-full overflow-hidden rounded-xl bg-slate-950 border border-border/60 dark:border-white/10">
                         <img
-                          src={featuredProjects[1].image}
-                          alt={featuredProjects[1].title}
+                          src={veggieProject.image}
+                          alt={veggieProject.title}
                           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                         <span className="absolute top-2.5 left-2.5 rounded-md bg-slate-950/85 backdrop-blur-md px-2 py-0.5 text-[11px] font-bold text-emerald-400 border border-emerald-500/30">
-                          {featuredProjects[1].status}
+                          {veggieProject.status}
                         </span>
                       </div>
 
                       {/* Text Below */}
                       <h3 className="mt-3.5 font-outfit text-lg font-bold text-foreground group-hover:text-amber-500 transition-colors">
-                        {featuredProjects[1].title}
+                        {veggieProject.title}
                       </h3>
                       <p className="mt-1 text-xs leading-relaxed text-muted-foreground line-clamp-2">
-                        {featuredProjects[1].summary}
+                        {veggieProject.summary}
                       </p>
 
                       <div className="mt-3 flex flex-wrap gap-1.5">
-                        {featuredProjects[1].tech.slice(0, 4).map((t) => (
+                        {veggieProject.tech.slice(0, 4).map((t) => (
                           <span
                             key={t}
                             className="rounded-md border border-border/60 bg-muted/40 px-2 py-0.5 text-[11px] font-mono text-muted-foreground dark:border-white/5 dark:bg-white/[0.03]"
@@ -511,7 +513,7 @@ export default function PortfolioPage() {
 
                     <div className="mt-4 pt-3 border-t border-border/60 flex items-center justify-between dark:border-white/5">
                       <a
-                        href={featuredProjects[1].repoUrl}
+                        href={veggieProject.repoUrl}
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center gap-1.5 text-xs font-bold text-foreground hover:text-amber-500 transition-colors"
@@ -533,31 +535,31 @@ export default function PortfolioPage() {
                 )}
 
                 {/* Project 3: FastAPI Book Management API */}
-                {featuredProjects[2] && (
+                {fastapiProject && (
                   <div className="flex-1 group flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-5 shadow-sm transition-all duration-300 hover:border-amber-400/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.08)] dark:border-white/8 dark:bg-[#121922]">
                     <div>
                       {/* Image on Top (Full Width) */}
                       <div className="relative aspect-[16/8] w-full overflow-hidden rounded-xl bg-slate-950 border border-border/60 dark:border-white/10">
                         <img
-                          src={featuredProjects[2].image}
-                          alt={featuredProjects[2].title}
+                          src={fastapiProject.image}
+                          alt={fastapiProject.title}
                           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                         <span className="absolute top-2.5 left-2.5 rounded-md bg-slate-950/85 backdrop-blur-md px-2 py-0.5 text-[11px] font-bold text-amber-400 border border-amber-500/30">
-                          {featuredProjects[2].status}
+                          {fastapiProject.status}
                         </span>
                       </div>
 
                       {/* Text Below */}
                       <h3 className="mt-3.5 font-outfit text-lg font-bold text-foreground group-hover:text-amber-500 transition-colors">
-                        {featuredProjects[2].title}
+                        {fastapiProject.title}
                       </h3>
                       <p className="mt-1 text-xs leading-relaxed text-muted-foreground line-clamp-2">
-                        {featuredProjects[2].summary}
+                        {fastapiProject.summary}
                       </p>
 
                       <div className="mt-3 flex flex-wrap gap-1.5">
-                        {featuredProjects[2].tech.slice(0, 4).map((t) => (
+                        {fastapiProject.tech.slice(0, 4).map((t) => (
                           <span
                             key={t}
                             className="rounded-md border border-border/60 bg-muted/40 px-2 py-0.5 text-[11px] font-mono text-muted-foreground dark:border-white/5 dark:bg-white/[0.03]"
@@ -570,7 +572,7 @@ export default function PortfolioPage() {
 
                     <div className="mt-4 pt-3 border-t border-border/60 flex items-center justify-between dark:border-white/5">
                       <a
-                        href={featuredProjects[2].repoUrl}
+                        href={fastapiProject.repoUrl}
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center gap-1.5 text-xs font-bold text-foreground hover:text-amber-500 transition-colors"

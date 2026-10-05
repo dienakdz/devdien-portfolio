@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -329,6 +329,7 @@ export default function AboutPage() {
                         alt="Nguyễn Minh Diện (DevDien) - Backend Developer at TMA Solutions"
                         className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         fetchPriority="high"
+                        decoding="async"
                       />
                       {/* Subtle Bottom Ambient Vignette */}
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none transition-opacity duration-500 group-hover:opacity-80" />

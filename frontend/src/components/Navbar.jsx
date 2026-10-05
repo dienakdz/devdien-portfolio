@@ -14,11 +14,9 @@ import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { siteConfig } from '../data/siteConfig';
 
-const Navbar = ({ theme: propTheme, toggleTheme: propToggleTheme }) => {
+const Navbar = () => {
   const { lang, toggleLang } = useLanguage();
-  const { theme: ctxTheme, toggleTheme: ctxToggleTheme } = useTheme();
-  const theme = propTheme || ctxTheme;
-  const toggleTheme = propToggleTheme || ctxToggleTheme;
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 

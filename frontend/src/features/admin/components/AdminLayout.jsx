@@ -52,24 +52,7 @@ export default function AdminLayout() {
       title: t.admin.title,
       description: t.admin.description,
     };
-  }, [
-    t.admin.contacts,
-    location.pathname,
-    t.admin.contactsPageDescription,
-    t.admin.contactsPageTitle,
-    t.admin.description,
-    t.admin.overview,
-    t.admin.passwordPageDescription,
-    t.admin.passwordPageTitle,
-    t.admin.passwordSettings,
-    t.admin.profile,
-    t.admin.profilePageDescription,
-    t.admin.profilePageTitle,
-    t.admin.title,
-    t.admin.visits,
-    t.admin.visitsPageDescription,
-    t.admin.visitsPageTitle,
-  ]);
+  }, [location.pathname, t.admin]);
 
   const handleSignOut = async () => {
     await signOut();
