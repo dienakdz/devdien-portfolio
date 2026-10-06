@@ -33,9 +33,9 @@ export const projectData = {
           driver: 'asyncpg',
         },
         endpoints: [
-          { method: 'GET', path: '/api/v1/books', desc: 'Lấy danh mục sách kèm phân trang & lọc' },
-          { method: 'POST', path: '/api/v1/books', desc: 'Thêm sách mới & upload ảnh bìa (multipart)' },
-          { method: 'POST', path: '/api/v1/auth/login', desc: 'Xác thực tài khoản & cấp phát JWT token' },
+          { method: 'GET', path: '/books', desc: 'Lấy danh mục sách kèm phân trang & lọc' },
+          { method: 'POST', path: '/books', desc: 'Tạo sách mới & kiểm tra ràng buộc khóa ngoại' },
+          { method: 'POST', path: '/books/{id}/cover', desc: 'Upload file ảnh bìa (multipart/form-data)' },
         ],
       },
     },
@@ -137,7 +137,7 @@ export const projectData = {
         'Xây dựng hệ thống backend với Laravel & MySQL, thiết kế cấu trúc phân cấp Makes/Models/Trims, lưu trữ thuộc tính động EAV, lịch sử biến động giá và đặt lịch hẹn lái thử.',
       impact:
         'Cung cấp quy trình vận hành toàn diện cho showroom từ lúc nhập kho phương tiện đến khi tiếp nhận lead và chốt giao dịch.',
-      tech: ['Laravel', 'PHP', 'MySQL', 'EAV Model', 'Docker', 'TailwindCSS'],
+      tech: ['Laravel 12', 'Livewire', 'MySQL', 'EAV Model', 'Docker', 'PHP 8.3'],
       repoUrl: 'https://github.com/dienakdz/car-showroom',
       liveUrl: null,
       status: 'EAV Showroom',
@@ -175,9 +175,9 @@ export const projectData = {
           driver: 'asyncpg',
         },
         endpoints: [
-          { method: 'GET', path: '/api/v1/books', desc: 'List books with pagination & filter' },
-          { method: 'POST', path: '/api/v1/books', desc: 'Create book with cover upload (multipart)' },
-          { method: 'POST', path: '/api/v1/auth/login', desc: 'Authenticate account & issue JWT' },
+          { method: 'GET', path: '/books', desc: 'List books with pagination & filter' },
+          { method: 'POST', path: '/books', desc: 'Create book with foreign key validation' },
+          { method: 'POST', path: '/books/{id}/cover', desc: 'Upload book cover (multipart/form-data)' },
         ],
       },
     },
@@ -279,7 +279,7 @@ export const projectData = {
         'Architected a robust Laravel & MySQL backend with multi-table catalog hierarchy, EAV attribute values, inventory price tracking, and appointment scheduling workflows.',
       impact:
         'Provides a complete dealership workflow engine handling vehicles from intake to customer test-drive booking and sales.',
-      tech: ['Laravel', 'PHP', 'MySQL', 'EAV Model', 'Docker', 'TailwindCSS'],
+      tech: ['Laravel 12', 'Livewire', 'MySQL', 'EAV Model', 'Docker', 'PHP 8.3'],
       repoUrl: 'https://github.com/dienakdz/car-showroom',
       liveUrl: null,
       status: 'EAV Showroom',
