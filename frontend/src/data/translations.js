@@ -160,7 +160,7 @@ export const translations = {
         "items": [
           {
             "id": "vku-honor-board",
-            "src": "/images/about/nguyen-minh-dien-vku-honor-board.jpg",
+            "src": "/images/about/nguyen-minh-dien-vku-honor-board.webp",
             "category": "education",
             "year": "2025",
             "tag": "VKU • Bảng Vàng Vinh Danh",
@@ -170,7 +170,7 @@ export const translations = {
           },
           {
             "id": "vku-bang-ky-su",
-            "src": "/images/about/nguyen-minh-dien-vku-bang-ky-su.jpg",
+            "src": "/images/about/nguyen-minh-dien-vku-bang-ky-su.webp",
             "category": "education",
             "year": "2025",
             "tag": "Lễ tốt nghiệp VKU • Cùng Em Trai Ruột",
@@ -180,7 +180,7 @@ export const translations = {
           },
           {
             "id": "vku-graduation-mother",
-            "src": "/images/about/nguyen-minh-dien-vku-graduation-mother.jpg",
+            "src": "/images/about/nguyen-minh-dien-vku-graduation-mother.webp",
             "category": "education",
             "year": "2025",
             "tag": "Tình thân & Tri ân",
@@ -190,7 +190,7 @@ export const translations = {
           },
           {
             "id": "vku-friends-graduation",
-            "src": "/images/about/nguyen-minh-dien-vku-friends-graduation.jpg",
+            "src": "/images/about/nguyen-minh-dien-vku-friends-graduation.webp",
             "category": "education",
             "year": "2025",
             "tag": "Bạn bè & Đồng môn VKU",
@@ -200,7 +200,7 @@ export const translations = {
           },
           {
             "id": "vku-classmate-graduation",
-            "src": "/images/about/nguyen-minh-dien-vku-classmate-graduation.jpg",
+            "src": "/images/about/nguyen-minh-dien-vku-classmate-graduation.webp",
             "category": "education",
             "year": "2025",
             "tag": "Kỷ niệm giảng đường",
@@ -210,7 +210,7 @@ export const translations = {
           },
           {
             "id": "grab-danang-port",
-            "src": "/images/about/nguyen-minh-dien-grab-danang-port.jpg",
+            "src": "/images/about/nguyen-minh-dien-grab-danang-port.webp",
             "category": "career",
             "tag": "Hành trình bươn chải • Tự lập sinh viên",
             "caption": "Tự lập thời sinh viên: Chạy Grab trang trải cuộc sống",
@@ -219,7 +219,7 @@ export const translations = {
           },
           {
             "id": "tma-speaker-gialai",
-            "src": "/images/about/nguyen-minh-dien-tma-speaker-gialai.jpg",
+            "src": "/images/about/nguyen-minh-dien-tma-speaker-gialai.webp",
             "category": "career",
             "year": "2026",
             "tag": "Diễn giả • Hướng dẫn tập huấn",
@@ -229,7 +229,7 @@ export const translations = {
           },
           {
             "id": "tma-conference-stage",
-            "src": "/images/about/nguyen-minh-dien-tma-conference-stage.jpg",
+            "src": "/images/about/nguyen-minh-dien-tma-conference-stage.webp",
             "category": "career",
             "year": "2026",
             "tag": "Tập huấn Phần mềm • Hội nghị",
@@ -239,7 +239,7 @@ export const translations = {
           },
           {
             "id": "efe-rising-talent",
-            "src": "/images/about/nguyen-minh-dien-efe-rising-talent.jpg",
+            "src": "/images/about/nguyen-minh-dien-efe-rising-talent.webp",
             "category": "career",
             "year": "2024",
             "tag": "EFE Technology • Vinh danh",
@@ -249,7 +249,7 @@ export const translations = {
           },
           {
             "id": "tma-futsal-champion",
-            "src": "/images/about/nguyen-minh-dien-tma-futsal-champion.jpg",
+            "src": "/images/about/nguyen-minh-dien-tma-futsal-champion.webp",
             "category": "sports",
             "year": "2026",
             "tag": "TMA Futsal • Vô Địch",
@@ -259,7 +259,7 @@ export const translations = {
           },
           {
             "id": "tma-futsal-team",
-            "src": "/images/about/nguyen-minh-dien-tma-futsal-team.jpg",
+            "src": "/images/about/nguyen-minh-dien-tma-futsal-team.webp",
             "category": "sports",
             "year": "2026",
             "tag": "TMA Bình Định • Đội Vô Địch",
@@ -269,7 +269,7 @@ export const translations = {
           },
           {
             "id": "tma-gala-dalat",
-            "src": "/images/about/nguyen-minh-dien-tma-gala-dalat.jpg",
+            "src": "/images/about/nguyen-minh-dien-tma-gala-dalat.webp",
             "category": "career",
             "year": "2026",
             "tag": "TMA Solutions • Gala Đà Lạt",
@@ -279,7 +279,7 @@ export const translations = {
           },
           {
             "id": "tma-team-dalat",
-            "src": "/images/about/nguyen-minh-dien-tma-team-dalat.jpg",
+            "src": "/images/about/nguyen-minh-dien-tma-team-dalat.webp",
             "category": "career",
             "year": "2026",
             "tag": "TMA Teambuilding • \"We Are One\"",
@@ -289,7 +289,7 @@ export const translations = {
           },
           {
             "id": "company-year-end-party",
-            "src": "/images/about/nguyen-minh-dien-company-year-end-party.jpg",
+            "src": "/images/about/nguyen-minh-dien-company-year-end-party.webp",
             "category": "career",
             "year": "2025",
             "tag": "Year End Party • Gala Night",
@@ -299,7 +299,7 @@ export const translations = {
           },
           {
             "id": "tma-team-tet",
-            "src": "/images/about/nguyen-minh-dien-tma-team-tet.jpg",
+            "src": "/images/about/nguyen-minh-dien-tma-team-tet.webp",
             "category": "career",
             "year": "2025",
             "tag": "TMA DC27 • Xuân Sum Vầy",
@@ -309,7 +309,7 @@ export const translations = {
           },
           {
             "id": "hoian-basket-boat",
-            "src": "/images/about/nguyen-minh-dien-hoian-basket-boat.jpg",
+            "src": "/images/about/nguyen-minh-dien-hoian-basket-boat.webp",
             "category": "lifestyle",
             "year": "2026",
             "tag": "Khám phá sông nước • Hội An",
@@ -319,7 +319,7 @@ export const translations = {
           },
           {
             "id": "hoian-river-travel",
-            "src": "/images/about/nguyen-minh-dien-hoian-river-travel.jpg",
+            "src": "/images/about/nguyen-minh-dien-hoian-river-travel.webp",
             "category": "lifestyle",
             "year": "2026",
             "tag": "Văn hóa & Cảnh sắc miền Trung",
@@ -329,7 +329,7 @@ export const translations = {
           },
           {
             "id": "lifestyle-travel",
-            "src": "/images/about/nguyen-minh-dien-lifestyle-travel.jpg",
+            "src": "/images/about/nguyen-minh-dien-lifestyle-travel.webp",
             "category": "lifestyle",
             "year": "2024",
             "tag": "Dã ngoại & Thiên nhiên",
@@ -339,7 +339,7 @@ export const translations = {
           },
           {
             "id": "dinosaur-park",
-            "src": "/images/about/nguyen-minh-dien-dinosaur-park.jpg",
+            "src": "/images/about/nguyen-minh-dien-dinosaur-park.webp",
             "category": "lifestyle",
             "year": "2024",
             "tag": "Du lịch & Khám phá",
@@ -349,7 +349,7 @@ export const translations = {
           },
           {
             "id": "temple-zen",
-            "src": "/images/about/nguyen-minh-dien-temple-zen.jpg",
+            "src": "/images/about/nguyen-minh-dien-temple-zen.webp",
             "category": "lifestyle",
             "year": "2024",
             "tag": "Kỷ niệm • Chốn thanh tịnh",
@@ -566,7 +566,7 @@ export const translations = {
         "items": [
           {
             "id": "vku-honor-board",
-            "src": "/images/about/nguyen-minh-dien-vku-honor-board.jpg",
+            "src": "/images/about/nguyen-minh-dien-vku-honor-board.webp",
             "category": "education",
             "year": "2025",
             "tag": "VKU • Honor Roll",
@@ -576,7 +576,7 @@ export const translations = {
           },
           {
             "id": "vku-bang-ky-su",
-            "src": "/images/about/nguyen-minh-dien-vku-bang-ky-su.jpg",
+            "src": "/images/about/nguyen-minh-dien-vku-bang-ky-su.webp",
             "category": "education",
             "year": "2025",
             "tag": "VKU Graduation • With Younger Brother",
@@ -586,7 +586,7 @@ export const translations = {
           },
           {
             "id": "vku-graduation-mother",
-            "src": "/images/about/nguyen-minh-dien-vku-graduation-mother.jpg",
+            "src": "/images/about/nguyen-minh-dien-vku-graduation-mother.webp",
             "category": "education",
             "year": "2025",
             "tag": "Family & Gratitude",
@@ -596,7 +596,7 @@ export const translations = {
           },
           {
             "id": "vku-friends-graduation",
-            "src": "/images/about/nguyen-minh-dien-vku-friends-graduation.jpg",
+            "src": "/images/about/nguyen-minh-dien-vku-friends-graduation.webp",
             "category": "education",
             "year": "2025",
             "tag": "Friends & VKU Alumni",
@@ -606,7 +606,7 @@ export const translations = {
           },
           {
             "id": "vku-classmate-graduation",
-            "src": "/images/about/nguyen-minh-dien-vku-classmate-graduation.jpg",
+            "src": "/images/about/nguyen-minh-dien-vku-classmate-graduation.webp",
             "category": "education",
             "year": "2025",
             "tag": "Campus Memories",
@@ -616,7 +616,7 @@ export const translations = {
           },
           {
             "id": "grab-danang-port",
-            "src": "/images/about/nguyen-minh-dien-grab-danang-port.jpg",
+            "src": "/images/about/nguyen-minh-dien-grab-danang-port.webp",
             "category": "career",
             "tag": "Student Hustle • Grab Driver",
             "caption": "Self-Funded Student Days: Driving Grab to Cover Living Expenses",
@@ -625,7 +625,7 @@ export const translations = {
           },
           {
             "id": "tma-speaker-gialai",
-            "src": "/images/about/nguyen-minh-dien-tma-speaker-gialai.jpg",
+            "src": "/images/about/nguyen-minh-dien-tma-speaker-gialai.webp",
             "category": "career",
             "year": "2026",
             "tag": "Speaker • User Training",
@@ -635,7 +635,7 @@ export const translations = {
           },
           {
             "id": "tma-conference-stage",
-            "src": "/images/about/nguyen-minh-dien-tma-conference-stage.jpg",
+            "src": "/images/about/nguyen-minh-dien-tma-conference-stage.webp",
             "category": "career",
             "year": "2026",
             "tag": "Software Training • Conference",
@@ -645,7 +645,7 @@ export const translations = {
           },
           {
             "id": "efe-rising-talent",
-            "src": "/images/about/nguyen-minh-dien-efe-rising-talent.jpg",
+            "src": "/images/about/nguyen-minh-dien-efe-rising-talent.webp",
             "category": "career",
             "year": "2024",
             "tag": "EFE Technology • Award",
@@ -655,7 +655,7 @@ export const translations = {
           },
           {
             "id": "tma-futsal-champion",
-            "src": "/images/about/nguyen-minh-dien-tma-futsal-champion.jpg",
+            "src": "/images/about/nguyen-minh-dien-tma-futsal-champion.webp",
             "category": "sports",
             "year": "2026",
             "tag": "TMA Futsal • Champions",
@@ -665,7 +665,7 @@ export const translations = {
           },
           {
             "id": "tma-futsal-team",
-            "src": "/images/about/nguyen-minh-dien-tma-futsal-team.jpg",
+            "src": "/images/about/nguyen-minh-dien-tma-futsal-team.webp",
             "category": "sports",
             "year": "2026",
             "tag": "TMA Binh Dinh • Champions Squad",
@@ -675,7 +675,7 @@ export const translations = {
           },
           {
             "id": "tma-gala-dalat",
-            "src": "/images/about/nguyen-minh-dien-tma-gala-dalat.jpg",
+            "src": "/images/about/nguyen-minh-dien-tma-gala-dalat.webp",
             "category": "career",
             "year": "2026",
             "tag": "TMA Solutions • Gala Dinner",
@@ -685,7 +685,7 @@ export const translations = {
           },
           {
             "id": "tma-team-dalat",
-            "src": "/images/about/nguyen-minh-dien-tma-team-dalat.jpg",
+            "src": "/images/about/nguyen-minh-dien-tma-team-dalat.webp",
             "category": "career",
             "year": "2026",
             "tag": "TMA Teambuilding • \"We Are One\"",
@@ -695,7 +695,7 @@ export const translations = {
           },
           {
             "id": "company-year-end-party",
-            "src": "/images/about/nguyen-minh-dien-company-year-end-party.jpg",
+            "src": "/images/about/nguyen-minh-dien-company-year-end-party.webp",
             "category": "career",
             "year": "2025",
             "tag": "Year End Party • Grand Gala",
@@ -705,7 +705,7 @@ export const translations = {
           },
           {
             "id": "tma-team-tet",
-            "src": "/images/about/nguyen-minh-dien-tma-team-tet.jpg",
+            "src": "/images/about/nguyen-minh-dien-tma-team-tet.webp",
             "category": "career",
             "year": "2025",
             "tag": "TMA DC27 • Lunar New Year",
@@ -715,7 +715,7 @@ export const translations = {
           },
           {
             "id": "hoian-basket-boat",
-            "src": "/images/about/nguyen-minh-dien-hoian-basket-boat.jpg",
+            "src": "/images/about/nguyen-minh-dien-hoian-basket-boat.webp",
             "category": "lifestyle",
             "year": "2026",
             "tag": "Riverways & Hoi An Coconut Forest",
@@ -725,7 +725,7 @@ export const translations = {
           },
           {
             "id": "hoian-river-travel",
-            "src": "/images/about/nguyen-minh-dien-hoian-river-travel.jpg",
+            "src": "/images/about/nguyen-minh-dien-hoian-river-travel.webp",
             "category": "lifestyle",
             "year": "2026",
             "tag": "Cultural Exploration & Travel",
@@ -735,7 +735,7 @@ export const translations = {
           },
           {
             "id": "lifestyle-travel",
-            "src": "/images/about/nguyen-minh-dien-lifestyle-travel.jpg",
+            "src": "/images/about/nguyen-minh-dien-lifestyle-travel.webp",
             "category": "lifestyle",
             "year": "2024",
             "tag": "Nature & Trekking",
@@ -745,7 +745,7 @@ export const translations = {
           },
           {
             "id": "dinosaur-park",
-            "src": "/images/about/nguyen-minh-dien-dinosaur-park.jpg",
+            "src": "/images/about/nguyen-minh-dien-dinosaur-park.webp",
             "category": "lifestyle",
             "year": "2024",
             "tag": "Travel & Exploration",
@@ -755,7 +755,7 @@ export const translations = {
           },
           {
             "id": "temple-zen",
-            "src": "/images/about/nguyen-minh-dien-temple-zen.jpg",
+            "src": "/images/about/nguyen-minh-dien-temple-zen.webp",
             "category": "lifestyle",
             "year": "2024",
             "tag": "Visit & Serenity",
