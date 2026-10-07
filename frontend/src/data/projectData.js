@@ -1,8 +1,8 @@
-import project1 from '../assets/optimized/project1.webp';
-import project2 from '../assets/optimized/project2.webp';
-import carShowroomImg from '../assets/optimized/car-showroom.webp';
-import veggieImg from '../assets/optimized/veggie.webp';
-import fastapiBookImg from '../assets/optimized/fastapi-book.webp';
+const travelaImg = '/images/projects/travela-tour-booking.webp';
+const devopsImg = '/images/projects/devops-foundations-labs.webp';
+const carShowroomImg = '/images/projects/car-showroom.webp';
+const veggieImg = '/images/projects/veggie.webp';
+const fastapiBookImg = '/images/projects/fastapi-book.webp';
 
 export const projectData = {
   vi: [
@@ -57,7 +57,7 @@ export const projectData = {
       repoUrl: 'https://github.com/dienakdz/devops-foundations-labs',
       liveUrl: null,
       status: 'Cloud & Infrastructure',
-      image: project2,
+      image: devopsImg,
       architecture: {
         containers: [
           { name: 'Nginx Proxy', port: '80/443', role: 'Reverse Proxy & SSL Termination' },
@@ -113,7 +113,7 @@ export const projectData = {
       repoUrl: 'https://github.com/dienakdz/travela',
       liveUrl: null,
       status: 'Tour & Recommendation',
-      image: project1,
+      image: travelaImg,
       architecture: {
         flowSteps: ['Chọn tour & số lượng', 'Khóa giữ chỗ (Lock Slot)', 'Thanh toán MoMo / PayPal', 'Xuất vé PDF & Gửi Email', 'Python Recommender (:5555)'],
         stats: {
@@ -199,7 +199,7 @@ export const projectData = {
       repoUrl: 'https://github.com/dienakdz/devops-foundations-labs',
       liveUrl: null,
       status: 'Cloud & Infrastructure',
-      image: project2,
+      image: devopsImg,
       architecture: {
         containers: [
           { name: 'Nginx Proxy', port: '80/443', role: 'Reverse Proxy & SSL Termination' },
@@ -255,7 +255,7 @@ export const projectData = {
       repoUrl: 'https://github.com/dienakdz/travela',
       liveUrl: null,
       status: 'Tour & Recommendation',
-      image: project1,
+      image: travelaImg,
       architecture: {
         flowSteps: ['Select Tour', 'Lock Slot', 'MoMo / PayPal Gateway', 'Issue PDF & Email', 'Python Recommender (:5555)'],
         stats: {

@@ -22,6 +22,16 @@ import { useTheme } from '../context/ThemeContext';
 
 const INITIAL_VISIBLE_COUNT = 8;
 
+const CATEGORY_KEYS = ['all', 'career', 'education', 'sports', 'lifestyle'];
+
+const CATEGORY_ICONS = {
+  all: Layers,
+  career: Briefcase,
+  education: GraduationCap,
+  sports: Trophy,
+  lifestyle: Compass,
+};
+
 export default function AboutGallery({ isDark: propIsDark }) {
   const { isDark: ctxIsDark } = useTheme();
   const isDark = propIsDark !== undefined ? propIsDark : ctxIsDark;
@@ -31,7 +41,7 @@ export default function AboutGallery({ isDark: propIsDark }) {
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
 
   const galleryData = t?.aboutPage?.gallery || {};
-  const galleryItems = galleryData.items || [];
+  const galleryItems = useMemo(() => galleryData.items || [], [galleryData.items]);
   const categoriesMap = galleryData.categories || {
     all: lang === 'vi' ? 'Tất cả' : 'All Moments',
     career: lang === 'vi' ? 'Sự nghiệp & TMA' : 'Career & TMA',
@@ -40,20 +50,10 @@ export default function AboutGallery({ isDark: propIsDark }) {
     lifestyle: lang === 'vi' ? 'Đời sống & Du lịch' : 'Lifestyle & Travel',
   };
 
-  const categoryIcons = {
-    all: Layers,
-    career: Briefcase,
-    education: GraduationCap,
-    sports: Trophy,
-    lifestyle: Compass,
-  };
-
-  const categoryKeys = ['all', 'career', 'education', 'sports', 'lifestyle'];
-
   // Calculate counts for each category
   const categoryCounts = useMemo(() => {
     const counts = { all: galleryItems.length };
-    categoryKeys.forEach((key) => {
+    CATEGORY_KEYS.forEach((key) => {
       if (key !== 'all') {
         counts[key] = galleryItems.filter((item) => item.category === key).length;
       }
@@ -183,8 +183,8 @@ export default function AboutGallery({ isDark: propIsDark }) {
 
         {/* Category Filter Tabs */}
         <div className="mb-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-          {categoryKeys.map((key) => {
-            const Icon = categoryIcons[key] || Tag;
+          {CATEGORY_KEYS.map((key) => {
+            const Icon = CATEGORY_ICONS[key] || Tag;
             const isActive = activeCategory === key;
             const count = categoryCounts[key] || 0;
 

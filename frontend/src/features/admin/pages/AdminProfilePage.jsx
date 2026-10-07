@@ -28,7 +28,7 @@ export default function AdminProfilePage() {
     const nextProfile = normalizeProfile(user);
     setForm(nextProfile);
     setInitialForm(nextProfile);
-  }, [user?.email, user?.fullName]);
+  }, [user]);
 
   useEffect(() => {
     let active = true;

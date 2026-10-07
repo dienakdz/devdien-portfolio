@@ -24,10 +24,10 @@ import {
 import { useLanguage } from '../../../context/LanguageContext';
 import { useTheme } from '../../../context/ThemeContext';
 import { siteConfig } from '../../../data/siteConfig';
-import fastapiArchImg from '../../../assets/optimized/fastapi-architecture.webp';
-import veggieArchImg from '../../../assets/optimized/veggie-architecture.webp';
-import travelaArchImg from '../../../assets/optimized/travela-architecture.webp';
-import carShowroomArchImg from '../../../assets/optimized/car-showroom-architecture.webp';
+const fastapiArchImg = '/images/projects/fastapi-architecture.webp';
+const veggieArchImg = '/images/projects/veggie-architecture.webp';
+const travelaArchImg = '/images/projects/travela-architecture.webp';
+const carShowroomArchImg = '/images/projects/car-showroom-architecture.webp';
 
 export default function ProjectsPage() {
   const { lang } = useLanguage();

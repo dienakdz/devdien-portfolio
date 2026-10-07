@@ -33,6 +33,14 @@ export default defineConfig([
     },
   },
   {
+    files: ['frontend/vite.config.js', 'frontend/scripts/**/*.{js,mjs}'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+  {
     files: ['backend/**/*.js'],
     extends: [js.configs.recommended],
     languageOptions: {

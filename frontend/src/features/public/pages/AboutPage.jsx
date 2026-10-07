@@ -18,17 +18,17 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '../../../context/LanguageContext';
 import { useTheme } from '../../../context/ThemeContext';
-import { siteConfig, getLocalizedName } from '../../../data/siteConfig';
+import { siteConfig } from '../../../data/siteConfig';
 import AboutGallery from '../../../components/AboutGallery';
 import YouTubeShowcase from '../../../components/YouTubeShowcase';
 import AboutTimeline from '../../../components/AboutTimeline';
-import profileImg from '../../../assets/profile.jpg';
+
+const profileImg = '/images/about/nguyen-minh-dien-profile.jpg';
 
 export default function AboutPage() {
   const { t, lang } = useLanguage();
   const { isDark } = useTheme();
   const page = t?.aboutPage || {};
-  const localizedName = getLocalizedName(lang);
 
   const socialLinks = [
     {

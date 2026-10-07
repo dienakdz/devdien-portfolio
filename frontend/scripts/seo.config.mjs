@@ -13,13 +13,16 @@ export const normalizeSiteUrl = (value = DEFAULT_SITE_URL) => {
 };
 
 export const resolveSiteUrl = (env = process.env) => {
-  const candidate =
-    env.VITE_SITE_URL ||
-    env.VERCEL_PROJECT_PRODUCTION_URL ||
-    env.VERCEL_URL ||
-    DEFAULT_SITE_URL;
-
-  return normalizeSiteUrl(candidate);
+  if (env.VITE_SITE_URL) {
+    return normalizeSiteUrl(env.VITE_SITE_URL);
+  }
+  if (env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return normalizeSiteUrl(env.VERCEL_PROJECT_PRODUCTION_URL);
+  }
+  if (env.VERCEL_ENV === 'preview' && env.VERCEL_URL) {
+    return normalizeSiteUrl(env.VERCEL_URL);
+  }
+  return DEFAULT_SITE_URL;
 };
 
 export const buildAbsoluteUrl = (pathname = '/', siteUrl = resolveSiteUrl()) =>
@@ -74,7 +77,7 @@ export const getRouteSeo = (pathname = '/', siteUrl = resolveSiteUrl()) => {
       description: siteConfig.projectsDescriptionVi,
       keywords: `${siteConfig.keywords.join(', ')}, Dự án Backend Python FastAPI, Kiến trúc hệ thống microservices, Docker DevOps Labs, EAV Model MySQL, Veggie Logistics GHN`,
       canonicalUrl,
-      imageUrl: buildAbsoluteUrl(siteConfig.ogImagePath, siteUrl),
+      imageUrl: buildAbsoluteUrl(siteConfig.projectImages[0].loc, siteUrl),
       robots: 'index, follow, max-image-preview:large',
       schema: createStructuredData(siteUrl, '/projects'),
       siteUrl,
@@ -232,6 +235,10 @@ export const createStructuredData = (siteUrl = resolveSiteUrl(), pathname = '/')
               'RESTful API chuẩn Clean Architecture với FastAPI, PostgreSQL async, SQLAlchemy ORM, phân quyền JWT.',
             codeRepository: 'https://github.com/dienakdz/fastapi-book-management-api',
             programmingLanguage: 'Python',
+            image: [
+              buildAbsoluteUrl('/images/projects/fastapi-architecture.webp', siteUrl),
+              buildAbsoluteUrl('/images/projects/fastapi-book.webp', siteUrl),
+            ],
             author: { '@id': `${siteUrl}/#person` },
           },
         },
@@ -245,6 +252,7 @@ export const createStructuredData = (siteUrl = resolveSiteUrl(), pathname = '/')
               'Bộ lab thực hành DevOps chuẩn hóa kết nối Docker Compose, cụm microservices, Kubernetes manifests và Terraform AWS.',
             codeRepository: 'https://github.com/dienakdz/devops-foundations-labs',
             programmingLanguage: 'Shell / Docker',
+            image: buildAbsoluteUrl('/images/projects/devops-foundations-labs.webp', siteUrl),
             author: { '@id': `${siteUrl}/#person` },
           },
         },
@@ -258,6 +266,10 @@ export const createStructuredData = (siteUrl = resolveSiteUrl(), pathname = '/')
               'Nền tảng thương mại điện tử thực phẩm sạch với tích hợp giao vận Giao Hàng Nhanh (GHN API), quản lý state machine đơn hàng.',
             codeRepository: 'https://github.com/dienakdz/veggie',
             programmingLanguage: 'PHP / Laravel',
+            image: [
+              buildAbsoluteUrl('/images/projects/veggie-architecture.webp', siteUrl),
+              buildAbsoluteUrl('/images/projects/veggie.webp', siteUrl),
+            ],
             author: { '@id': `${siteUrl}/#person` },
           },
         },
@@ -270,6 +282,10 @@ export const createStructuredData = (siteUrl = resolveSiteUrl(), pathname = '/')
             description:
               'Mô hình cơ sở dữ liệu quan hệ EAV phân cấp (Makes/Models/Trims) lưu trữ thuộc tính xe động và trạng thái kho xe.',
             programmingLanguage: 'SQL / PHP',
+            image: [
+              buildAbsoluteUrl('/images/projects/car-showroom-architecture.webp', siteUrl),
+              buildAbsoluteUrl('/images/projects/car-showroom.webp', siteUrl),
+            ],
             author: { '@id': `${siteUrl}/#person` },
           },
         },

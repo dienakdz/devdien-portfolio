@@ -15,8 +15,9 @@ import {
   User,
   Youtube,
 } from 'lucide-react';
-import heroCover from '../../../assets/optimized/hero-cover.webp';
 import { useLanguage } from '../../../context/LanguageContext';
+
+const heroCover = '/images/about/nguyen-minh-dien-lifestyle-travel.webp';
 import { getLocalizedName, siteConfig } from '../../../data/siteConfig';
 import { projectData } from '../../../data/projectData';
 import { careerData } from '../../../data/careerData';

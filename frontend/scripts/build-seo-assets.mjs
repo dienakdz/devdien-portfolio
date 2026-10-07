@@ -20,7 +20,7 @@ const env = { ...loadEnv(mode, rootDir, ''), ...process.env };
 const siteUrl = resolveSiteUrl(env);
 
 // Generate image tags for Google Image Sitemap
-const buildImageTags = () => {
+const buildAboutImageTags = () => {
   const images = siteConfig.entityImages || [];
   return images
     .map(
@@ -33,13 +33,47 @@ const buildImageTags = () => {
     .join('\n');
 };
 
+const buildProjectImageTags = () => {
+  const images = siteConfig.projectImages || [];
+  return images
+    .map(
+      (img) => `    <image:image>
+      <image:loc>${buildAbsoluteUrl(img.loc, siteUrl)}</image:loc>
+      <image:title>${img.title.replaceAll('&', '&amp;')}</image:title>
+      <image:caption>${img.caption.replaceAll('&', '&amp;')}</image:caption>
+    </image:image>`,
+    )
+    .join('\n');
+};
+
+const buildHomeImageTags = () => {
+  const avatar = siteConfig.profileImagePath || siteConfig.entityImages?.[0] || '/og-preview.jpg';
+  const heroCover = '/images/about/nguyen-minh-dien-lifestyle-travel.webp';
+  return `    <image:image>
+      <image:loc>${buildAbsoluteUrl(avatar, siteUrl)}</image:loc>
+      <image:title>Nguyễn Minh Diện (DevDien) - Kỹ sư Backend &amp; Kiến trúc Hệ thống</image:title>
+      <image:caption>Chân dung chính thức của Nguyễn Minh Diện (DevDien) - Kỹ sư Backend tại TMA Solutions, Tốt nghiệp Kỹ thuật Phần mềm VKU</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>${buildAbsoluteUrl(heroCover, siteUrl)}</image:loc>
+      <image:title>Nguyễn Minh Diện (DevDien) - Ảnh Bìa Trang Chủ</image:title>
+      <image:caption>Hình ảnh Nguyễn Minh Diện (DevDien) - Kỹ sư Backend đam mê công nghệ và khám phá</image:caption>
+    </image:image>`;
+};
+
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${publicSitemapEntries
   .map((entry) => {
-    const isProfile = entry.path === '/about';
-    const imageBlock = isProfile ? `\n${buildImageTags()}` : '';
+    let imageBlock = '';
+    if (entry.path === '/about') {
+      imageBlock = `\n${buildAboutImageTags()}`;
+    } else if (entry.path === '/projects') {
+      imageBlock = `\n${buildProjectImageTags()}`;
+    } else if (entry.path === '/') {
+      imageBlock = `\n${buildHomeImageTags()}`;
+    }
     return `  <url>
     <loc>${buildAbsoluteUrl(entry.path, siteUrl)}</loc>
     <changefreq>${entry.changefreq}</changefreq>
@@ -113,6 +147,17 @@ try {
       noscriptContent += `\n      <div style="margin-top: 1.5rem;">${imageFigures}\n      </div>`;
     }
 
+    if (route.path === '/projects') {
+      const projectImgs = siteConfig.projectImages || [];
+      const imageFigures = projectImgs
+        .map(
+          (img) =>
+            `\n      <figure style="margin-bottom: 1.5rem;">\n        <img src="${buildAbsoluteUrl(img.loc, siteUrl)}" alt="${img.title}" loading="lazy" decoding="async" style="max-width: 100%; height: auto;" />\n        <figcaption style="font-weight: 600; margin-top: 0.5rem;">${img.title}</figcaption>\n        <p style="font-size: 0.875rem; color: #4b5563;">${img.caption}</p>\n      </figure>`,
+        )
+        .join('');
+      noscriptContent += `\n      <div style="margin-top: 1.5rem;">${imageFigures}\n      </div>`;
+    }
+
     noscriptContent += `\n    </section>\n  </noscript>`;
 
     let html = baseHtml
@@ -166,6 +211,13 @@ try {
     await writeFile(path.join(targetDir, 'index.html'), html, 'utf8');
     console.log(`[seo] Pre-rendered static HTML for route: ${route.path}`);
   }
+
+  const homeAvatar = siteConfig.profileImagePath || siteConfig.entityImages?.[0] || '/og-preview.jpg';
+  const homeNoscript = `<noscript>\n    <section style="padding: 2rem; font-family: system-ui, sans-serif; color: #061119;">\n      <h1>Nguyễn Minh Diện (DevDien) | Backend Developer</h1>\n      <p>Backend Developer focused on Python, FastAPI, API design, and scalable product systems.</p>\n      <figure style="margin-top: 1.5rem;">\n        <img src="${buildAbsoluteUrl(homeAvatar, siteUrl)}" alt="Nguyễn Minh Diện (DevDien) - Kỹ sư Backend" loading="eager" decoding="async" style="max-width: 280px; height: auto; border-radius: 12px;" />\n        <figcaption style="margin-top: 0.5rem; font-weight: 600;">Nguyễn Minh Diện (DevDien) - Kỹ sư Backend tại TMA Solutions, Tốt nghiệp VKU</figcaption>\n      </figure>\n      <p style="margin-top: 1rem;">Truy cập portfolio với JavaScript được bật để có trải nghiệm đầy đủ.</p>\n    </section>\n  </noscript>`;
+
+  const updatedBaseHtml = baseHtml.replace(/<noscript>.*?<\/noscript>/s, homeNoscript);
+  await writeFile(baseHtmlPath, updatedBaseHtml, 'utf8');
+  console.log('[seo] Enhanced static noscript for root: /');
 } catch (err) {
   console.warn('[seo] Could not pre-render static pages:', err.message);
 }
