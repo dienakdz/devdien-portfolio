@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowUpRight,
   Code2,
@@ -13,17 +13,137 @@ import {
   ChevronDown,
   Monitor,
   Check,
+  Maximize2,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  ZoomIn,
+  ZoomOut,
+  Sparkles,
 } from 'lucide-react';
 import { useLanguage } from '../../../context/LanguageContext';
 import { useTheme } from '../../../context/ThemeContext';
 import { siteConfig } from '../../../data/siteConfig';
 import fastapiArchImg from '../../../assets/optimized/fastapi-architecture.webp';
 import veggieArchImg from '../../../assets/optimized/veggie-architecture.webp';
+import travelaArchImg from '../../../assets/optimized/travela-architecture.webp';
+import carShowroomArchImg from '../../../assets/optimized/car-showroom-architecture.webp';
 
 export default function ProjectsPage() {
   const { lang } = useLanguage();
   const { isDark } = useTheme();
   const [selectedLayer, setSelectedLayer] = useState('ALL');
+  const [activeDiagramIndex, setActiveDiagramIndex] = useState(null);
+  const [isZoomed, setIsZoomed] = useState(false);
+
+  const architectureList = [
+    {
+      id: 'fastapi',
+      title: 'FastAPI Book Management API',
+      category: 'Core REST API',
+      tag: 'Layered Clean Architecture',
+      sourcePath: 'D:\\FastAPI\\fast-api-books',
+      image: fastapiArchImg,
+      github: 'https://github.com/dienakdz/fastapi-book-management-api',
+      desc:
+        lang === 'vi'
+          ? 'Kiến trúc phân tầng Clean Architecture: Tách biệt APIRouters, Pydantic v2 schemas DTOs validation chặt chẽ, SQLAlchemy 2.0 ORM với connection pooling và tự động hóa migration bằng Alembic.'
+          : 'Layered Clean Architecture: Decoupled APIRouters, strict Pydantic v2 schemas validation, SQLAlchemy 2.0 ORM with connection pooling, and automated Alembic schema migrations.',
+      tech: ['FastAPI', 'SQLAlchemy 2.0', 'Pydantic v2', 'PostgreSQL', 'Docker'],
+    },
+    {
+      id: 'veggie',
+      title: 'Veggie Organic E-Commerce & GHN Logistics',
+      category: 'Enterprise & Logistics',
+      tag: 'MVC & Logistics Realtime Flow',
+      sourcePath: 'D:\\veggie',
+      image: veggieArchImg,
+      github: 'https://github.com/dienakdz/veggie-organic-shop',
+      desc:
+        lang === 'vi'
+          ? 'Kiến trúc MVC tích hợp sâu webhook logistics: Tự động tính cước động theo trọng lượng/địa chỉ, push mã vận đơn GHN Express tự động, xử lý thanh toán đa cổng và bảo đảm tính toàn vẹn tồn kho.'
+          : 'Full-cycle MVC architecture with live GHN Logistics webhook integration: Dynamic rate engine, automated shipment push, multi-gateway payments, and atomic inventory checkout transactions.',
+      tech: ['Spring Boot 3', 'GHN Logistics', 'MySQL', 'Docker Compose', 'Python AI'],
+    },
+    {
+      id: 'travela',
+      title: 'Travela Tour Booking & Recommendation Platform',
+      category: 'Enterprise Platform',
+      tag: 'Domain Modular Booking & AI',
+      sourcePath: 'D:\\travela',
+      image: travelaArchImg,
+      github: 'https://github.com/dienakdz/travela-tour-booking',
+      desc:
+        lang === 'vi'
+          ? 'Nền tảng du lịch modul hóa: Quản lý kho tour theo lịch trình linh hoạt, quy trình đặt chỗ và xuất hóa đơn đa bước, cổng thanh toán kép (PayPal Sandbox & MoMo IPN) cùng AI gợi ý tour thông minh.'
+          : 'Modular travel platform: Dynamic itinerary tour management, multi-step booking and automated invoicing pipeline, dual payment gateways (PayPal & MoMo), and content-based AI recommendations.',
+      tech: ['Spring Boot 3', 'PayPal / MoMo', 'Python AI (:5555)', 'MySQL', 'Dompdf'],
+    },
+    {
+      id: 'car-showroom',
+      title: 'Car Showroom & Dynamic EAV Inventory System',
+      category: 'Relational EAV & Concurrency',
+      tag: 'Dual-Engine EAV & Row Locking',
+      sourcePath: 'D:\\car-showroom',
+      image: carShowroomArchImg,
+      github: 'https://github.com/dienakdz/car-showroom',
+      desc:
+        lang === 'vi'
+          ? 'Mô hình cơ sở dữ liệu quan hệ EAV phân cấp (Makes ➔ Models ➔ Trims) triệt tiêu schema migration khi mở rộng hàng trăm biến thể xe động, kết hợp State Machine với Pessimistic Row Locking (SELECT ... FOR UPDATE) phòng chống race condition khi khách hàng giữ chỗ cọc xe.'
+          : 'Relational EAV catalog model eliminating schema migrations across hundreds of dynamic vehicle variants, unified with an inventory state machine using pessimistic row locking (SELECT ... FOR UPDATE) to prevent concurrency race conditions.',
+      tech: ['Laravel 12', 'Livewire 3', 'MySQL 8.0', 'EAV Architecture', 'Row Locks'],
+    },
+  ];
+
+  const openDiagramModal = (id) => {
+    const idx = architectureList.findIndex((item) => item.id === id);
+    if (idx !== -1) {
+      setActiveDiagramIndex(idx);
+      setIsZoomed(false);
+    }
+  };
+
+  const handleCloseModal = useCallback(() => {
+    setActiveDiagramIndex(null);
+    setIsZoomed(false);
+  }, []);
+
+  const handlePrevDiagram = useCallback(() => {
+    setActiveDiagramIndex((prev) =>
+      prev === null ? null : (prev - 1 + architectureList.length) % architectureList.length
+    );
+    setIsZoomed(false);
+  }, [architectureList.length]);
+
+  const handleNextDiagram = useCallback(() => {
+    setActiveDiagramIndex((prev) =>
+      prev === null ? null : (prev + 1) % architectureList.length
+    );
+    setIsZoomed(false);
+  }, [architectureList.length]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (activeDiagramIndex === null) return;
+      if (e.key === 'Escape') handleCloseModal();
+      if (e.key === 'ArrowLeft') handlePrevDiagram();
+      if (e.key === 'ArrowRight') handleNextDiagram();
+    };
+
+    if (activeDiagramIndex !== null) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [activeDiagramIndex, handleCloseModal, handlePrevDiagram, handleNextDiagram]);
+
+  const activeDiagram = activeDiagramIndex !== null ? architectureList[activeDiagramIndex] : null;
 
   const filterOptions = [
     { id: 'ALL', label: lang === 'vi' ? 'Tất cả hệ thống' : 'All Systems' },
@@ -143,13 +263,23 @@ export default function ProjectsPage() {
                     </div>
 
                     {/* Architecture Diagram Image */}
-                    <div className="my-2 rounded-lg overflow-hidden border border-slate-800/80 bg-[#0d1520]">
+                    <div
+                      onClick={() => openDiagramModal('fastapi')}
+                      className="group relative my-2 rounded-lg overflow-hidden border border-slate-800/80 bg-[#0d1520] cursor-zoom-in transition-all duration-200 hover:border-amber-500/50 hover:shadow-[0_0_20px_rgba(245,158,11,0.14)]"
+                      title={lang === 'vi' ? 'Bấm để phóng to và xem chi tiết kiến trúc' : 'Click to zoom and view architecture details'}
+                    >
                       <img
                         src={fastapiArchImg}
                         alt="FastAPI Architecture"
-                        className="w-full h-auto object-contain"
+                        className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
                         loading="lazy"
                       />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/45 opacity-0 backdrop-blur-[1px] transition-opacity duration-200 group-hover:opacity-100">
+                        <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-slate-900/95 px-3 py-1.5 text-[11px] font-semibold text-amber-300 shadow-xl">
+                          <Maximize2 size={13} />
+                          <span>{lang === 'vi' ? 'Xem chi tiết & ảnh to' : 'View Detail & Enlarge'}</span>
+                        </div>
+                      </div>
                     </div>
 
                     <div className="text-[9px] text-slate-500 text-right">D:\FastAPI\fast-api-books</div>
@@ -430,13 +560,23 @@ export default function ProjectsPage() {
                     </div>
 
                     {/* Architecture Diagram Image */}
-                    <div className="my-2 rounded-lg overflow-hidden border border-slate-800/80 bg-[#0d1520]">
+                    <div
+                      onClick={() => openDiagramModal('veggie')}
+                      className="group relative my-2 rounded-lg overflow-hidden border border-slate-800/80 bg-[#0d1520] cursor-zoom-in transition-all duration-200 hover:border-emerald-500/50 hover:shadow-[0_0_20px_rgba(16,185,129,0.14)]"
+                      title={lang === 'vi' ? 'Bấm để phóng to và xem chi tiết kiến trúc' : 'Click to zoom and view architecture details'}
+                    >
                       <img
                         src={veggieArchImg}
                         alt="Veggie Organic Architecture"
-                        className="w-full h-auto object-contain"
+                        className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
                         loading="lazy"
                       />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/45 opacity-0 backdrop-blur-[1px] transition-opacity duration-200 group-hover:opacity-100">
+                        <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-slate-900/95 px-3 py-1.5 text-[11px] font-semibold text-emerald-300 shadow-xl">
+                          <Maximize2 size={13} />
+                          <span>{lang === 'vi' ? 'Xem chi tiết & ảnh to' : 'View Detail & Enlarge'}</span>
+                        </div>
+                      </div>
                     </div>
 
                     <div className="text-[9px] text-slate-500 text-right">D:\veggie</div>
@@ -542,63 +682,68 @@ export default function ProjectsPage() {
                   Travela Tour Booking &amp; Recommendation Platform
                 </h2>
 
-                <p className={`mt-2 text-xs leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                  {lang === 'vi'
-                    ? 'Quy trình đặt tour đa bước bảo toàn giao dịch và Microservice gợi ý tour bằng Python.'
-                    : 'Showcase a multi-step reservation pipeline for Microservices.'}
-                </p>
+                {/* 2-Column Interior Split (Left: Architecture Diagram, Right: Stack List) */}
+                <div className="mt-5 grid grid-cols-1 md:grid-cols-12 gap-4">
+                  {/* Left: Architecture Diagram Box (Always Sleek Dark Terminal) */}
+                  <div className="md:col-span-7 rounded-xl p-3 border font-mono text-xs flex flex-col justify-between border-slate-800/80 bg-[#0d1520] text-slate-200 shadow-inner">
+                    <div className="flex items-center justify-between border-b pb-2 border-slate-800">
+                      <div className="flex items-center gap-1.5 font-bold text-amber-400">
+                        <Terminal size={13} />
+                        <span>System Architecture</span>
+                      </div>
+                      <span className="text-[10px] text-slate-400">Laravel 9</span>
+                    </div>
 
-                {/* Reservation Pipeline Flow (Always Sleek Dark Terminal) */}
-                <div className="mt-5 rounded-xl p-3 sm:p-4 border font-mono text-xs border-slate-800/80 bg-[#0d1520] text-slate-200 shadow-inner">
-                  {/* 5 Connected Steps with arrows */}
-                  <div className="grid grid-cols-5 items-center gap-1.5 sm:gap-2 text-center">
-                    {/* Step 1: Select Tour */}
-                    <div className="rounded-lg p-2 border border-slate-800 bg-slate-900/60 min-h-[58px] flex flex-col justify-between">
-                      <div className="font-bold text-slate-200 text-[9px] sm:text-[10px] leading-tight">Select Tour</div>
-                      <div className="mt-1">
-                        <span className="inline-block rounded bg-amber-500/20 px-1.5 py-0.5 text-[8px] font-bold text-amber-400">
-                          Pending
-                        </span>
+                    {/* Architecture Diagram Image */}
+                    <div
+                      onClick={() => openDiagramModal('travela')}
+                      className="group relative my-2 rounded-lg overflow-hidden border border-slate-800/80 bg-[#0d1520] cursor-zoom-in transition-all duration-200 hover:border-amber-500/50 hover:shadow-[0_0_20px_rgba(245,158,11,0.14)]"
+                      title={lang === 'vi' ? 'Bấm để phóng to và xem chi tiết kiến trúc' : 'Click to zoom and view architecture details'}
+                    >
+                      <img
+                        src={travelaArchImg}
+                        alt="Travela Tour Architecture"
+                        className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/45 opacity-0 backdrop-blur-[1px] transition-opacity duration-200 group-hover:opacity-100">
+                        <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-slate-900/95 px-3 py-1.5 text-[11px] font-semibold text-amber-300 shadow-xl">
+                          <Maximize2 size={13} />
+                          <span>{lang === 'vi' ? 'Xem chi tiết & ảnh to' : 'View Detail & Enlarge'}</span>
+                        </div>
                       </div>
                     </div>
 
-                    {/* Step 2: Check Availability */}
-                    <div className="rounded-lg p-2 border border-slate-800 bg-slate-900/60 min-h-[58px] flex flex-col justify-between">
-                      <div className="font-bold text-slate-200 text-[9px] sm:text-[10px] leading-tight">Check Avail</div>
-                      <div className="mt-1">
-                        <span className="inline-block rounded bg-blue-500/20 px-1.5 py-0.5 text-[8px] font-bold text-blue-400">
-                          Processing
-                        </span>
-                      </div>
-                    </div>
+                    <div className="text-[9px] text-slate-500 text-right">D:\travela</div>
+                  </div>
 
-                    {/* Step 3: Payment */}
-                    <div className="rounded-lg p-2 border border-emerald-500/30 bg-emerald-950/30 min-h-[58px] flex flex-col justify-between">
-                      <div className="font-bold text-emerald-400 text-[9px] sm:text-[10px] leading-tight">Payment</div>
-                      <div className="mt-1">
-                        <span className="inline-block rounded bg-emerald-500/25 px-1.5 py-0.5 text-[8px] font-bold text-emerald-300">
-                          Booked
-                        </span>
-                      </div>
-                    </div>
+                  {/* Right: Text & Tech Stack Bullets */}
+                  <div className="md:col-span-5 flex flex-col justify-between text-xs">
+                    <div>
+                      <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                        {lang === 'vi'
+                          ? 'Nền tảng đặt tour du lịch trực tuyến: Quy trình đặt chỗ đa bước, cổng thanh toán PayPal/MoMo và AI gợi ý tour thông minh.'
+                          : 'Tour booking platform: Multi-step reservation flow, PayPal & MoMo payments, and AI-driven tour recommendation engine.'}
+                      </p>
 
-                    {/* Step 4: Confirmation */}
-                    <div className="rounded-lg p-2 border border-slate-800 bg-slate-900/60 min-h-[58px] flex flex-col justify-between">
-                      <div className="font-bold text-slate-200 text-[9px] sm:text-[10px] leading-tight">Confirmation</div>
-                      <div className="mt-1">
-                        <span className="inline-block rounded bg-slate-800 px-1.5 py-0.5 text-[8px] font-bold text-slate-400">
-                          Success
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Step 5: Recs Engine */}
-                    <div className="rounded-lg p-2 border border-amber-500/30 bg-amber-950/30 min-h-[58px] flex flex-col justify-between">
-                      <div className="font-bold text-amber-400 text-[9px] sm:text-[10px] leading-tight">Recs Engine</div>
-                      <div className="mt-1">
-                        <span className="inline-block rounded bg-amber-500/20 px-1.5 py-0.5 text-[8px] font-bold text-amber-300">
-                          Triggered
-                        </span>
+                      <div className="mt-3.5">
+                        <div className={`font-bold text-xs mb-2 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                          Backend Tech Stack
+                        </div>
+                        <ul className={`space-y-1.5 text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                          <li className="flex items-center gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                            <span>Laravel 9 &amp; MySQL</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                            <span>PayPal, MoMo &amp; Dompdf</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                            <span>Python AI Recommender (:5555)</span>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -613,13 +758,13 @@ export default function ProjectsPage() {
               >
                 <div className="flex flex-wrap items-center gap-1.5">
                   <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
-                    Microservices
+                    Laravel 9
                   </span>
                   <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
-                    Redis, Personalized Recs
+                    PayPal &amp; MoMo
                   </span>
                   <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
-                    Email/SMS Alerts
+                    Python AI (:5555)
                   </span>
                 </div>
 
@@ -678,104 +823,68 @@ export default function ProjectsPage() {
                     : 'Relational EAV catalog model (Makes/Models/Trims) for dynamic automotive specifications & inventory hold states.'}
                 </p>
 
-                {/* 2-Column Interior Split (Left: Dynamic EAV Schema Explorer, Right: Specs & Bullets) */}
+                {/* 2-Column Interior Split (Left: Dynamic EAV Architecture Diagram, Right: Tech Stack Bullets) */}
                 <div className="mt-5 grid grid-cols-1 md:grid-cols-12 gap-4">
-                  {/* Left: Dynamic EAV Schema Explorer (Always Sleek Dark Terminal) */}
+                  {/* Left: Architecture Diagram Terminal */}
                   <div className="md:col-span-7 rounded-xl p-3 border font-mono text-xs flex flex-col justify-between border-slate-800/80 bg-[#0d1520] text-slate-200 shadow-inner">
-                    <div>
-                      <div className="flex items-center justify-between border-b pb-2 border-slate-800">
-                        <div className="flex items-center gap-1.5 font-bold text-amber-400">
-                          <Database size={13} />
-                          <span>eav_catalog.sql</span>
-                          <span className="rounded bg-emerald-500/20 text-emerald-400 px-1 py-0.2 text-[9px]">MySQL 8.0</span>
-                        </div>
-                        <span className="text-[10px] text-slate-400">Dynamic EAV Schema</span>
+                    <div className="flex items-center justify-between border-b pb-2 border-slate-800">
+                      <div className="flex items-center gap-1.5 font-bold text-amber-400">
+                        <Layers size={13} />
+                        <span>System Architecture</span>
                       </div>
+                      <span className="text-[10px] text-slate-400">Dynamic EAV &amp; Concurrency</span>
+                    </div>
 
-                      {/* Level 1: 3-Tier Entity Hierarchy */}
-                      <div className="mt-2.5 rounded-lg p-2 border border-slate-800 bg-slate-900/60">
-                        <div className="text-[9px] text-slate-400 mb-1 font-sans">Entity Hierarchy (Normalized Core)</div>
-                        <div className="flex items-center gap-1.5 text-[10px]">
-                          <span className="font-bold text-amber-400">Makes</span>
-                          <span className="text-slate-500">→</span>
-                          <span className="font-bold text-cyan-400">Models</span>
-                          <span className="text-slate-500">→</span>
-                          <span className="font-bold text-emerald-400">Trims</span>
-                          <span className="text-slate-500">→</span>
-                          <span className="text-slate-200 font-sans">Porsche 911 GT3 RS</span>
-                        </div>
-                      </div>
-
-                      {/* Level 2: Dynamic EAV Key-Value Store */}
-                      <div className="mt-2 space-y-1 text-[10px]">
-                        <div className="flex items-center justify-between rounded p-1.5 bg-slate-900/60 border border-slate-800">
-                          <span className="text-slate-400 font-mono text-[9px]">[attr: engine]</span>
-                          <span className="font-bold text-slate-200 font-sans text-[10px]">4.0L Naturally Aspirated Flat-6</span>
-                        </div>
-                        <div className="flex items-center justify-between rounded p-1.5 bg-slate-900/60 border border-slate-800">
-                          <span className="text-slate-400 font-mono text-[9px]">[attr: output]</span>
-                          <span className="font-bold text-amber-300 font-sans text-[10px]">518 HP @ 8,500 RPM / 465 Nm</span>
-                        </div>
-                        <div className="flex items-center justify-between rounded p-1.5 bg-slate-900/60 border border-slate-800">
-                          <span className="text-slate-400 font-mono text-[9px]">[attr: transmission]</span>
-                          <span className="font-bold text-cyan-300 font-sans text-[10px]">7-Speed PDK Dual-Clutch</span>
-                        </div>
-                        <div className="flex items-center justify-between rounded p-1.5 bg-emerald-950/25 border border-emerald-500/30">
-                          <span className="text-emerald-400 font-mono text-[9px]">[inventory_status]</span>
-                          <span className="font-bold text-emerald-300 font-sans text-[10px]">Hold Reserved [Row Lock]</span>
+                    {/* Architecture Diagram Image */}
+                    <div
+                      onClick={() => openDiagramModal('car-showroom')}
+                      className="group relative my-2 rounded-lg overflow-hidden border border-slate-800/80 bg-[#0d1520] cursor-zoom-in transition-all duration-200 hover:border-amber-500/50 hover:shadow-[0_0_20px_rgba(245,158,11,0.14)]"
+                      title={lang === 'vi' ? 'Bấm để phóng to và xem chi tiết kiến trúc' : 'Click to zoom and view architecture details'}
+                    >
+                      <img
+                        src={carShowroomArchImg}
+                        alt="Car Showroom EAV Architecture"
+                        className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/45 opacity-0 backdrop-blur-[1px] transition-opacity duration-200 group-hover:opacity-100">
+                        <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-slate-900/95 px-3 py-1.5 text-[11px] font-semibold text-amber-300 shadow-xl">
+                          <Maximize2 size={13} />
+                          <span>{lang === 'vi' ? 'Xem chi tiết & ảnh to' : 'View Detail & Enlarge'}</span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="mt-3 text-[9px] text-slate-500 text-right">Schema Extensibility: 0-migration catalog</div>
+                    <div className="text-[9px] text-slate-500 text-right">D:\car-showroom</div>
                   </div>
 
-                  {/* Right: Technical Specs & Tech Pills */}
+                  {/* Right: Technical Specs & Tech Stack Bullets */}
                   <div className="md:col-span-5 flex flex-col justify-between text-xs">
                     <div>
                       <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                         {lang === 'vi'
-                          ? 'Kiến trúc Entity-Attribute-Value triệt tiêu việc mở rộng cột bảng khi phát sinh hàng trăm biến thể xe & trạng thái khóa giữ chỗ xe.'
-                          : 'Entity-Attribute-Value architecture eliminating column sprawl across hundreds of vehicle variants & inventory hold states.'}
+                          ? 'Mô hình cơ sở dữ liệu quan hệ EAV phân cấp triệt tiêu schema migration khi mở rộng hàng trăm biến thể xe, đồng bộ giữ chỗ với pessimistic row locking.'
+                          : 'Relational EAV catalog model eliminating schema migrations across hundreds of vehicle variants, unified with pessimistic row-locking hold states.'}
                       </p>
 
-                      {/* Small Tech Pills */}
-                      <div className="mt-2.5 flex flex-wrap gap-1.5">
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
-                          Laravel 9
-                        </span>
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
-                          MySQL 8.0
-                        </span>
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
-                          EAV Pattern
-                        </span>
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
-                          Docker
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* MySQL EAV Specs Box (Always Dark Terminal) */}
-                    <div className="mt-4 rounded-xl p-3 border font-mono text-[11px] border-slate-800/80 bg-[#0d1520] text-slate-300 shadow-inner">
-                      <div className="font-bold text-slate-200 mb-1.5">MySQL EAV Relational Specs</div>
-                      <div className="space-y-1 text-slate-400 text-[10px]">
-                        <div className="flex justify-between">
-                          <span>Primary Hierarchy:</span>
-                          <span className="font-bold text-slate-200">Makes → Models → Trims</span>
+                      <div className="mt-3.5">
+                        <div className={`font-bold text-xs mb-2 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                          Backend Tech Stack
                         </div>
-                        <div className="flex justify-between">
-                          <span>Dynamic Attributes:</span>
-                          <span className="font-bold text-amber-400">JSON &amp; Key-Value Store</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Concurrency Lock:</span>
-                          <span className="font-bold text-emerald-400">FOR UPDATE (Row Lock)</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Index Strategy:</span>
-                          <span className="font-bold text-cyan-400">Composite (entity, attr)</span>
-                        </div>
+                        <ul className={`space-y-1.5 text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                          <li className="flex items-center gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                            <span>Laravel 12 &amp; Livewire 3</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                            <span>Dynamic EAV Attribute Storage</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                            <span>Pessimistic Row Lock (SELECT ... FOR UPDATE)</span>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -790,10 +899,13 @@ export default function ProjectsPage() {
               >
                 <div className="flex flex-wrap items-center gap-1.5">
                   <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
-                    Laravel 9
+                    Laravel 12
                   </span>
                   <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
-                    MySQL
+                    Livewire 3
+                  </span>
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
+                    MySQL 8.0
                   </span>
                   <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
                     EAV Architecture
@@ -871,6 +983,162 @@ export default function ProjectsPage() {
             </a>
           </div>
         </div>
+
+        {/* ========================================================================= */}
+        {/* ARCHITECTURE DIAGRAM LIGHTBOX MODAL (ENLARGED & DETAIL VIEW)             */}
+        {/* ========================================================================= */}
+        <AnimatePresence>
+          {activeDiagram && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={handleCloseModal}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-3 sm:p-6 backdrop-blur-md overflow-y-auto"
+              role="dialog"
+              aria-modal="true"
+            >
+              {/* Modal Container */}
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0, y: 15 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.95, opacity: 0, y: 15 }}
+                transition={{ duration: 0.2 }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative my-auto w-full max-w-5xl rounded-2xl border border-slate-700/80 bg-[#0d1420] p-4 sm:p-6 text-slate-200 shadow-[0_25px_60px_rgba(0,0,0,0.85)]"
+              >
+                {/* Modal Header */}
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3 mb-4">
+                  <div className="flex items-center gap-3">
+                    <span className="rounded-md bg-amber-500/15 border border-amber-500/30 px-2.5 py-1 text-[11px] font-mono font-bold text-amber-300">
+                      {activeDiagram.category}
+                    </span>
+                    <div>
+                      <h3 className="font-outfit text-base sm:text-lg font-bold text-white leading-tight">
+                        {activeDiagram.title}
+                      </h3>
+                      <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono text-slate-400 mt-0.5">
+                        <span className="text-amber-400">{activeDiagram.tag}</span>
+                        <span>•</span>
+                        <span className="text-slate-400">{activeDiagram.sourcePath}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    {/* Index Counter */}
+                    <span className="font-mono text-xs text-slate-400 px-2 py-1 rounded bg-slate-800/60 border border-slate-700/60">
+                      {activeDiagramIndex + 1} / {architectureList.length}
+                    </span>
+
+                    {/* Prev Diagram Button */}
+                    <button
+                      onClick={handlePrevDiagram}
+                      className="rounded-lg border border-slate-700/80 bg-slate-800/80 p-2 text-slate-300 transition hover:bg-slate-700 hover:text-white"
+                      title={lang === 'vi' ? 'Sơ đồ trước (Phím mũi tên trái)' : 'Previous diagram (Left Arrow)'}
+                    >
+                      <ChevronLeft size={17} />
+                    </button>
+
+                    {/* Next Diagram Button */}
+                    <button
+                      onClick={handleNextDiagram}
+                      className="rounded-lg border border-slate-700/80 bg-slate-800/80 p-2 text-slate-300 transition hover:bg-slate-700 hover:text-white"
+                      title={lang === 'vi' ? 'Sơ đồ tiếp theo (Phím mũi tên phải)' : 'Next diagram (Right Arrow)'}
+                    >
+                      <ChevronRight size={17} />
+                    </button>
+
+                    {/* Zoom Toggle Button */}
+                    <button
+                      onClick={() => setIsZoomed(!isZoomed)}
+                      className={`rounded-lg border p-2 transition ${
+                        isZoomed
+                          ? 'border-amber-500/50 bg-amber-500/20 text-amber-300'
+                          : 'border-slate-700/80 bg-slate-800/80 text-slate-300 hover:bg-slate-700 hover:text-white'
+                      }`}
+                      title={isZoomed ? 'Thu nhỏ về khung vừa' : 'Phóng to tối đa (100%)'}
+                    >
+                      {isZoomed ? <ZoomOut size={17} /> : <ZoomIn size={17} />}
+                    </button>
+
+                    {/* Close Button */}
+                    <button
+                      onClick={handleCloseModal}
+                      className="rounded-lg border border-slate-700/80 bg-slate-800/80 p-2 text-slate-300 transition hover:bg-rose-500/20 hover:border-rose-500/40 hover:text-rose-300 ml-1"
+                      title={lang === 'vi' ? 'Đóng (Phím ESC)' : 'Close (ESC)'}
+                    >
+                      <X size={17} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Main Image Canvas */}
+                <div
+                  onClick={() => setIsZoomed(!isZoomed)}
+                  className={`relative rounded-xl border border-slate-800 bg-[#060a12] p-2 sm:p-4 overflow-auto shadow-inner flex items-center justify-center transition-all ${
+                    isZoomed ? 'cursor-zoom-out max-h-[68vh]' : 'cursor-zoom-in max-h-[58vh]'
+                  }`}
+                >
+                  <img
+                    src={activeDiagram.image}
+                    alt={activeDiagram.title}
+                    className={`rounded-lg transition-transform duration-300 ${
+                      isZoomed
+                        ? 'w-auto min-w-[1240px] max-w-none h-auto'
+                        : 'w-full h-auto max-h-[54vh] object-contain'
+                    }`}
+                  />
+
+                  {/* Floating Zoom Indicator Hint */}
+                  <div className="absolute bottom-3 right-3 pointer-events-none rounded-md bg-black/75 px-2 py-1 text-[10px] font-mono text-slate-300 border border-slate-700/60 backdrop-blur-sm">
+                    {isZoomed
+                      ? (lang === 'vi' ? '100% Full Res • Bấm để thu gọn' : '100% Full Res • Click to fit')
+                      : (lang === 'vi' ? 'Bấm vào ảnh để phóng to 100%' : 'Click image to zoom 100%')}
+                  </div>
+                </div>
+
+                {/* Modal Footer / Technical Breakdown */}
+                <div className="mt-4 grid grid-cols-1 md:grid-cols-12 gap-4 items-center border-t border-slate-800 pt-3">
+                  <div className="md:col-span-8">
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      {activeDiagram.desc}
+                    </p>
+                    <div className="mt-2.5 flex flex-wrap gap-1.5">
+                      {activeDiagram.tech.map((t, idx) => (
+                        <span
+                          key={idx}
+                          className="rounded-full px-2.5 py-0.5 font-mono text-[10px] border border-slate-700 bg-slate-800/80 text-amber-300"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="md:col-span-4 flex flex-wrap items-center justify-end gap-2.5">
+                    <a
+                      href={activeDiagram.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-800/80 px-3.5 py-2 text-xs font-semibold text-slate-200 transition hover:bg-slate-700 hover:text-white"
+                    >
+                      <Github size={14} />
+                      <span>{lang === 'vi' ? 'Xem mã nguồn' : 'GitHub Repo'}</span>
+                      <ArrowUpRight size={12} className="text-slate-400" />
+                    </a>
+                    <button
+                      onClick={handleCloseModal}
+                      className="rounded-lg bg-amber-500 hover:bg-amber-400 px-4 py-2 text-xs font-bold text-slate-950 transition active:scale-95"
+                    >
+                      {lang === 'vi' ? 'Đóng' : 'Close'}
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
     </section>
   );
 }

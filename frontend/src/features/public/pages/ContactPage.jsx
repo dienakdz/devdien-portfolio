@@ -281,19 +281,6 @@ export default function ContactPage() {
                   );
                 })}
               </div>
-
-              {/* SLA Response Pill */}
-              <div className="mt-5 flex justify-center">
-                <span
-                  className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1 text-xs font-semibold ${
-                    isDark
-                      ? 'border border-slate-800 bg-[#0c1117] text-slate-400'
-                      : 'border border-slate-200 bg-slate-100 text-slate-600'
-                  }`}
-                >
-                  <span>&lt; 24h SLA</span>
-                </span>
-              </div>
             </div>
           </div>
 
