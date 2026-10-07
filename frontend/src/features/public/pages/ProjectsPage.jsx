@@ -18,6 +18,7 @@ import { useLanguage } from '../../../context/LanguageContext';
 import { useTheme } from '../../../context/ThemeContext';
 import { siteConfig } from '../../../data/siteConfig';
 import fastapiArchImg from '../../../assets/optimized/fastapi-architecture.webp';
+import veggieArchImg from '../../../assets/optimized/veggie-architecture.webp';
 
 export default function ProjectsPage() {
   const { lang } = useLanguage();
@@ -416,101 +417,57 @@ export default function ProjectsPage() {
                   Veggie Organic E-Commerce &amp; GHN Logistics
                 </h2>
 
-                {/* 2-Column Interior Split (Left: Webhook & Order Pipeline, Right: Specs) */}
+                {/* 2-Column Interior Split (Left: Architecture Diagram, Right: Stack List) */}
                 <div className="mt-5 grid grid-cols-1 md:grid-cols-12 gap-4">
-                  {/* Left: Webhook Monitor & Order Pipeline (Always Sleek Dark Terminal) */}
+                  {/* Left: Architecture Diagram Box (Always Sleek Dark Terminal) */}
                   <div className="md:col-span-7 rounded-xl p-3 border font-mono text-xs flex flex-col justify-between border-slate-800/80 bg-[#0d1520] text-slate-200 shadow-inner">
-                    <div>
-                      <div className="flex items-center justify-between border-b pb-2 border-slate-800">
-                        <span className="font-bold text-slate-200">Live Webhook Status</span>
-                        <span className="text-[10px] text-emerald-400 font-sans">● Listening</span>
+                    <div className="flex items-center justify-between border-b pb-2 border-slate-800">
+                      <div className="flex items-center gap-1.5 font-bold text-emerald-400">
+                        <Terminal size={13} />
+                        <span>System Architecture</span>
                       </div>
-
-                      {/* Webhook Rows */}
-                      <div className="mt-2.5 space-y-1.5 text-[11px]">
-                        <div className="flex justify-between items-center text-emerald-400">
-                          <span>GHN Order Update</span>
-                          <span className="font-bold">[200 OK]</span>
-                        </div>
-                        <div className="flex justify-between items-center text-emerald-400">
-                          <span>Payment Confirmed</span>
-                          <span className="font-bold">[200 OK]</span>
-                        </div>
-                      </div>
+                      <span className="text-[10px] text-slate-400">Laravel 11</span>
                     </div>
 
-                    {/* Order Progress Pipeline */}
-                    <div className="mt-4 pt-3 border-t border-dashed border-slate-800">
-                      <div className="text-[10px] text-slate-400 mb-2">Order #12345</div>
-                      <div className="flex items-center justify-between text-[9px]">
-                        {/* Step 1: Created */}
-                        <div className="flex flex-col items-center">
-                          <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-emerald-500 text-slate-950 font-bold mb-1">
-                            <Check size={8} strokeWidth={3} />
-                          </span>
-                          <span className="text-slate-300">Created</span>
-                        </div>
-
-                        {/* Line 1 */}
-                        <div className="h-0.5 flex-1 bg-emerald-500/60 mx-1" />
-
-                        {/* Step 2: Payment */}
-                        <div className="flex flex-col items-center">
-                          <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-emerald-500 text-slate-950 font-bold mb-1">
-                            <Check size={8} strokeWidth={3} />
-                          </span>
-                          <span className="text-slate-300">Payment</span>
-                        </div>
-
-                        {/* Line 2 */}
-                        <div className="h-0.5 flex-1 bg-amber-500/60 mx-1" />
-
-                        {/* Step 3: GHN Shipped */}
-                        <div className="flex flex-col items-center">
-                          <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-amber-500 text-slate-950 font-bold mb-1 animate-pulse">
-                            ●
-                          </span>
-                          <span className="text-amber-400 font-bold">GHN Shipped</span>
-                        </div>
-
-                        {/* Line 3 */}
-                        <div className="h-0.5 flex-1 bg-slate-700 mx-1" />
-
-                        {/* Step 4: Delivered */}
-                        <div className="flex flex-col items-center">
-                          <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full border border-slate-600 bg-transparent mb-1" />
-                          <span className="text-slate-500">Delivered</span>
-                        </div>
-                      </div>
+                    {/* Architecture Diagram Image */}
+                    <div className="my-2 rounded-lg overflow-hidden border border-slate-800/80 bg-[#0d1520]">
+                      <img
+                        src={veggieArchImg}
+                        alt="Veggie Organic Architecture"
+                        className="w-full h-auto object-contain"
+                        loading="lazy"
+                      />
                     </div>
+
+                    <div className="text-[9px] text-slate-500 text-right">D:\veggie</div>
                   </div>
 
-                  {/* Right: Description & Feature Pills */}
+                  {/* Right: Text & Tech Stack Bullets */}
                   <div className="md:col-span-5 flex flex-col justify-between text-xs">
                     <div>
                       <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                         {lang === 'vi'
-                          ? 'Veggies Organic E-Commerce & imbrans GHN Logistics integration.'
-                          : 'Veggies Organic E-Commerce & imbrans GHN Logistics integration.'}
+                          ? 'Hệ thống thương mại điện tử nông sản hữu cơ: Tích hợp vận chuyển GHN Logistics, thanh toán PayPal & gợi ý thông minh Python AI.'
+                          : 'Organic e-commerce system: GHN Logistics realtime shipping, PayPal gateway, and Python AI recommendations.'}
                       </p>
 
-                      <div className="mt-3 flex flex-wrap gap-1.5">
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
-                          Inventory Sync
-                        </span>
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
-                          Async Jobs
-                        </span>
-                      </div>
-
                       <div className="mt-3.5">
-                        <div className={`font-bold text-xs mb-1.5 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
-                          Features
+                        <div className={`font-bold text-xs mb-2 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                          Backend Tech Stack
                         </div>
-                        <ul className={`space-y-1 text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                          <li>• Realtime shipping calculation</li>
-                          <li>• GHN webhook status updates</li>
-                          <li>• Order state machine validation</li>
+                        <ul className={`space-y-1.5 text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                          <li className="flex items-center gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                            <span>Laravel 11 &amp; MySQL</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                            <span>GHN Logistics &amp; PayPal</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                            <span>Python AI (NLTK Recommender)</span>
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -526,7 +483,13 @@ export default function ProjectsPage() {
               >
                 <div className="flex flex-wrap gap-1.5">
                   <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
-                    Inventory Sync
+                    Laravel 11
+                  </span>
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
+                    GHN Logistics
+                  </span>
+                  <span className="rounded-full px-3 py-1 text-[11px] font-mono border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-slate-300">
+                    MySQL
                   </span>
                 </div>
 
