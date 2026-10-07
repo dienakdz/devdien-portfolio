@@ -17,6 +17,7 @@ import {
 import { useLanguage } from '../../../context/LanguageContext';
 import { useTheme } from '../../../context/ThemeContext';
 import { siteConfig } from '../../../data/siteConfig';
+import fastapiArchImg from '../../../assets/optimized/fastapi-architecture.webp';
 
 export default function ProjectsPage() {
   const { lang } = useLanguage();
@@ -128,119 +129,58 @@ export default function ProjectsPage() {
                   FastAPI Book Management API
                 </h2>
 
-                {/* 2-Column Interior Split (Left: Swagger Box, Right: Specs & Tags) */}
+                {/* 2-Column Interior Split (Left: Architecture Diagram, Right: Stack List) */}
                 <div className="mt-5 grid grid-cols-1 md:grid-cols-12 gap-4">
-                  {/* Left: Interactive Swagger Box (Always Sleek Dark Terminal for Crystal Contrast) */}
-                  <div className="md:col-span-7 rounded-xl p-3 border font-mono text-xs border-slate-800/80 bg-[#0d1520] text-slate-200 shadow-inner">
+                  {/* Left: Architecture Diagram Box (Always Sleek Dark Terminal) */}
+                  <div className="md:col-span-7 rounded-xl p-3 border font-mono text-xs flex flex-col justify-between border-slate-800/80 bg-[#0d1520] text-slate-200 shadow-inner">
                     <div className="flex items-center justify-between border-b pb-2 border-slate-800">
                       <div className="flex items-center gap-1.5 font-bold text-amber-400">
                         <Terminal size={13} />
-                        <span>/api/v1</span>
-                        <span className="rounded bg-emerald-500/20 text-emerald-400 px-1 py-0.2 text-[9px]">0.2.0</span>
+                        <span>System Architecture</span>
                       </div>
-                      <span className="text-[10px] text-slate-400">OpenAPI Docs</span>
+                      <span className="text-[10px] text-slate-400">Layered REST</span>
                     </div>
 
-                    {/* Books Endpoints */}
-                    <div className="mt-2.5">
-                      <div className="flex items-center justify-between text-[11px] font-bold text-slate-300 mb-1">
-                        <span>Books</span>
-                        <ChevronDown size={12} className="text-slate-500" />
-                      </div>
-
-                      {/* GET /books */}
-                      <div className="flex items-center justify-between rounded p-1.5 mb-1.5 bg-[#0e2a47]/75 border border-blue-700/50">
-                        <div className="flex items-center gap-1.5 truncate mr-1">
-                          <span className="rounded bg-blue-600 text-white px-1.5 py-0.5 text-[9px] font-bold">
-                            GET
-                          </span>
-                          <span className="text-[11px] text-blue-200 font-semibold truncate">/books</span>
-                          <span className="text-[9px] text-slate-400 hidden sm:inline">{'{page, limit}'}</span>
-                        </div>
-                        <span className="shrink-0 text-[9px] text-slate-300 rounded px-1.5 py-0.5 bg-slate-800/90 border border-slate-700">
-                          Try it out
-                        </span>
-                      </div>
-
-                      {/* POST /books */}
-                      <div className="flex items-center justify-between rounded p-1.5 bg-[#0e382d]/75 border border-emerald-700/50">
-                        <div className="flex items-center gap-1.5 truncate mr-1">
-                          <span className="rounded bg-emerald-600 text-white px-1.5 py-0.5 text-[9px] font-bold">
-                            POST
-                          </span>
-                          <span className="text-[11px] text-emerald-200 font-semibold truncate">/books</span>
-                        </div>
-                        <span className="shrink-0 text-[9px] text-slate-300 rounded px-1.5 py-0.5 bg-slate-800/90 border border-slate-700">
-                          Try it out
-                        </span>
-                      </div>
+                    {/* Architecture Diagram Image */}
+                    <div className="my-2 rounded-lg overflow-hidden border border-slate-800/80 bg-[#0d1520]">
+                      <img
+                        src={fastapiArchImg}
+                        alt="FastAPI Architecture"
+                        className="w-full h-auto object-contain"
+                        loading="lazy"
+                      />
                     </div>
 
-                    {/* Auth Endpoints */}
-                    <div className="mt-2.5">
-                      <div className="flex items-center justify-between text-[11px] font-bold text-slate-300 mb-1">
-                        <span>Auth</span>
-                        <ChevronDown size={12} className="text-slate-500" />
-                      </div>
-
-                      {/* POST /auth/login */}
-                      <div className="flex items-center justify-between rounded p-1.5 bg-[#0e382d]/75 border border-emerald-700/50">
-                        <div className="flex items-center gap-1.5 truncate mr-1">
-                          <span className="rounded bg-emerald-600 text-white px-1.5 py-0.5 text-[9px] font-bold">
-                            POST
-                          </span>
-                          <span className="text-[11px] text-emerald-200 font-semibold truncate">/auth/login</span>
-                        </div>
-                        <span className="shrink-0 text-[9px] text-slate-300 rounded px-1.5 py-0.5 bg-slate-800/90 border border-slate-700">
-                          Try it out
-                        </span>
-                      </div>
-                    </div>
+                    <div className="text-[9px] text-slate-500 text-right">D:\FastAPI\fast-api-books</div>
                   </div>
 
-                  {/* Right: Technical Specs & Tech Pills */}
+                  {/* Right: Text & Tech Stack Bullets */}
                   <div className="md:col-span-5 flex flex-col justify-between text-xs">
                     <div>
                       <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                         {lang === 'vi'
-                          ? 'Detailed interactive e-endpoints. Clean Architecture Book Management API tags.'
-                          : 'Detailed interactive e-endpoints. Book Management API tags.'}
+                          ? 'Mô hình kiến trúc phân tầng Clean Architecture: Decoupled Routers, Pydantic DTOs, SQLAlchemy ORM & DB.'
+                          : 'Layered REST architecture: Decoupled Routers, Pydantic schemas, SQLAlchemy ORM & DB.'}
                       </p>
 
-                      {/* Small Tech Pills */}
-                      <div className="mt-2.5 flex flex-wrap gap-1.5">
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
-                          Python
-                        </span>
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
-                          PostgreSQL
-                        </span>
-                        <span className="rounded-full px-2.5 py-1 text-[11px] font-medium border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/80 dark:text-amber-300">
-                          Alembic
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* PostgreSQL Connection Pool Specs Box (Always Dark Terminal) */}
-                    <div className="mt-4 rounded-xl p-3 border font-mono text-[11px] border-slate-800/80 bg-[#0d1520] text-slate-300 shadow-inner">
-                      <div className="font-bold text-slate-200 mb-1.5">PostgreSQL Connection Pool Specs</div>
-                      <div className="space-y-1 text-slate-400 text-[10px]">
-                        <div className="flex justify-between">
-                          <span>Max Connections:</span>
-                          <span className="font-bold text-slate-200">100</span>
+                      <div className="mt-3.5">
+                        <div className={`font-bold text-xs mb-2 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                          Backend Tech Stack
                         </div>
-                        <div className="flex justify-between">
-                          <span>Idle:</span>
-                          <span className="font-bold text-slate-200">10</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Timeout:</span>
-                          <span className="font-bold text-slate-200">30s</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Driver:</span>
-                          <span className="font-bold text-emerald-400">asyncpg</span>
-                        </div>
+                        <ul className={`space-y-1.5 text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                          <li className="flex items-center gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                            <span>FastAPI + Uvicorn</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                            <span>SQLAlchemy 2.0 &amp; Alembic</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                            <span>Pydantic v2 &amp; Docker</span>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
