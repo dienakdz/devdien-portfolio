@@ -2,6 +2,13 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/nguyen-minh-dien",
+      "destination": "/about",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/login",

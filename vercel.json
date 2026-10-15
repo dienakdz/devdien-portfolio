@@ -3,6 +3,13 @@
   "cleanUrls": true,
   "buildCommand": "npm run build --workspace frontend",
   "outputDirectory": "frontend/dist",
+  "redirects": [
+    {
+      "source": "/nguyen-minh-dien",
+      "destination": "/about",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/login",

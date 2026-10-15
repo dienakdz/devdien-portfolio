@@ -218,6 +218,27 @@ try {
   const updatedBaseHtml = baseHtml.replace(/<noscript>.*?<\/noscript>/s, homeNoscript);
   await writeFile(baseHtmlPath, updatedBaseHtml, 'utf8');
   console.log('[seo] Enhanced static noscript for root: /');
+
+  // Generate static fallback redirect for legacy /nguyen-minh-dien URL
+  const legacyDir = path.join(distDir, 'nguyen-minh-dien');
+  await mkdir(legacyDir, { recursive: true });
+  const aboutCanonical = buildAbsoluteUrl('/about', siteUrl);
+  const legacyRedirectHtml = `<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <title>Đang chuyển hướng đến /about | Nguyễn Minh Diện</title>
+  <link rel="canonical" href="${aboutCanonical}">
+  <meta http-equiv="refresh" content="0; url=/about">
+  <meta name="robots" content="noindex, follow">
+  <script>window.location.replace('/about');</script>
+</head>
+<body style="font-family: system-ui, sans-serif; padding: 2rem; text-align: center;">
+  <p>Đang chuyển hướng đến trang hồ sơ chính thức: <a href="/about">/about</a>...</p>
+</body>
+</html>`;
+  await writeFile(path.join(legacyDir, 'index.html'), legacyRedirectHtml, 'utf8');
+  console.log('[seo] Generated static fallback redirect for /nguyen-minh-dien -> /about');
 } catch (err) {
   console.warn('[seo] Could not pre-render static pages:', err.message);
 }

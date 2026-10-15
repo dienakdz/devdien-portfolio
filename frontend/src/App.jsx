@@ -40,6 +40,7 @@ function App() {
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="/projects" element={<ProjectsPage />} />
                     <Route path="/contact" element={<ContactPage />} />
+                    <Route path="/nguyen-minh-dien" element={<Navigate to="/about" replace />} />
                   </Route>
 
                   {/* Admin authentication & dashboard routes */}
